@@ -1,0 +1,1938 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laughora | Open Mic Night Registration</title>
+    <meta name="description" content="Sign up for Laughora's Open Mic Night. Register your performance spot, submit your act details, and step into the neon spotlight.">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Inline blocking theme loader -->
+    <script>
+        (function () {
+            const theme = localStorage.getItem('theme') || 'dark';
+            if (theme === 'light') {
+                document.documentElement.classList.add('light-theme');
+            }
+        })();
+    </script>
+    <style>
+        /* Base and Utility Overrides */
+        :root {
+            --ring-circumference: 263.89; /* 2 * PI * 42 */
+            
+            /* Status Pill Variables */
+            --pill-color-cyan: var(--color-cyan);
+            --pill-bg-cyan: rgba(0, 240, 255, 0.1);
+            --pill-border-cyan: rgba(0, 240, 255, 0.3);
+            
+            --pill-color-orange: var(--color-orange);
+            --pill-bg-orange: rgba(255, 107, 0, 0.1);
+            --pill-border-orange: rgba(255, 107, 0, 0.3);
+            
+            --pill-color-pink: var(--color-pink);
+            --pill-bg-pink: rgba(255, 0, 127, 0.1);
+            --pill-border-pink: rgba(255, 0, 127, 0.3);
+        }
+
+        /* Page Hero Redesign */
+        .page-hero {
+            padding: 160px 24px 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(ellipse at 50% 0%, rgba(0, 240, 255, 0.12) 0%, rgba(176, 38, 255, 0.08) 50%, transparent 80%);
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--color-cyan), var(--color-purple), transparent);
+            opacity: 0.4;
+        }
+
+        .hero-grid-overlay {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            background-position: center top;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .page-hero-title {
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            font-weight: 900;
+            color: var(--color-text-white);
+            margin-bottom: 1.25rem;
+            letter-spacing: -2px;
+            line-height: 1;
+            font-family: var(--font-heading);
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-hero-title span {
+            background: linear-gradient(135deg, var(--color-cyan), var(--color-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.3));
+        }
+
+        .page-hero p {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+            color: var(--color-text-slate);
+        }
+
+        .openmic-page { padding: 60px 0 100px; }
+
+        /* Spots Ticker Card Redesign */
+        .spots-ticker {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 2.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            box-shadow: 0 0 35px rgba(0, 240, 255, 0.05), inset 0 0 20px rgba(0, 240, 255, 0.03);
+            border-radius: 24px;
+            padding: 2rem 2.5rem;
+            margin-bottom: 4rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+        }
+
+        .spots-ticker::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: linear-gradient(to bottom, var(--color-cyan), var(--color-purple));
+        }
+
+        .spots-circle-progress {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .progress-ring-svg {
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring-bg {
+            stroke: rgba(255, 255, 255, 0.04);
+        }
+
+        .progress-ring-fill {
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .progress-ring-text {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .progress-ring-text .spots-count {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--color-cyan);
+            font-family: var(--font-heading);
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+        }
+
+        .progress-ring-text .spots-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--color-text-muted);
+            margin-top: 2px;
+        }
+
+        .spots-ticker-info h3 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--color-text-white);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .spots-ticker-info p {
+            font-size: 0.95rem;
+            color: var(--color-text-slate);
+        }
+
+        .spots-progress-details {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+            text-align: right;
+        }
+
+        .spots-details-label {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+        }
+
+        .spots-details-label span {
+            color: var(--color-text-white);
+            font-weight: 600;
+        }
+
+        .spots-status-pill {
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            color: var(--color-cyan);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 6px 14px;
+            border-radius: 100px;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
+        }
+
+        .openmic-main-layout {
+            display: grid;
+            grid-template-columns: 1.1fr 1.3fr;
+            gap: 3.5rem;
+            align-items: start;
+        }
+
+        .guidelines-panel {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(12px);
+            transition: all var(--transition-smooth);
+        }
+
+        /* Guideline Cards (Terminal Style) */
+        .guidelines-panel h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--color-text-white);
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.5px;
+        }
+
+        .guidelines-panel > p {
+            color: var(--color-text-slate);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+        }
+
+        .guidelines-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+            margin-bottom: 3rem;
+            padding: 0;
+        }
+
+        .guideline-card {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            gap: 1.25rem;
+            transition: all var(--transition-smooth);
+            position: relative;
+            cursor: default;
+        }
+
+        .guideline-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(var(--card-accent-rgb), 0.05), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .guideline-card:hover {
+            transform: translateX(6px);
+            border-color: rgba(var(--card-accent-rgb), 0.25);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .guideline-card:hover::after {
+            opacity: 1;
+        }
+
+        .guideline-card.gl-cyan { --card-accent-rgb: 0, 240, 255; }
+        .guideline-card.gl-purple { --card-accent-rgb: 176, 38, 255; }
+        .guideline-card.gl-orange { --card-accent-rgb: 255, 107, 0; }
+        .guideline-card.gl-pink { --card-accent-rgb: 255, 0, 127; }
+
+        .guideline-icon-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: rgba(var(--card-accent-rgb), 0.1);
+            border: 1px solid rgba(var(--card-accent-rgb), 0.25);
+            color: rgb(var(--card-accent-rgb));
+            box-shadow: 0 0 12px rgba(var(--card-accent-rgb), 0.1);
+        }
+
+        .guideline-text h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--color-text-white);
+            margin-bottom: 0.35rem;
+        }
+
+        .guideline-text p {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Stage Readiness Tracker */
+        .readiness-panel {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: border-color var(--transition-smooth);
+        }
+
+        .readiness-panel h3 {
+            font-size: 1.25rem;
+            color: var(--color-text-white);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .readiness-panel h3 svg {
+            color: var(--color-cyan);
+            filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.4));
+        }
+
+        .readiness-panel p {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .checklist-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .check-item input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            width: 0; height: 0;
+        }
+
+        .check-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.02);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: var(--transition-fast);
+        }
+
+        .check-item:hover .check-box {
+            border-color: var(--color-cyan);
+            background: rgba(0, 240, 255, 0.03);
+        }
+
+        .check-item input:checked + .check-box {
+            background: var(--color-cyan);
+            border-color: var(--color-cyan);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+        }
+
+        .check-box::before {
+            content: '✓';
+            color: #040408;
+            font-size: 0.8rem;
+            font-weight: 900;
+            opacity: 0;
+            transform: scale(0.6);
+            transition: var(--transition-fast);
+        }
+
+        .check-item input:checked + .check-box::before {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .check-label {
+            font-size: 0.85rem;
+            color: var(--color-text-slate);
+            line-height: 1.4;
+            transition: var(--transition-fast);
+        }
+
+        .check-item input:checked ~ .check-label {
+            color: var(--color-text-white);
+        }
+
+        .readiness-badge-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 12px;
+            transition: all 0.4s ease;
+        }
+
+        .readiness-badge-wrap.unlocked {
+            background: rgba(0, 255, 136, 0.06);
+            border-color: rgba(0, 255, 136, 0.3);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.1);
+        }
+
+        .badge-lock-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-fast);
+        }
+
+        .readiness-badge-wrap.unlocked .badge-lock-icon {
+            color: #00ff88;
+            filter: drop-shadow(0 0 5px rgba(0, 255, 136, 0.4));
+        }
+
+        .badge-text {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .readiness-badge-wrap.unlocked .badge-text {
+            color: #00ff88;
+            font-weight: 700;
+            text-shadow: 0 0 8px rgba(0, 255, 136, 0.3);
+        }
+
+        /* Scheduler Console */
+        .scheduler-panel {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(12px);
+        }
+
+        .scheduler-panel h3 {
+            font-size: 1.4rem;
+            color: var(--color-text-white);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .scheduler-panel p {
+            font-size: 0.875rem;
+            color: var(--color-text-muted);
+            margin-bottom: 1.75rem;
+        }
+
+        .sched-tabs {
+            display: flex;
+            gap: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 10px;
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+        }
+
+        .sched-tab-btn {
+            background: transparent;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            color: var(--color-text-slate);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            white-space: nowrap;
+        }
+
+        .sched-tab-btn:hover {
+            color: var(--color-text-white);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .sched-tab-btn.active {
+            background: rgba(0, 240, 255, 0.08);
+            color: var(--color-cyan);
+            border: 1px solid rgba(0, 240, 255, 0.25);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.05);
+        }
+
+        .sched-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+        }
+
+        .sched-slot {
+            border-radius: 12px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all var(--transition-smooth);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sched-slot.available {
+            cursor: pointer;
+            border-color: rgba(0, 240, 255, 0.2);
+        }
+
+        .sched-slot.available:hover {
+            transform: translateY(-3px);
+            border-color: var(--color-cyan);
+            background: rgba(0, 240, 255, 0.04);
+            box-shadow: 0 5px 15px rgba(0, 240, 255, 0.1);
+        }
+
+        .sched-slot.available.selected-slot {
+            border-color: var(--color-cyan);
+            background: rgba(0, 240, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
+        }
+
+        .sched-slot.taken {
+            opacity: 0.55;
+            background: rgba(255, 255, 255, 0.005);
+            border-color: rgba(255, 255, 255, 0.03);
+            cursor: not-allowed;
+        }
+
+        .sched-slot.guest {
+            border-color: rgba(255, 107, 0, 0.25);
+            background: rgba(255, 107, 0, 0.02);
+        }
+
+        .slot-time {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--color-text-white);
+            margin-bottom: 4px;
+        }
+
+        .slot-status {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+        }
+
+        .sched-slot.available .slot-status { color: var(--color-cyan); }
+        .sched-slot.taken .slot-status { color: var(--color-text-muted); }
+        .sched-slot.guest .slot-status { color: var(--color-orange); }
+
+        .slot-performer {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--color-text-slate);
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        /* Glassmorphism Performer Registration Form */
+        .registration-panel {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            position: relative;
+        }
+
+        .registration-panel.disabled-form {
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .registration-panel.disabled-form::after {
+            content: '🔒 Complete Guidelines Readiness Checklist to Unlock Form';
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(4, 4, 8, 0.65);
+            color: var(--color-cyan);
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-align: center;
+            padding: 2rem;
+            border-radius: 24px;
+            z-index: 10;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        .registration-panel h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--color-text-white);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .registration-panel > p {
+            font-size: 0.875rem;
+            color: var(--color-text-muted);
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        /* Form Styles Override */
+        .form-group label {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group select,
+        .form-group textarea {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            color: var(--color-text-white);
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            transition: all var(--transition-fast);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--color-cyan);
+            background: rgba(255, 255, 255, 0.04);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
+            outline: none;
+        }
+
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* Genre radio selector redesign */
+        .comedy-genre-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+
+        .genre-option {
+            position: relative;
+        }
+
+        .genre-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0; height: 0;
+        }
+
+        .genre-label {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: var(--color-text-slate);
+            transition: all var(--transition-fast);
+            font-weight: 500;
+        }
+
+        .genre-option input:checked + .genre-label {
+            background: rgba(0, 240, 255, 0.08);
+            border-color: rgba(0, 240, 255, 0.4);
+            color: var(--color-cyan);
+            box-shadow: 0 0 12px rgba(0, 240, 255, 0.15);
+        }
+
+        .genre-emoji {
+            font-size: 1.1rem;
+        }
+
+        .char-counter {
+            font-size: 0.7rem;
+            color: var(--color-text-muted);
+            text-align: right;
+            margin-top: 4px;
+        }
+
+        /* Performer Pass (Success state redesign) */
+        .reg-success {
+            text-align: center;
+            padding: 1.5rem 0.5rem;
+        }
+
+        .rs-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: #00ff88;
+            box-shadow: 0 0 25px rgba(0, 255, 136, 0.15);
+        }
+
+        .performer-pass {
+            background: radial-gradient(circle at top left, rgba(0,240,255,0.06), rgba(176,38,255,0.06)), rgba(0,0,0,0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            position: relative;
+            text-align: left;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .performer-pass::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, var(--color-cyan), var(--color-purple));
+        }
+
+        .pass-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed rgba(255,255,255,0.15);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+
+        .pass-title {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--color-cyan);
+            text-transform: uppercase;
+        }
+
+        .pass-no {
+            font-family: monospace;
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+        }
+
+        .pass-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 20px;
+        }
+
+        .pass-field label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-text-muted);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .pass-field span {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--color-text-white);
+        }
+
+        .pass-footer {
+            margin-top: 1.5rem;
+            background: rgba(0, 240, 255, 0.05);
+            border: 1px solid rgba(0, 240, 255, 0.15);
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 0.78rem;
+            color: var(--color-text-slate);
+            line-height: 1.4;
+        }
+
+        .pass-footer strong {
+            color: var(--color-cyan);
+        }
+
+        /* Responsiveness Media Queries */
+        @media (max-width: 990px) {
+            .openmic-main-layout {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            .openmic-main-layout > * {
+                min-width: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .spots-ticker {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                gap: 1.25rem;
+                padding: 1.5rem;
+            }
+            .spots-circle-progress {
+                margin: 0 auto;
+            }
+            .spots-progress-details {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .form-grid-2, .comedy-genre-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .spots-ticker {
+                padding: 1.25rem 1rem;
+                gap: 1rem;
+                margin-bottom: 2.5rem;
+            }
+            .spots-ticker-info h3 {
+                font-size: 1.2rem;
+            }
+            .guidelines-panel h2 {
+                font-size: 1.6rem;
+                line-height: 1.2;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+            .guidelines-panel > p {
+                margin-bottom: 1.5rem;
+            }
+            .guideline-card {
+                padding: 1rem;
+                gap: 0.85rem;
+            }
+            .guideline-icon-box {
+                width: 38px;
+                height: 38px;
+            }
+            .guidelines-panel, .readiness-panel, .scheduler-panel, .registration-panel {
+                padding: 1.25rem 1rem;
+                margin-bottom: 2rem;
+            }
+            .checklist-grid {
+                gap: 0.65rem;
+            }
+            .check-label {
+                font-size: 0.8rem;
+            }
+            .sched-tabs {
+                margin-bottom: 1rem;
+            }
+            .sched-slot {
+                padding: 10px 4px;
+            }
+            .slot-time {
+                font-size: 0.8rem;
+            }
+            .slot-status {
+                font-size: 0.58rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .page-hero {
+                padding: 120px 16px 60px;
+            }
+            .page-hero-title {
+                font-size: 2.2rem;
+            }
+            .sched-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .pass-grid {
+                grid-template-columns: 1fr;
+            }
+            .spots-ticker {
+                padding: 1rem;
+            }
+            .guidelines-panel, .readiness-panel, .scheduler-panel, .registration-panel {
+                padding: 1rem;
+            }
+            .spots-status-pill {
+                font-size: 0.6rem;
+                padding: 4px 10px;
+            }
+        }
+
+        /* ----------------------------------------------------
+           LIGHT MODE DESIGN SYSTEM OVERRIDES
+           ---------------------------------------------------- */
+        html.light-theme .page-hero {
+            background: radial-gradient(ellipse at 50% 0%, rgba(139, 92, 246, 0.1) 0%, rgba(6, 182, 212, 0.05) 50%, transparent 80%);
+        }
+
+        html.light-theme .hero-grid-overlay {
+            background-image: linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+        }
+
+        html.light-theme {
+            --pill-color-cyan: #0891b2;
+            --pill-bg-cyan: rgba(8, 145, 178, 0.08);
+            --pill-border-cyan: rgba(8, 145, 178, 0.25);
+            
+            --pill-color-orange: #ea580c;
+            --pill-bg-orange: rgba(234, 88, 12, 0.08);
+            --pill-border-orange: rgba(234, 88, 12, 0.25);
+            
+            --pill-color-pink: #db2777;
+            --pill-bg-pink: rgba(219, 39, 119, 0.08);
+            --pill-border-pink: rgba(219, 39, 119, 0.25);
+        }
+
+        html.light-theme .spots-ticker {
+            background: #ffffff;
+            border-color: rgba(139, 92, 246, 0.25);
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+        }
+
+        html.light-theme .progress-ring-bg {
+            stroke: rgba(15, 23, 42, 0.08);
+        }
+
+        html.light-theme .progress-ring-fill {
+            stroke: #7c3aed;
+        }
+
+        html.light-theme .progress-ring-text .spots-count {
+            color: #8b5cf6;
+            text-shadow: none;
+        }
+
+        html.light-theme .progress-ring-text .spots-label {
+            color: #64748b;
+        }
+
+        html.light-theme .spots-ticker-info p {
+            color: #475569;
+        }
+
+        html.light-theme .spots-details-label span {
+            color: #0f172a;
+        }
+
+        html.light-theme .spots-ticker-info h3,
+        html.light-theme .guidelines-panel h2,
+        html.light-theme .guideline-text h4,
+        html.light-theme .readiness-panel h3,
+        html.light-theme .scheduler-panel h3,
+        html.light-theme .registration-panel h3,
+        html.light-theme .pass-field span {
+            color: #0f172a;
+        }
+
+        html.light-theme .spots-status-pill {
+            background: rgba(139, 92, 246, 0.08);
+            border-color: rgba(139, 92, 246, 0.25);
+            color: #7c3aed;
+            box-shadow: none;
+        }
+
+        html.light-theme .guidelines-panel,
+        html.light-theme .guideline-card,
+        html.light-theme .readiness-panel,
+        html.light-theme .scheduler-panel,
+        html.light-theme .registration-panel {
+            background: #ffffff;
+            border-color: rgba(15, 23, 42, 0.08);
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+        }
+
+        html.light-theme .registration-panel.disabled-form::after {
+            background: rgba(255, 255, 255, 0.85);
+            color: #7c3aed;
+        }
+
+        html.light-theme .guideline-card:hover {
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+        }
+
+        html.light-theme .check-box {
+            border-color: rgba(15, 23, 42, 0.15);
+            background: #f8fafc;
+        }
+
+        html.light-theme .check-item:hover .check-box {
+            border-color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.03);
+        }
+
+        html.light-theme .check-item input:checked + .check-box {
+            background: #8b5cf6;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.25);
+        }
+
+        html.light-theme .check-box::before {
+            color: #ffffff;
+        }
+
+        html.light-theme .check-item input:checked ~ .check-label {
+            color: #0f172a;
+        }
+
+        html.light-theme .readiness-badge-wrap {
+            background: rgba(15, 23, 42, 0.02);
+            border-color: rgba(15, 23, 42, 0.06);
+        }
+
+        html.light-theme .readiness-badge-wrap.unlocked {
+            background: rgba(16, 185, 129, 0.06);
+            border-color: rgba(16, 185, 129, 0.25);
+            box-shadow: none;
+        }
+
+        html.light-theme .readiness-badge-wrap.unlocked .badge-text {
+            color: #059669;
+            text-shadow: none;
+        }
+
+        html.light-theme .sched-tab-btn.active {
+            background: rgba(139, 92, 246, 0.08);
+            color: #7c3aed;
+            border-color: rgba(139, 92, 246, 0.25);
+        }
+
+        html.light-theme .sched-slot {
+            background: #f8fafc;
+            border-color: rgba(15, 23, 42, 0.06);
+        }
+
+        html.light-theme .sched-slot.available {
+            border-color: rgba(139, 92, 246, 0.15);
+        }
+
+        html.light-theme .sched-slot.available:hover {
+            border-color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.03);
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.08);
+        }
+
+        html.light-theme .sched-slot.available.selected-slot {
+            border-color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.08);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.15);
+        }
+
+        html.light-theme .slot-time {
+            color: #0f172a;
+        }
+
+        html.light-theme .sched-slot.available .slot-status { color: #7c3aed; }
+        html.light-theme .sched-slot.guest .slot-status { color: #ea580c; }
+
+        html.light-theme .form-group input[type="text"],
+        html.light-theme .form-group input[type="email"],
+        html.light-theme .form-group input[type="tel"],
+        html.light-theme .form-group select,
+        html.light-theme .form-group textarea {
+            background: #f8fafc;
+            border-color: rgba(15, 23, 42, 0.12);
+            color: #0f172a;
+        }
+
+        html.light-theme .form-group input:focus,
+        html.light-theme .form-group select:focus,
+        html.light-theme .form-group textarea:focus {
+            border-color: #8b5cf6;
+            background: #ffffff;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.15);
+        }
+
+        html.light-theme .genre-label {
+            background: #f8fafc;
+            border-color: rgba(15, 23, 42, 0.1);
+        }
+
+        html.light-theme .genre-option input:checked + .genre-label {
+            background: rgba(139, 92, 246, 0.06);
+            border-color: rgba(139, 92, 246, 0.3);
+            color: #7c3aed;
+            box-shadow: none;
+        }
+
+        html.light-theme .performer-pass {
+            background: radial-gradient(circle at top left, rgba(139,92,246,0.04), rgba(6,182,212,0.04)), #ffffff;
+            border-color: rgba(15, 23, 42, 0.08);
+            box-shadow: 0 10px 30px rgba(15,23,42,0.06);
+        }
+
+        html.light-theme .performer-pass::before {
+            background: linear-gradient(90deg, #8b5cf6, #06b6d4);
+        }
+
+        html.light-theme .pass-header {
+            border-bottom-color: rgba(15,23,42,0.1);
+        }
+
+        html.light-theme .pass-title {
+            color: #7c3aed;
+        }
+
+        html.light-theme .pass-footer {
+            background: rgba(139, 92, 246, 0.05);
+            border-color: rgba(139, 92, 246, 0.15);
+        }
+
+        html.light-theme .pass-footer strong {
+            color: #7c3aed;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/logo.png" alt="Laughora Logo" class="brand-logo-img">
+                <span class="logo-neon">Laugh</span><span class="logo-accent">ora</span></a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="home2.html" class="nav-link">Home2</a>
+                <a href="shows.html" class="nav-link">Shows</a>
+                <a href="tickets.html" class="nav-link">Tickets</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="openmic.html" class="nav-link active">Open Mic</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+                <a href="performers.html" class="nav-link">Performers</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </nav>
+
+            <!-- Navbar Actions (Theme Toggle & Account) -->
+            <div class="nav-actions">
+                <button id="rtlToggle" class="rtl-toggle-btn" aria-label="Toggle RTL/LTR">
+                    <svg class="ltr-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12H9M15 6l-6 6 6 6"/></svg>
+                    <svg class="rtl-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h12M9 18l6-6-6-6"/></svg>
+                </button>
+                <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle theme">
+                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path>
+                        <path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path>
+                        <path d="M2 12h2"></path><path d="M20 12h2"></path>
+                        <path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>
+                    </svg>
+                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                    </svg>
+                </button>
+                <div class="user-dropdown">
+                    <button id="userDropdownBtn" class="user-dropdown-btn" aria-label="User Account">
+                        <svg class="user-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span class="user-badge-dot"></span>
+                    </button>
+                    <div class="user-dropdown-content">
+                        <div class="dropdown-header">
+                             <p class="user-name" id="navUserName">Comedy Fan</p>
+                            <p class="user-role" id="navUserRole">Spectator</p>
+                        </div>
+                        <a href="login.html" class="dropdown-item login-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+                            </span>
+                            <span>Sign In / Sign Up</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-divider"></div>
+                        <a href="user-dashboard.html" class="dropdown-item user-dash-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            </span>
+                            <span>User Dashboard</span>
+                        </a>
+                        <a href="admin-dashboard.html" class="dropdown-item admin-dash-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                            </span>
+                            <span>Admin Dashboard</span>
+                        </a>
+                        <button class="dropdown-item signout-btn logged-in-only" id="signoutBtn">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+                            </span>
+                            <span>Sign Out</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <div class="page-hero">
+        <div class="hero-grid-overlay"></div>
+        <span class="section-tag tag-cyan">STEP ONTO THE STAGE</span>
+        <h1 class="page-hero-title">Open <span>Mic Night</span></h1>
+        <p>Ready to test your punchlines? Register for a performance slot, review the guidelines, and join the neon-charged stage family.</p>
+    </div>
+
+    <!-- Open Mic Content -->
+    <section class="openmic-page">
+        <div class="container">
+
+            <!-- Spots Ticker Card -->
+            <div class="spots-ticker">
+                <div class="spots-circle-progress">
+                    <svg class="progress-ring-svg" width="100" height="100">
+                        <circle class="progress-ring-bg" stroke="rgba(255,255,255,0.05)" stroke-width="6" fill="transparent" r="42" cx="50" cy="50"/>
+                        <circle id="spotsRingFill" class="progress-ring-fill" stroke="var(--color-cyan)" stroke-width="6" fill="transparent" r="42" cx="50" cy="50" stroke-dasharray="263.89" stroke-dashoffset="0"/>
+                    </svg>
+                    <div class="progress-ring-text">
+                        <span class="spots-count" id="spotsCountOM">4</span>
+                        <span class="spots-label">Left</span>
+                    </div>
+                </div>
+                <div class="spots-ticker-info">
+                    <h3>Performance Slots Remaining</h3>
+                    <p id="activeShowDetails">This week's Open Mic Night — June 1, 2026 at 7:00 PM</p>
+                </div>
+                <div class="spots-progress-details">
+                    <div class="spots-details-label"><span id="spotsTakenOM">8</span> of <span>12</span> spots taken</div>
+                    <div class="spots-status-pill" id="spotsStatusPill">Hurry, Slots Filling!</div>
+                </div>
+            </div>
+
+            <!-- Main Layout Grid -->
+            <div class="openmic-main-layout">
+
+                <!-- Left Column: Guidelines + Readiness Tracker -->
+                <div class="guidelines-panel">
+                    <h2>Performance Guidelines</h2>
+                    <p>We welcome all kinds of stand-up styles: dark humor, observational, surreal, or musical comedy. Here's what you need to know before stepping on Laughora stage.</p>
+
+                    <ul class="guidelines-list">
+                        <li class="guideline-card gl-cyan">
+                            <div class="guideline-icon-box">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            </div>
+                            <div class="guideline-text">
+                                <h4>Strict 5-Minute Sets</h4>
+                                <p>Standard slots are 5 minutes. Feature spots are 7 minutes. No overtime will be tolerated — our timekeeper is ruthless.</p>
+                            </div>
+                        </li>
+                        <li class="guideline-card gl-purple">
+                            <div class="guideline-icon-box">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                            </div>
+                            <div class="guideline-text">
+                                <h4>Original Material Only</h4>
+                                <p>No stolen bits, recycled jokes, or AI-generated scripts. We're here for authentic, original comedy from your brain.</p>
+                            </div>
+                        </li>
+                        <li class="guideline-card gl-orange">
+                            <div class="guideline-icon-box">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            </div>
+                            <div class="guideline-text">
+                                <h4>Respect the Crowd</h4>
+                                <p>While dark humor is welcome, material targeting specific individuals or groups with malicious intent won't be tolerated on our stage.</p>
+                            </div>
+                        </li>
+                        <li class="guideline-card gl-pink">
+                            <div class="guideline-icon-box">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+                            </div>
+                            <div class="guideline-text">
+                                <h4>Free Entry + Cocktail Perk</h4>
+                                <p>Registered comedians get free entry to the show and one complimentary signature cocktail. Arrive 45 min before show time.</p>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <!-- Stage Readiness Tracker -->
+                    <div class="readiness-panel">
+                        <h3>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"></polygon><polyline points="12 22 12 12.5"></polyline><polyline points="22 8.5 12 12.5 2 8.5"></polyline><polyline points="2 15.5 12 12.5 22 15.5"></polyline></svg>
+                            Stage Readiness Checklist
+                        </h3>
+                        <p>Complete all checklist items to unlock your Performer Pass and register for the stage.</p>
+                        <div class="checklist-grid">
+                            <label class="check-item">
+                                <input type="checkbox" class="readiness-check" id="chkTime">
+                                <span class="check-box"></span>
+                                <span class="check-label">I have timed my set to be strictly 5 minutes (or 7 min feature)</span>
+                            </label>
+                            <label class="check-item">
+                                <input type="checkbox" class="readiness-check" id="chkOriginal">
+                                <span class="check-box"></span>
+                                <span class="check-label">I confirm my comedy material is 100% original</span>
+                            </label>
+                            <label class="check-item">
+                                <input type="checkbox" class="readiness-check" id="chkCall">
+                                <span class="check-box"></span>
+                                <span class="check-label">I agree to arrive 45 minutes prior for performer roll-call</span>
+                            </label>
+                            <label class="check-item">
+                                <input type="checkbox" class="readiness-check" id="chkRespect">
+                                <span class="check-box"></span>
+                                <span class="check-label">I agree to respect the audience and adhere to venue safety protocols</span>
+                            </label>
+                        </div>
+                        <div class="readiness-badge-wrap" id="readinessBadge">
+                            <span class="badge-lock-icon">🔒</span>
+                            <span class="badge-text" id="badgeTextOM">Preparation Checklist</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Scheduler + Form -->
+                <div class="right-column">
+
+                    <!-- Virtual Stage Scheduler Console -->
+                    <div class="scheduler-panel">
+                        <h3>Virtual Stage Scheduler</h3>
+                        <p>Select a date tab below to inspect live time-slots. Click an open spot to lock it in your registration form.</p>
+                        
+                        <div class="sched-tabs" id="schedTabs">
+                            <button class="sched-tab-btn active" data-date="2026-06-01">Jun 01</button>
+                            <button class="sched-tab-btn" data-date="2026-06-08">Jun 08</button>
+                            <button class="sched-tab-btn" data-date="2026-06-15">Jun 15</button>
+                            <button class="sched-tab-btn" data-date="2026-06-21">Jun 21</button>
+                        </div>
+
+                        <div class="sched-grid" id="schedGrid">
+                            <!-- Injected dynamically via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Performer Registration Form Panel -->
+                    <div class="registration-panel" id="registrationPanel">
+                        <div id="regFormWrap">
+                            <h3>Secure Your Performer Spot</h3>
+                            <p>Fill in your stage bio details below to claim your spot. Performance slots are updated in real time via the scheduler above.</p>
+
+                            <form id="openmicFormOM">
+                                <div class="form-group">
+                                    <label for="perfNameOM">Performer / Stage Name</label>
+                                    <input type="text" id="perfNameOM" placeholder='e.g., Jane "Volt" Doe' required>
+                                </div>
+                                <div class="form-grid-2">
+                                    <div class="form-group">
+                                        <label for="perfEmailOM">Email Address</label>
+                                        <input type="email" id="perfEmailOM" placeholder="volt@neon.com" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="perfPhoneOM">Phone (Optional)</label>
+                                        <input type="tel" id="perfPhoneOM" placeholder="+1 555 000 0000">
+                                    </div>
+                                </div>
+
+                                <div class="form-grid-2">
+                                    <div class="form-group">
+                                        <label for="showDateOM">Preferred Show Date</label>
+                                        <select id="showDateOM" required>
+                                            <option value="2026-06-01">June 01 – Open Mic Night</option>
+                                            <option value="2026-06-08">June 08 – Open Mic Weekly</option>
+                                            <option value="2026-06-15">June 15 – Comedy Lab</option>
+                                            <option value="2026-06-21">June 21 – Solstice Special</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="slotTimeOM">Preferred Time Slot</label>
+                                        <select id="slotTimeOM" required>
+                                            <option value="" disabled selected>Select from Stage Scheduler</option>
+                                            <option value="7:00 PM">7:00 PM - 7:05 PM</option>
+                                            <option value="7:05 PM">7:05 PM - 7:10 PM</option>
+                                            <option value="7:10 PM">7:10 PM - 7:15 PM</option>
+                                            <option value="7:15 PM">7:15 PM - 7:20 PM</option>
+                                            <option value="7:20 PM">7:20 PM - 7:25 PM</option>
+                                            <option value="7:25 PM">7:25 PM - 7:30 PM</option>
+                                            <option value="7:30 PM">7:30 PM - 7:35 PM</option>
+                                            <option value="7:35 PM">7:35 PM - 7:40 PM</option>
+                                            <option value="7:40 PM">7:40 PM - 7:45 PM</option>
+                                            <option value="7:45 PM">7:45 PM - 7:50 PM</option>
+                                            <option value="7:50 PM">7:50 PM - 7:55 PM</option>
+                                            <option value="7:55 PM">7:55 PM - 8:00 PM</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-grid-2">
+                                    <div class="form-group">
+                                        <label for="actDurOM">Act Duration</label>
+                                        <select id="actDurOM" required>
+                                            <option value="5 Minutes (Standard)">5 Minutes (Standard)</option>
+                                            <option value="7 Minutes (Feature Spot)">7 Minutes (Feature Spot)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Comedy Genre</label>
+                                        <div class="comedy-genre-grid">
+                                            <div class="genre-option">
+                                                <input type="radio" id="gObservational" name="comedyGenre" value="Observational" checked>
+                                                <label class="genre-label" for="gObservational"><span class="genre-emoji">🔍</span> Obs</label>
+                                            </div>
+                                            <div class="genre-option">
+                                                <input type="radio" id="gDark" name="comedyGenre" value="Dark Humor">
+                                                <label class="genre-label" for="gDark"><span class="genre-emoji">🌑</span> Dark</label>
+                                            </div>
+                                            <div class="genre-option">
+                                                <input type="radio" id="gSurreal" name="comedyGenre" value="Surreal / Absurdist">
+                                                <label class="genre-label" for="gSurreal"><span class="genre-emoji">🌀</span> Surreal</label>
+                                            </div>
+                                            <div class="genre-option">
+                                                <input type="radio" id="gMusical" name="comedyGenre" value="Musical / Props">
+                                                <label class="genre-label" for="gMusical"><span class="genre-emoji">🎸</span> Music</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="pitchOM">Brief Pitch or Past Experience</label>
+                                    <textarea id="pitchOM" rows="3" placeholder="Tell us in a sentence why you deserve this slot and any past comedy experience..." maxlength="200"></textarea>
+                                    <div class="char-counter"><span id="charCountOM">0</span>/200 characters</div>
+                                </div>
+
+                                <button type="submit" class="btn btn-cyan btn-block">
+                                    <span>Claim Your Spot</span>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Success State Performer Pass -->
+                        <div class="reg-success" id="regSuccessOM" style="display: none;">
+                            <div class="rs-icon">
+                                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                            </div>
+                            <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Stage Slot Confirmed!</h2>
+                            <p style="color: var(--color-text-muted); font-size: 0.875rem;">Your stage booking is confirmed. Keep the Performer Pass below for verification at the main entrance.</p>
+
+                            <!-- High-Tech Performer Pass -->
+                            <div class="performer-pass">
+                                <div class="pass-header">
+                                    <span class="pass-title">Stage Access Pass</span>
+                                    <span class="pass-no" id="passNoOM">NL-0948-26</span>
+                                </div>
+                                <div class="pass-grid">
+                                    <div class="pass-field">
+                                        <label>Performer</label>
+                                        <span id="passNameOM">Jane "Volt" Doe</span>
+                                    </div>
+                                    <div class="pass-field">
+                                        <label>Genre</label>
+                                        <span id="passGenreOM">Observational</span>
+                                    </div>
+                                    <div class="pass-field">
+                                        <label>Call Date</label>
+                                        <span id="passDateOM">June 01, 2026</span>
+                                    </div>
+                                    <div class="pass-field">
+                                        <label>Stage Time</label>
+                                        <span id="passTimeOM">7:15 PM</span>
+                                    </div>
+                                </div>
+                                <div class="pass-footer">
+                                    🎁 Performer Perks: <strong>Free Entrance</strong> + 1 Free <strong>Signature Cocktail</strong> at Stage B bar.
+                                </div>
+                            </div>
+
+                            <button class="btn btn-outline-cyan btn-block" id="regResetBtn">Register Another Spot</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-glow-line"></div>
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Brand Info -->
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <img src="assets/logo.png" alt="Laughora Logo" class="brand-logo-img">
+                        <span class="logo-neon">Laugh</span><span class="logo-accent">ora</span>
+                    </a>
+                    <p>The premier stand-up comedy club. Three stages, non-stop laughs, and an unforgettable night out.</p>
+                    <div class="footer-socials">
+                        <a href="#" aria-label="Twitter"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.53v.05c0 2.08 1.48 3.82 3.44 4.21-.36.1-.74.15-1.13.15-.27 0-.54-.03-.8-.08.54 1.7 2.11 2.93 3.97 2.97-1.46 1.14-3.3 1.82-5.31 1.82-.35 0-.69-.02-1.02-.06C2.82 20.31 5.09 21 7.5 21c9 0 13.92-7.46 13.92-13.92 0-.21 0-.42-.02-.63.95-.7 1.78-1.56 2.43-2.54z" />
+                            </svg></a>
+                        <a href="#" aria-label="Instagram"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg></a>
+                        <a href="#" aria-label="YouTube"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"></path>
+                                <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" />
+                            </svg></a>
+                    </div>
+                </div>
+
+                <!-- Fast Links -->
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="home2.html">Alternate Stage</a></li>
+                        <li><a href="shows.html">Comedy Shows</a></li>
+                        <li><a href="openmic.html">Open Mic Slots</a></li>
+                        <li><a href="performers.html">The Comedians</a></li>
+                        <li><a href="tickets.html">Seating Tickets</a></li>
+                    </ul>
+                </div>
+
+                <!-- Quick Help -->
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="footer-newsletter">
+                    <h4>Stay Updated</h4>
+                    <p>Subscribe to receive secret discount codes, lineup updates, and priority open mic notifications.</p>
+                    <form id="newsletterForm" class="newsletter-form">
+                        <input type="email" id="newsletterEmail" placeholder="Enter your email" required>
+                        <button type="submit" aria-label="Subscribe to newsletter">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </form>
+                    <p class="newsletter-feedback" id="newsletterFeedback"></p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Laughora Inc. All rights reserved.</p>
+                <a href="#" class="back-to-top">
+                    <span>Back to Top</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 15l-6-6-6 6" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Data Structures for Virtual Stage Scheduler
+        const schedulerData = {
+            "2026-06-01": [
+                { time: "7:00 PM", status: "taken", performer: "Dave Chappelle (Guest)" },
+                { time: "7:05 PM", status: "available", performer: "" },
+                { time: "7:10 PM", status: "taken", performer: "Alex R." },
+                { time: "7:15 PM", status: "available", performer: "" },
+                { time: "7:20 PM", status: "taken", performer: "Jane Volt" },
+                { time: "7:25 PM", status: "taken", performer: "Mike Sparks" },
+                { time: "7:30 PM", status: "guest", performer: "Sarah Silverman (Guest)" },
+                { time: "7:35 PM", status: "available", performer: "" },
+                { time: "7:40 PM", status: "taken", performer: "Leo Chuckle" },
+                { time: "7:45 PM", status: "taken", performer: "Tom Mir" },
+                { time: "7:50 PM", status: "guest", performer: "Bill Burr (Guest)" },
+                { time: "7:55 PM", status: "available", performer: "" }
+            ],
+            "2026-06-08": [
+                { time: "7:30 PM", status: "guest", performer: "Marc Maron (Guest)" },
+                { time: "7:35 PM", status: "taken", performer: "Sara G." },
+                { time: "7:40 PM", status: "available", performer: "" },
+                { time: "7:45 PM", status: "available", performer: "" },
+                { time: "7:50 PM", status: "available", performer: "" },
+                { time: "7:55 PM", status: "available", performer: "" },
+                { time: "8:00 PM", status: "available", performer: "" },
+                { time: "8:05 PM", status: "available", performer: "" },
+                { time: "8:10 PM", status: "available", performer: "" },
+                { time: "8:15 PM", status: "available", performer: "" },
+                { time: "8:20 PM", status: "available", performer: "" },
+                { time: "8:25 PM", status: "available", performer: "" }
+            ],
+            "2026-06-15": [
+                { time: "8:00 PM", status: "guest", performer: "Hannah G. (Guest)" },
+                { time: "8:05 PM", status: "taken", performer: "Ray B." },
+                { time: "8:10 PM", status: "taken", performer: "Dan K." },
+                { time: "8:15 PM", status: "taken", performer: "Anna P." },
+                { time: "8:20 PM", status: "available", performer: "" },
+                { time: "8:25 PM", status: "available", performer: "" },
+                { time: "8:30 PM", status: "available", performer: "" },
+                { time: "8:35 PM", status: "available", performer: "" },
+                { time: "8:40 PM", status: "available", performer: "" },
+                { time: "8:45 PM", status: "available", performer: "" },
+                { time: "8:50 PM", status: "available", performer: "" },
+                { time: "8:55 PM", status: "available", performer: "" }
+            ],
+            "2026-06-21": [
+                { time: "7:30 PM", status: "available", performer: "" },
+                { time: "7:35 PM", status: "available", performer: "" },
+                { time: "7:40 PM", status: "available", performer: "" },
+                { time: "7:45 PM", status: "available", performer: "" },
+                { time: "7:50 PM", status: "available", performer: "" },
+                { time: "7:55 PM", status: "available", performer: "" },
+                { time: "8:00 PM", status: "available", performer: "" },
+                { time: "8:05 PM", status: "available", performer: "" },
+                { time: "8:10 PM", status: "available", performer: "" },
+                { time: "8:15 PM", status: "available", performer: "" },
+                { time: "8:20 PM", status: "available", performer: "" },
+                { time: "8:25 PM", status: "available", performer: "" }
+            ]
+        };
+
+        const showDateMapNames = {
+            "2026-06-01": "Cybernetic Open Mic Arena — June 1, 2026",
+            "2026-06-08": "Neon Mic: Weekly Edition — June 8, 2026",
+            "2026-06-15": "Glitch Comedy Lab — June 15, 2026",
+            "2026-06-21": "Open Mic: Solstice Special — June 21, 2026"
+        };
+
+        let currentActiveDate = "2026-06-01";
+        let selectedTimeSlotValue = "";
+
+        // Elements
+        const schedTabs = document.getElementById("schedTabs");
+        const schedGrid = document.getElementById("schedGrid");
+        const showDateSelect = document.getElementById("showDateOM");
+        const slotTimeSelect = document.getElementById("slotTimeOM");
+        const spotsCountEl = document.getElementById("spotsCountOM");
+        const spotsTakenEl = document.getElementById("spotsTakenOM");
+        const spotsStatusPill = document.getElementById("spotsStatusPill");
+        const spotsRingFill = document.getElementById("spotsRingFill");
+        const activeShowDetails = document.getElementById("activeShowDetails");
+
+        const checkboxes = document.querySelectorAll(".readiness-check");
+        const readinessPanel = document.querySelector(".readiness-panel");
+        const readinessBadge = document.getElementById("readinessBadge");
+        const badgeText = document.getElementById("badgeTextOM");
+        const registrationPanel = document.getElementById("registrationPanel");
+
+        const pitchTextarea = document.getElementById("pitchOM");
+        const charCountEl = document.getElementById("charCountOM");
+
+        const omForm = document.getElementById('openmicFormOM');
+        const omSuccess = document.getElementById('regSuccessOM');
+        const omFormWrap = document.getElementById('regFormWrap');
+        const omResetBtn = document.getElementById('regResetBtn');
+
+        // Circular Progress Updater
+        function updateCircleProgress(spotsLeft) {
+            const total = 12;
+            const taken = total - spotsLeft;
+            spotsCountEl.textContent = spotsLeft;
+            spotsTakenEl.textContent = taken;
+
+            const percentage = taken / total;
+            const circumference = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--ring-circumference') || 263.89);
+            const offset = circumference * (1 - percentage);
+            spotsRingFill.style.strokeDashoffset = offset;
+
+            // Status pill updates
+            if (spotsLeft === 0) {
+                spotsStatusPill.textContent = "Sold Out";
+                spotsStatusPill.style.background = "var(--pill-bg-pink)";
+                spotsStatusPill.style.borderColor = "var(--pill-border-pink)";
+                spotsStatusPill.style.color = "var(--pill-color-pink)";
+            } else if (spotsLeft <= 4) {
+                spotsStatusPill.textContent = "Hurry, Slots Filling!";
+                spotsStatusPill.style.background = "var(--pill-bg-orange)";
+                spotsStatusPill.style.borderColor = "var(--pill-border-orange)";
+                spotsStatusPill.style.color = "var(--pill-color-orange)";
+            } else {
+                spotsStatusPill.textContent = "Slots Open";
+                spotsStatusPill.style.background = "var(--pill-bg-cyan)";
+                spotsStatusPill.style.borderColor = "var(--pill-border-cyan)";
+                spotsStatusPill.style.color = "var(--pill-color-cyan)";
+            }
+        }
+
+        // Render scheduler slots for a specific date
+        function renderScheduler(date) {
+            schedGrid.innerHTML = "";
+            const slots = schedulerData[date];
+            let availableCount = 0;
+
+            slots.forEach(slot => {
+                const isSelected = selectedTimeSlotValue === slot.time;
+                const slotDiv = document.createElement("div");
+                slotDiv.className = `sched-slot ${slot.status}`;
+                if (slot.status === "available") {
+                    availableCount++;
+                    if (isSelected) slotDiv.classList.add("selected-slot");
+
+                    slotDiv.innerHTML = `
+                        <span class="slot-time">${slot.time}</span>
+                        <span class="slot-status">Stage Open</span>
+                    `;
+                    slotDiv.addEventListener("click", () => {
+                        // Deselect other slots
+                        document.querySelectorAll(".sched-slot").forEach(s => s.classList.remove("selected-slot"));
+                        slotDiv.classList.add("selected-slot");
+                        
+                        selectedTimeSlotValue = slot.time;
+                        
+                        // Set values in form
+                        showDateSelect.value = date;
+                        slotTimeSelect.value = slot.time;
+
+                        // Smooth scroll to form
+                        const formSection = document.getElementById("registrationPanel");
+                        if (formSection) {
+                            formSection.scrollIntoView({ behavior: "smooth", block: "center" });
+                        }
+                    });
+                } else if (slot.status === "guest") {
+                    slotDiv.innerHTML = `
+                        <span class="slot-time">${slot.time}</span>
+                        <span class="slot-status">Guest Star</span>
+                        <span class="slot-performer">${slot.performer}</span>
+                    `;
+                } else {
+                    slotDiv.innerHTML = `
+                        <span class="slot-time">${slot.time}</span>
+                        <span class="slot-status">Registered</span>
+                        <span class="slot-performer">${slot.performer}</span>
+                    `;
+                }
+                schedGrid.appendChild(slotDiv);
+            });
+
+            // Update ticker
+            updateCircleProgress(availableCount);
+            activeShowDetails.textContent = showDateMapNames[date] + " at 7:00 PM";
+        }
+
+        // Tab Switching Click
+        if (schedTabs) {
+            schedTabs.addEventListener("click", e => {
+                if (e.target.classList.contains("sched-tab-btn")) {
+                    document.querySelectorAll(".sched-tab-btn").forEach(btn => btn.classList.remove("active"));
+                    e.target.classList.add("active");
+                    currentActiveDate = e.target.getAttribute("data-date");
+                    selectedTimeSlotValue = ""; // reset selection
+                    renderScheduler(currentActiveDate);
+                }
+            });
+        }
+
+        // Form selects sync back to scheduler highlights
+        showDateSelect.addEventListener("change", e => {
+            currentActiveDate = e.target.value;
+            // Update active tab visually
+            document.querySelectorAll(".sched-tab-btn").forEach(btn => {
+                if (btn.getAttribute("data-date") === currentActiveDate) {
+                    btn.classList.add("active");
+                } else {
+                    btn.classList.remove("active");
+                }
+            });
+            selectedTimeSlotValue = slotTimeSelect.value;
+            renderScheduler(currentActiveDate);
+        });
+
+        slotTimeSelect.addEventListener("change", e => {
+            selectedTimeSlotValue = e.target.value;
+            renderScheduler(currentActiveDate);
+        });
+
+        // Checklist readiness triggers
+        function checkReadiness() {
+            let allChecked = true;
+            checkboxes.forEach(chk => {
+                if (!chk.checked) allChecked = false;
+            });
+
+            if (allChecked) {
+                readinessPanel.style.borderColor = "rgba(0, 255, 136, 0.4)";
+                readinessBadge.className = "readiness-badge-wrap unlocked";
+                readinessBadge.querySelector(".badge-lock-icon").textContent = "🔓";
+                badgeText.textContent = "You're Ready!";
+                registrationPanel.classList.remove("disabled-form");
+            } else {
+                readinessPanel.style.borderColor = "";
+                readinessBadge.className = "readiness-badge-wrap";
+                readinessBadge.querySelector(".badge-lock-icon").textContent = "🔒";
+                badgeText.textContent = "Preparation Checklist";
+                // registrationPanel.classList.add("disabled-form");
+            }
+        }
+
+        checkboxes.forEach(chk => {
+            chk.addEventListener("change", checkReadiness);
+        });
+
+        // Textarea Char Counter
+        if (pitchTextarea) {
+            pitchTextarea.addEventListener("input", e => {
+                charCountEl.textContent = e.target.value.length;
+            });
+        }
+
+        // Form Submit Redirection
+        if (omForm) {
+            omForm.addEventListener('submit', e => {
+                e.preventDefault();
+
+                const performerName = document.getElementById("perfNameOM").value;
+                const performerGenre = document.querySelector('input[name="comedyGenre"]:checked').value;
+                const selectedDateStr = showDateSelect.options[showDateSelect.selectedIndex].text.split("–")[0].trim();
+                const selectedTimeStr = slotTimeSelect.value;
+                
+                // Form Pass Info Mapping
+                document.getElementById("passNameOM").textContent = performerName;
+                document.getElementById("passGenreOM").textContent = performerGenre;
+                document.getElementById("passDateOM").textContent = selectedDateStr + ", 2026";
+                document.getElementById("passTimeOM").textContent = selectedTimeStr;
+                
+                // Generate Performer Random Pass Number
+                const passNumber = "NL-" + Math.floor(1000 + Math.random() * 9000) + "-26";
+                document.getElementById("passNoOM").textContent = passNumber;
+
+                // Hide Form & Show Success
+                omFormWrap.style.display = 'none';
+                omSuccess.style.display = 'block';
+
+                // Persist the performer in local scheduler data
+                const slots = schedulerData[currentActiveDate];
+                const activeSlotIndex = slots.findIndex(s => s.time === selectedTimeStr);
+                if (activeSlotIndex !== -1) {
+                    slots[activeSlotIndex].status = "taken";
+                    slots[activeSlotIndex].performer = performerName;
+                }
+
+                // Render scheduler grid again to reflect the booked status
+                renderScheduler(currentActiveDate);
+                
+                // Scroll success pass into view
+                omSuccess.scrollIntoView({ behavior: "smooth", block: "center" });
+            });
+        }
+
+        // Reset Form
+        if (omResetBtn) {
+            omResetBtn.addEventListener('click', () => {
+                omFormWrap.style.display = 'block';
+                omSuccess.style.display = 'none';
+                omForm.reset();
+                selectedTimeSlotValue = "";
+                charCountEl.textContent = "0";
+                
+                // Reset checklist checks
+                checkboxes.forEach(chk => chk.checked = false);
+                checkReadiness();
+                renderScheduler(currentActiveDate);
+            });
+        }
+
+        // Initial setup
+        renderScheduler("2026-06-01");
+        checkReadiness();
+    </script>
+</body>
+
+</html>

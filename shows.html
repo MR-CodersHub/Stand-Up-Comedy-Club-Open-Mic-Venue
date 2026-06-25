@@ -1,0 +1,2238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laughora | Comedy Shows Schedule</title>
+    <meta name="description"
+        content="Browse Laughora's full comedy show schedule. Headline acts, special events, and open mic nights. Filter by category and book your seats instantly.">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .page-hero {
+            padding: 160px 24px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(ellipse at 50% 0%, rgba(176, 38, 255, 0.15) 0%, transparent 60%);
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--color-purple), var(--color-cyan), transparent);
+            opacity: 0.4;
+        }
+
+        .page-hero-title {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 800;
+            color: var(--color-text-white);
+            margin-bottom: 1rem;
+        }
+
+        .page-hero-title span {
+            background: linear-gradient(135deg, var(--color-purple), var(--color-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-hero p {
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+            color: var(--color-text-slate);
+        }
+
+        /* Shows Page Content */
+        .shows-page {
+            padding: 60px 0 100px;
+        }
+
+        /* Extended show card with "View Details" expandable */
+        .shows-full-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+
+        .show-card-full {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .show-card-full:hover {
+            transform: translateY(-8px);
+            border-color: rgba(176, 38, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(176, 38, 255, 0.15);
+        }
+
+        .scf-img-wrap {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .scf-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .show-card-full:hover .scf-img-wrap img {
+            transform: scale(1.08);
+        }
+
+        .scf-img-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(4, 4, 8, 0.95) 0%, transparent 60%);
+        }
+
+        .scf-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            padding: 5px 14px;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .scf-countdown {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 0.7rem;
+            color: var(--color-cyan);
+            font-weight: 600;
+            font-family: var(--font-alt);
+        }
+
+        .scf-body {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .scf-rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 0.75rem;
+        }
+
+        .scf-rating .stars {
+            color: var(--color-orange);
+            font-size: 0.85rem;
+        }
+
+        .scf-rating .rating-val {
+            color: var(--color-text-slate);
+            font-size: 0.8rem;
+        }
+
+        .scf-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--color-text-white);
+            margin-bottom: 0.5rem;
+        }
+
+        .scf-desc {
+            font-size: 0.875rem;
+            color: var(--color-text-muted);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            flex: 1;
+        }
+
+        .scf-meta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.25rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .scf-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: var(--color-text-slate);
+        }
+
+        .scf-price-tag {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--color-text-white);
+            font-family: var(--font-heading);
+        }
+
+        .scf-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--color-text-slate);
+            padding: 10px 18px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: var(--font-alt);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-ghost:hover {
+            border-color: rgba(176, 38, 255, 0.5);
+            color: var(--color-purple);
+        }
+
+        /* Expanded detail panel */
+        .scf-detail-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            border-top: 0px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .scf-detail-panel.open {
+            max-height: 300px;
+            padding: 1.25rem 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .scf-detail-panel h4 {
+            font-size: 0.9rem;
+            color: var(--color-text-white);
+            margin-bottom: 0.75rem;
+        }
+
+        .scf-perks-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .scf-perks-list li {
+            font-size: 0.82rem;
+            color: var(--color-text-slate);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .scf-perks-list li::before {
+            content: '▸';
+            color: var(--color-cyan);
+        }
+
+        /* Countdown Banner */
+        .shows-countdown-banner {
+            background: rgba(176, 38, 255, 0.06);
+            border: 1px solid rgba(176, 38, 255, 0.2);
+            border-radius: 16px;
+            padding: 2rem 2.5rem;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .scb-info {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .scb-info h3 {
+            font-size: 1.3rem;
+            color: var(--color-text-white);
+            margin-bottom: 0.4rem;
+        }
+
+        .scb-info p {
+            font-size: 0.875rem;
+            color: var(--color-text-muted);
+        }
+
+        .scb-timer {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .scb-unit {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(176, 38, 255, 0.3);
+            border-radius: 10px;
+            padding: 10px 14px;
+        }
+
+        .scb-unit .scb-num {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--color-purple);
+            font-family: var(--font-heading);
+            line-height: 1;
+        }
+
+        .scb-unit .scb-label {
+            font-size: 0.55rem;
+            letter-spacing: 2px;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+        }
+
+        .scb-colon {
+            font-size: 1.5rem;
+            color: var(--color-purple);
+            font-weight: 700;
+        }
+
+        @media (max-width: 600px) {
+            .shows-full-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .scf-actions {
+                flex-direction: column;
+            }
+        }
+
+        /* 360px & Mobile Viewport Safe Zone */
+        @media (max-width: 480px) {
+            .page-hero {
+                padding: 100px 16px 50px;
+            }
+            .page-hero-title {
+                font-size: 2.2rem;
+            }
+            .page-hero p {
+                font-size: 0.9rem;
+            }
+            .shows-countdown-banner {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 1.5rem 1rem;
+                gap: 1.25rem;
+                margin-bottom: 2rem;
+            }
+            .scb-info {
+                min-width: 0;
+            }
+            .scb-info h3 {
+                font-size: 1.1rem;
+            }
+            .scb-info p {
+                font-size: 0.8rem;
+            }
+            .scb-timer {
+                gap: 0.4rem;
+                justify-content: center;
+                width: 100%;
+            }
+            .scb-unit {
+                padding: 6px 10px;
+                min-width: 50px;
+            }
+            .scb-unit .scb-num {
+                font-size: 1.3rem;
+            }
+            .scb-unit .scb-label {
+                font-size: 0.5rem;
+                letter-spacing: 0.5px;
+            }
+            .scb-colon {
+                font-size: 1.1rem;
+            }
+            .filter-tabs {
+                background: none !important;
+                border: none !important;
+                padding: 0 !important;
+                border-radius: 0 !important;
+                gap: 8px !important;
+            }
+        }
+
+        /* Light Theme Countdown Banner Contrast Overrides */
+        html.light-theme .shows-countdown-banner {
+            background: #ffffff;
+            border-color: rgba(139, 92, 246, 0.25);
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+        }
+        html.light-theme .scb-info h3 {
+            color: #0f172a;
+        }
+        html.light-theme .scb-info p {
+            color: #475569;
+        }
+        html.light-theme .scb-unit {
+            background: #f1f5f9;
+            border-color: rgba(139, 92, 246, 0.2);
+        }
+        html.light-theme .scb-unit .scb-num {
+            color: #7c3aed;
+        }
+        html.light-theme .scb-colon {
+            color: #7c3aed;
+        }
+
+        /* ==========================================
+           LIVE COMEDY DESTINATION STYLING 
+           ========================================== */
+        .neon-ent-hub {
+            background: #030307;
+            padding: 120px 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Light Theme Overrides */
+        html.light-theme .neon-ent-hub {
+            background: #f8fafc;
+        }
+
+        /* Ambient glow background blur blobs */
+        .ent-glow-blob {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(120px);
+            z-index: 1;
+            opacity: 0.25;
+            transition: all var(--transition-smooth);
+        }
+
+        .ent-glow-blob-1 {
+            top: 10%;
+            left: -100px;
+            background: radial-gradient(circle, rgba(175, 38, 255, 0.8) 0%, transparent 70%);
+        }
+
+        .ent-glow-blob-2 {
+            bottom: 10%;
+            right: -100px;
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.8) 0%, transparent 70%);
+        }
+
+        .ent-glow-blob-3 {
+            top: 50%;
+            left: 45%;
+            background: radial-gradient(circle, rgba(255, 0, 127, 0.6) 0%, transparent 70%);
+        }
+
+        html.light-theme .ent-glow-blob-1 {
+            background: radial-gradient(circle, rgba(175, 38, 255, 0.08) 0%, transparent 70%);
+        }
+
+        html.light-theme .ent-glow-blob-2 {
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.08) 0%, transparent 70%);
+        }
+
+        html.light-theme .ent-glow-blob-3 {
+            background: radial-gradient(circle, rgba(255, 0, 127, 0.06) 0%, transparent 70%);
+        }
+
+        .neon-ent-hub .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header design */
+        .ent-hub-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .ent-hub-header .section-tag {
+            background: rgba(175, 38, 255, 0.1);
+            border: 1px solid rgba(175, 38, 255, 0.3);
+            color: #af26ff;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            font-weight: 600;
+            padding: 8px 18px;
+            border-radius: 100px;
+            text-transform: uppercase;
+            font-family: var(--font-alt);
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 15px rgba(175, 38, 255, 0.08);
+        }
+
+        html.light-theme .ent-hub-header .section-tag {
+            background: rgba(139, 92, 246, 0.08);
+            border-color: rgba(139, 92, 246, 0.25);
+            color: #7c3aed;
+        }
+
+        .ent-hub-title {
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 1.25rem;
+            line-height: 1.1;
+            font-family: var(--font-heading);
+            letter-spacing: -1px;
+        }
+
+        html.light-theme .ent-hub-title {
+            color: #0f172a;
+        }
+
+        .ent-hub-title span {
+            background: linear-gradient(135deg, #ff007f 0%, #af26ff 50%, #00f0ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 15px rgba(175, 38, 255, 0.3));
+        }
+
+        html.light-theme .ent-hub-title span {
+            filter: none;
+        }
+
+        .ent-hub-desc {
+            font-size: 1.1rem;
+            color: var(--color-text-slate);
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Divider & Dividers */
+        .ent-neon-divider {
+            height: 1px;
+            width: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.2) 20%, rgba(175, 38, 255, 0.4) 50%, rgba(255, 0, 127, 0.2) 80%, transparent);
+            margin: 80px 0;
+            position: relative;
+        }
+
+        .ent-neon-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #af26ff;
+            box-shadow: 0 0 10px #af26ff, 0 0 20px #af26ff;
+        }
+
+        /* Sub-sections layout */
+        .ent-sub-section {
+            margin-bottom: 40px;
+        }
+
+        .ent-sub-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 3.5rem;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .ent-sub-title-area h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+            font-family: var(--font-heading);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        html.light-theme .ent-sub-title-area h3 {
+            color: #0f172a;
+        }
+
+        .ent-sub-title-area h3 svg {
+            color: #00f0ff;
+            filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.5));
+        }
+
+        .ent-sub-title-area p {
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* --------------------------------------------------
+           SUB-SECTION A: UPCOMING COMEDY SHOWS
+           -------------------------------------------------- */
+        .shows-grid-cinematic {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .show-card-cine {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 480px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: all var(--transition-smooth);
+        }
+
+        html.light-theme .show-card-cine {
+            background: rgba(255, 255, 255, 0.75);
+            border-color: rgba(15, 23, 42, 0.08);
+            box-shadow: 0 10px 35px rgba(15, 23, 42, 0.04);
+        }
+
+        .show-card-cine::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 1px;
+            background: linear-gradient(to bottom right, rgba(var(--card-glow-rgb), 0.35), transparent 50%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .show-card-cine:hover {
+            transform: translateY(-8px);
+            border-color: rgba(var(--card-glow-rgb), 0.25);
+            box-shadow: 0 20px 45px rgba(var(--card-glow-rgb), 0.12),
+                0 0 30px rgba(var(--card-glow-rgb), 0.05);
+        }
+
+        .show-card-cine:hover::before {
+            opacity: 1;
+        }
+
+        .show-card-cine.cine-purple {
+            --card-glow-rgb: 175, 38, 255;
+        }
+
+        .show-card-cine.cine-pink {
+            --card-glow-rgb: 255, 0, 127;
+        }
+
+        .show-card-cine.cine-orange {
+            --card-glow-rgb: 255, 107, 0;
+        }
+
+        .show-card-cine.cine-blue {
+            --card-glow-rgb: 0, 240, 255;
+        }
+
+        /* Comedian Banner Block */
+        .cine-banner {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .cine-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .show-card-cine:hover .cine-banner img {
+            transform: scale(1.06);
+        }
+
+        .cine-banner-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, #030307 0%, rgba(4, 4, 8, 0.4) 60%, transparent 100%);
+        }
+
+        html.light-theme .cine-banner-overlay {
+            background: linear-gradient(to top, rgba(248, 250, 252, 0.98) 0%, rgba(248, 250, 252, 0.3) 60%, transparent 100%);
+        }
+
+        /* Float Spotlight Headshot */
+        .cine-headshot-wrap {
+            position: absolute;
+            bottom: -30px;
+            left: 24px;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(135deg, rgba(var(--card-glow-rgb), 1) 0%, rgba(0, 240, 255, 0.5) 100%);
+            box-shadow: 0 0 15px rgba(var(--card-glow-rgb), 0.35);
+            animation: floatHeadshot 4s ease-in-out infinite;
+            z-index: 5;
+        }
+
+        .cine-headshot-wrap img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #030307;
+        }
+
+        html.light-theme .cine-headshot-wrap img {
+            border-color: #ffffff;
+        }
+
+        @keyframes floatHeadshot {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        /* Show card body */
+        .cine-body {
+            padding: 44px 24px 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .cine-top-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .cine-pill {
+            font-size: 0.65rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 100px;
+            background: rgba(var(--card-glow-rgb), 0.12);
+            color: rgb(var(--card-glow-rgb));
+            border: 1px solid rgba(var(--card-glow-rgb), 0.3);
+            font-family: var(--font-alt);
+        }
+
+        .cine-capacity {
+            font-size: 0.72rem;
+            color: var(--color-text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .cine-capacity svg {
+            color: rgb(var(--card-glow-rgb));
+        }
+
+        .cine-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+            transition: color 0.3s ease;
+        }
+
+        html.light-theme .cine-title {
+            color: #0f172a;
+        }
+
+        .show-card-cine:hover .cine-title {
+            color: rgb(var(--card-glow-rgb));
+        }
+
+        .cine-desc {
+            font-size: 0.88rem;
+            color: var(--color-text-muted);
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .cine-info-bar {
+            display: flex;
+            gap: 1.25rem;
+            padding: 1rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        html.light-theme .cine-info-bar {
+            border-color: rgba(15, 23, 42, 0.06);
+        }
+
+        .cine-info-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: var(--color-text-slate);
+        }
+
+        .cine-info-item svg {
+            opacity: 0.7;
+            color: rgb(var(--card-glow-rgb));
+        }
+
+        .cine-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .cine-price {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cine-price span {
+            font-size: 0.65rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cine-price strong {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #ffffff;
+            font-family: var(--font-heading);
+        }
+
+        html.light-theme .cine-price strong {
+            color: #0f172a;
+        }
+
+        /* Interactive Booking button */
+        .btn-cine-glow {
+            position: relative;
+            background: transparent;
+            border: 1px solid rgba(var(--card-glow-rgb), 0.5);
+            color: rgb(var(--card-glow-rgb)) !important;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: var(--font-alt);
+            letter-spacing: 1px;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cine-glow::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(var(--card-glow-rgb), 1) 0%, rgba(var(--card-glow-rgb), 0.7) 100%);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+
+        .show-card-cine:hover .btn-cine-glow {
+            color: #ffffff !important;
+            border-color: transparent;
+            box-shadow: 0 0 15px rgba(var(--card-glow-rgb), 0.4);
+        }
+
+        .show-card-cine:hover .btn-cine-glow::before {
+            opacity: 1;
+        }
+
+        /* --------------------------------------------------
+           SUB-SECTION B: FEATURED COMEDIANS
+           -------------------------------------------------- */
+        .performers-grid-cine {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+        }
+
+        .perf-card-cine {
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all var(--transition-smooth);
+            cursor: pointer;
+            box-shadow: var(--h2-card-glow);
+        }
+
+        html.light-theme .perf-card-cine {
+            background: rgba(255, 255, 255, 0.75);
+            border-color: rgba(15, 23, 42, 0.08);
+            box-shadow: 0 8px 30px rgba(15, 23, 42, 0.03);
+        }
+
+        .perf-card-cine::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, rgba(0, 240, 255, 0.2), rgba(var(--perf-glow-rgb), 1), rgba(255, 0, 127, 0.2));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .perf-card-cine:hover {
+            transform: translateY(-6px);
+            border-color: rgba(var(--perf-glow-rgb), 0.3);
+            box-shadow: 0 15px 35px rgba(var(--perf-glow-rgb), 0.1),
+                inset 0 0 15px rgba(var(--perf-glow-rgb), 0.02);
+        }
+
+        .perf-card-cine:hover::after {
+            transform: scaleX(1);
+        }
+
+        .perf-card-cine.perf-pink {
+            --perf-glow-rgb: 255, 0, 127;
+        }
+
+        .perf-card-cine.perf-cyan {
+            --perf-glow-rgb: 0, 240, 255;
+        }
+
+        .perf-card-cine.perf-purple {
+            --perf-glow-rgb: 175, 38, 255;
+        }
+
+        .perf-card-cine.perf-orange {
+            --perf-glow-rgb: 255, 107, 0;
+        }
+
+        /* Comedian Profile Ring */
+        .perf-avatar-ring {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(135deg, rgba(var(--perf-glow-rgb), 0.2), rgba(255, 255, 255, 0.05));
+            position: relative;
+            transition: all 0.4s ease;
+        }
+
+        .perf-card-cine:hover .perf-avatar-ring {
+            background: linear-gradient(135deg, rgb(var(--perf-glow-rgb)) 0%, #00f0ff 100%);
+            box-shadow: 0 0 20px rgba(var(--perf-glow-rgb), 0.4);
+            transform: rotate(5deg);
+        }
+
+        .perf-avatar-ring img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #030307;
+            transition: transform 0.4s ease;
+        }
+
+        html.light-theme .perf-avatar-ring img {
+            border-color: #ffffff;
+        }
+
+        .perf-card-cine:hover .perf-avatar-ring img {
+            transform: scale(1.02);
+        }
+
+        /* Comedian labels */
+        .perf-name-cine {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.4rem;
+            transition: color 0.3s ease;
+        }
+
+        html.light-theme .perf-name-cine {
+            color: #0f172a;
+        }
+
+        .perf-card-cine:hover .perf-name-cine {
+            color: rgb(var(--perf-glow-rgb));
+        }
+
+        .perf-cat-cine {
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: rgb(var(--perf-glow-rgb));
+            font-family: var(--font-alt);
+            margin-bottom: 1rem;
+        }
+
+        .perf-rating-cine {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            font-size: 0.8rem;
+            color: #ea580c;
+            margin-bottom: 1rem;
+        }
+
+        .perf-rating-cine span {
+            color: var(--color-text-muted);
+            font-size: 0.75rem;
+        }
+
+        .perf-desc-cine {
+            font-size: 0.82rem;
+            color: var(--color-text-muted);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            height: 60px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        /* Social icons block */
+        .perf-socials-cine {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 1rem;
+        }
+
+        html.light-theme .perf-socials-cine {
+            border-color: rgba(15, 23, 42, 0.05);
+        }
+
+        .perf-social-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: var(--color-text-slate);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        html.light-theme .perf-social-btn {
+            background: rgba(15, 23, 42, 0.03);
+            border-color: rgba(15, 23, 42, 0.08);
+        }
+
+        .perf-social-btn:hover {
+            background: rgba(var(--perf-glow-rgb), 0.12);
+            color: rgb(var(--perf-glow-rgb));
+            border-color: rgb(var(--perf-glow-rgb));
+            transform: translateY(-2px);
+            box-shadow: 0 0 10px rgba(var(--perf-glow-rgb), 0.3);
+        }
+
+        /* --------------------------------------------------
+           SUB-SECTION C: PERFORMER DASHBOARD PREVIEW
+           -------------------------------------------------- */
+        .dash-preview-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3.5rem;
+            align-items: center;
+        }
+
+        @media (max-width: 991px) {
+            .dash-preview-area {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+        }
+
+        .dash-prev-left {
+            max-width: 500px;
+        }
+
+        .dash-badge {
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid rgba(0, 240, 255, 0.35);
+            color: #00f0ff;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-family: var(--font-alt);
+            padding: 6px 14px;
+            border-radius: 100px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        html.light-theme .dash-badge {
+            background: rgba(6, 182, 212, 0.08);
+            border-color: rgba(6, 182, 212, 0.25);
+            color: #0891b2;
+        }
+
+        .dash-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            box-shadow: 0 0 6px currentColor;
+        }
+
+        .dash-prev-desc {
+            color: var(--color-text-slate);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .dash-features-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .dash-feat-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .dash-feat-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: rgba(175, 38, 255, 0.12);
+            color: #af26ff;
+            border: 1px solid rgba(175, 38, 255, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        html.light-theme .dash-feat-icon {
+            background: rgba(139, 92, 246, 0.08);
+            border-color: rgba(139, 92, 246, 0.2);
+            color: #7c3aed;
+        }
+
+        .dash-feat-item:hover .dash-feat-icon {
+            transform: scale(1.1) rotate(-3deg);
+            background: #af26ff;
+            color: #ffffff !important;
+            box-shadow: 0 0 15px rgba(175, 38, 255, 0.4);
+        }
+
+        .dash-feat-text h4 {
+            font-size: 1rem;
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            transition: color 0.3s ease;
+        }
+
+        html.light-theme .dash-feat-text h4 {
+            color: #0f172a;
+        }
+
+        .dash-feat-item:hover .dash-feat-text h4 {
+            color: #af26ff;
+        }
+
+        .dash-feat-text p {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            line-height: 1.5;
+        }
+
+        /* Mockup HUD Console Panel */
+        .dash-prev-right {
+            position: relative;
+        }
+
+        .hud-mockup-panel {
+            background: rgba(8, 8, 16, 0.85);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7),
+                inset 0 0 30px rgba(0, 240, 255, 0.02),
+                0 0 35px rgba(0, 240, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            transition: all var(--transition-smooth);
+        }
+
+        html.light-theme .hud-mockup-panel {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(15, 23, 42, 0.08);
+            box-shadow: 0 15px 40px rgba(15, 23, 42, 0.05),
+                0 0 25px rgba(139, 92, 246, 0.03);
+        }
+
+        .hud-mockup-panel:hover {
+            border-color: rgba(175, 38, 255, 0.35);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8),
+                0 0 40px rgba(175, 38, 255, 0.08);
+        }
+
+        .hud-scanner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.4), transparent);
+            opacity: 0.6;
+            animation: hudScan 6s linear infinite;
+            z-index: 10;
+        }
+
+        @keyframes hudScan {
+            0% {
+                top: 0%;
+            }
+
+            100% {
+                top: 100%;
+            }
+        }
+
+        .hud-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        html.light-theme .hud-header {
+            border-color: rgba(15, 23, 42, 0.06);
+        }
+
+        .hud-logo {
+            font-family: var(--font-alt);
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+            color: #00f0ff;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hud-logo::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00f0ff;
+            box-shadow: 0 0 8px #00f0ff;
+        }
+
+        .hud-status {
+            font-size: 0.65rem;
+            color: var(--color-text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hud-status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 8px #10b981;
+            animation: statusPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes statusPulse {
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Holographic grid container inside widget mockup */
+        .hud-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 576px) {
+            .hud-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Stats visual card widgets */
+        .hud-widget {
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            padding: 1.25rem;
+            position: relative;
+        }
+
+        html.light-theme .hud-widget {
+            background: rgba(15, 23, 42, 0.02);
+            border-color: rgba(15, 23, 42, 0.05);
+        }
+
+        .hud-w-title {
+            font-size: 0.65rem;
+            letter-spacing: 1.5px;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+            font-family: var(--font-alt);
+        }
+
+        .hud-main-num {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1;
+            font-family: var(--font-heading);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+        }
+
+        html.light-theme .hud-main-num {
+            color: #0f172a;
+        }
+
+        .hud-main-num span {
+            font-size: 0.85rem;
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        /* Neon Progress indicator line */
+        .hud-progress-wrap {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        html.light-theme .hud-progress-wrap {
+            background: rgba(15, 23, 42, 0.08);
+        }
+
+        .hud-progress-bar {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #af26ff, #00f0ff);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+            width: 78%;
+            animation: progExpand 2s ease-out forwards;
+        }
+
+        @keyframes progExpand {
+            0% {
+                width: 0;
+            }
+
+            100% {
+                width: 78%;
+            }
+        }
+
+        /* Show Booking List preview */
+        .hud-bookings-preview {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .hud-booking-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.78rem;
+        }
+
+        html.light-theme .hud-booking-row {
+            background: #ffffff;
+            border-color: rgba(15, 23, 42, 0.04);
+        }
+
+        .hud-b-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hud-b-info strong {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        html.light-theme .hud-b-info strong {
+            color: #0f172a;
+        }
+
+        .hud-b-info span {
+            font-size: 0.68rem;
+            color: var(--color-text-muted);
+        }
+
+        .hud-status-pill {
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+        }
+
+        .hud-status-pill.approved {
+            background: rgba(16, 185, 129, 0.12);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .hud-status-pill.pending {
+            background: rgba(245, 158, 11, 0.12);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .hud-quick-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        html.light-theme .hud-quick-stats {
+            border-color: rgba(15, 23, 42, 0.06);
+        }
+
+        .hud-qs-item {
+            text-align: center;
+        }
+
+        .hud-qs-item span {
+            display: block;
+            font-size: 0.6rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+
+        .hud-qs-item strong {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        html.light-theme .hud-qs-item strong {
+            color: #0f172a;
+        }
+
+        .hud-qs-item.qs-pink strong {
+            color: #ff007f;
+        }
+
+        .hud-qs-item.qs-cyan strong {
+            color: #00f0ff;
+        }
+
+        .hud-qs-item.qs-orange strong {
+            color: #ea580c;
+        }
+    </style>
+    <!-- Inline blocking theme loader -->
+    <script>
+        (function () {
+            const theme = localStorage.getItem('theme') || 'dark';
+            if (theme === 'light') {
+                document.documentElement.classList.add('light-theme');
+            }
+        })();
+    </script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/logo.png" alt="Laughora Logo" class="brand-logo-img">
+                <span class="logo-neon">Laugh</span><span class="logo-accent">ora</span>
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </button>
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="home2.html" class="nav-link">Home2</a>
+                <a href="shows.html" class="nav-link active">Shows</a>
+                <a href="tickets.html" class="nav-link">Tickets</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="openmic.html" class="nav-link">Open Mic</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+                <a href="performers.html" class="nav-link">Performers</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </nav>
+
+            <!-- Navbar Actions (Theme Toggle & Account) -->
+            <div class="nav-actions">
+                <button id="rtlToggle" class="rtl-toggle-btn" aria-label="Toggle RTL/LTR">
+                    <svg class="ltr-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12H9M15 6l-6 6 6 6"/></svg>
+                    <svg class="rtl-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h12M9 18l6-6-6-6"/></svg>
+                </button>
+                <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle theme">
+                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2"></path>
+                        <path d="M12 20v2"></path>
+                        <path d="m4.93 4.93 1.41 1.41"></path>
+                        <path d="m17.66 17.66 1.41 1.41"></path>
+                        <path d="M2 12h2"></path>
+                        <path d="M20 12h2"></path>
+                        <path d="m6.34 17.66-1.41 1.41"></path>
+                        <path d="m19.07 4.93-1.41 1.41"></path>
+                    </svg>
+                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                    </svg>
+                </button>
+                <div class="user-dropdown">
+                    <button id="userDropdownBtn" class="user-dropdown-btn" aria-label="User Account">
+                        <svg class="user-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span class="user-badge-dot"></span>
+                    </button>
+                    <div class="user-dropdown-content">
+                        <div class="dropdown-header">
+                             <p class="user-name" id="navUserName">Comedy Fan</p>
+                            <p class="user-role" id="navUserRole">Spectator</p>
+                        </div>
+                        <a href="login.html" class="dropdown-item login-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+                            </span>
+                            <span>Sign In / Sign Up</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-divider"></div>
+                        <a href="user-dashboard.html" class="dropdown-item user-dash-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            </span>
+                            <span>User Dashboard</span>
+                        </a>
+                        <a href="admin-dashboard.html" class="dropdown-item admin-dash-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                            </span>
+                            <span>Admin Dashboard</span>
+                        </a>
+                        <button class="dropdown-item signout-btn logged-in-only" id="signoutBtn">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+                            </span>
+                            <span>Sign Out</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <div class="page-hero">
+        <span class="section-tag tag-purple">LIVE COMEDY SCHEDULE</span>
+        <h1 class="page-hero-title">Comedy <span>Shows</span></h1>
+        <p>Browse headline acts, special events, and open mic nights. Filter by category and secure your seats before
+            they're gone.</p>
+    </div>
+
+    <!-- Shows Content -->
+    <section class="shows-page">
+        <div class="container">
+
+            <!-- Countdown Banner -->
+            <div class="shows-countdown-banner">
+                <div class="scb-info">
+                    <h3>🔥 Comedy All-Stars Night — Next Up</h3>
+                    <p>The most anticipated comedy event of the season. Limited VIP pods remaining.</p>
+                </div>
+                <div class="scb-timer">
+                    <div class="scb-unit">
+                        <span class="scb-num" id="scbDays">00</span>
+                        <span class="scb-label">Days</span>
+                    </div>
+                    <span class="scb-colon">:</span>
+                    <div class="scb-unit">
+                        <span class="scb-num" id="scbHours">00</span>
+                        <span class="scb-label">Hrs</span>
+                    </div>
+                    <span class="scb-colon">:</span>
+                    <div class="scb-unit">
+                        <span class="scb-num" id="scbMins">00</span>
+                        <span class="scb-label">Min</span>
+                    </div>
+                    <span class="scb-colon">:</span>
+                    <div class="scb-unit">
+                        <span class="scb-num" id="scbSecs">00</span>
+                        <span class="scb-label">Sec</span>
+                    </div>
+                </div>
+                <a href="tickets.html?show=Comedy+All-Stars+Night&price=50&tier=Premium+Comfort" class="btn btn-purple">
+                    <span>Book VIP</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="section-header" style="margin-bottom:0;">
+                <div class="filter-tabs">
+                    <button class="filter-btn active" data-filter="all">All Events</button>
+                    <button class="filter-btn" data-filter="headline">Headline Shows</button>
+                    <button class="filter-btn" data-filter="openmic">Open Mic</button>
+                    <button class="filter-btn" data-filter="special">Special Events</button>
+                </div>
+            </div>
+
+            <!-- Full Shows Grid -->
+            <div class="shows-full-grid" id="showsGrid">
+
+                <!-- Show 1 -->
+                <div class="show-card-full" data-category="headline">
+                    <div class="scf-img-wrap">
+                        <img src="assets/comedian_female.png" alt="Roxy Vance">
+                        <div class="scf-img-overlay"></div>
+                        <span class="scf-badge"
+                            style="background:rgba(176,38,255,0.3);color:#b026ff;border:1px solid rgba(176,38,255,0.5);">Headline
+                            Show</span>
+                        <span class="scf-countdown" id="showTimer1">Loading...</span>
+                    </div>
+                    <div class="scf-body">
+                        <div class="scf-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-val">4.9 (312 reviews)</span>
+                        </div>
+                        <h3 class="scf-title">Roxy Vance: Live & Unfiltered</h3>
+                        <p class="scf-desc">An hour of razor-sharp stand-up comedy packed with hilarious observations,
+                            fearless storytelling, and Roxy's signature high-energy stage presence.</p>
+                        <div class="scf-meta">
+                            <div class="scf-meta-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                May 29, 2026
+                            </div>
+                            <div class="scf-meta-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                9:00 PM
+                            </div>
+                            <div class="scf-meta-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                </svg>
+                                Main Stage
+                            </div>
+                            <div class="scf-meta-item scf-price-tag">From $25</div>
+                        </div>
+                        <div class="scf-actions">
+                            <button class="btn-ghost view-details-btn" data-target="detail1">View Details ▾</button>
+                            <a href="tickets.html?show=Roxy+Vance%3A+Live+%26+Unfiltered&price=25&tier=Premium+Comfort"
+                                class="btn btn-purple btn-sm" style="flex:1;text-align:center;">
+                                <span>Book Now</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="scf-detail-panel" id="detail1">
+                        <h4>What to Expect</h4>
+                        <ul class="scf-perks-list">
+                            <li>60 minutes of high-energy stand-up + encore</li>
+                            <li>VIP meet & greet available post-show (upgrade required)</li>
+                            <li>Complimentary souvenir program</li>
+                            <li>Dedicated cocktail service for Premium & VIP tiers</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Show 2 -->
+                <div class="show-card-full" data-category="special">
+                    <div class="scf-img-wrap">
+                        <img src="assets/comedian_male.png" alt="Jax Carter">
+                        <div class="scf-img-overlay"></div>
+                        <span class="scf-badge"
+                            style="background:rgba(176,38,255,0.3);color:#b026ff;border:1px solid rgba(176,38,255,0.5);">Special
+                            Event</span>
+                        <span class="scf-countdown" id="showTimer2">Loading...</span>
+                    </div>
+                    <div class="scf-body">
+                        <div class="scf-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-val">4.7 (198 reviews)</span>
+                        </div>
+                        <h3 class="scf-title">Jax Carter: No Filter</h3>
+                        <p class="scf-desc">Jax brings the house down with brutally honest takes on modern life,
+                            relationships, and everyday absurdities — delivered with sharp physical comedy and unmatched crowd work.</p>
+                        <div class="scf-meta">
+                            <div class="scf-meta-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                May 30, 2026
+                            </div>
+                            <div class="scf-meta-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                8:30 PM
+                            </div>
+                            <div class="scf-meta-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                </svg>
+                                Main Stage
+                            </div>
+                            <div class="scf-meta-item scf-price-tag">From $30</div>
+                        </div>
+                        <div class="scf-actions">
+                            <button class="btn-ghost view-details-btn" data-target="detail2">View Details ▾</button>
+                            <a href="tickets.html?show=Jax+Carter%3A+No+Filter&price=30&tier=Premium+Comfort"
+                                class="btn btn-orange btn-sm" style="flex:1;text-align:center;">
+                                <span>Book Now</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="scf-detail-panel" id="detail2">
+                        <h4>What to Expect</h4>
+                        <ul class="scf-perks-list">
+                            <li>75 minutes of high-energy physical comedy</li>
+                            <li>Interactive audience participation and crowd work</li>
+                            <li>After-party in the Cocktail Lounge (all ticket holders)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Show 3 -->
+                <div class="show-card-full" data-category="openmic">
+                    <div class="scf-img-wrap">
+                        <img src="assets/spotlight_mic.png" alt="Open Mic Arena">
+                        <div class="scf-img-overlay"></div>
+                        <span class="scf-badge"
+                            style="background:rgba(0,240,255,0.2);color:#00f0ff;border:1px solid rgba(0,240,255,0.4);">Open
+                            Mic Night</span>
+                        <span class="scf-countdown" id="showTimer3">Loading...</span>
+                    </div>
+                    <div class="scf-body">
+                        <div class="scf-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-val">4.5 (421 reviews)</span>
+                        </div>
+                        <h3 class="scf-title">Open Mic Night</h3>
+                        <p class="scf-desc">Watch rising comedians test fresh material in front of a live crowd.
+                            Expect raw talent, surprise punchlines, and unfiltered laughs from 10+ performers.</p>
+                        <div class="scf-meta">
+                            <div class="scf-meta-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                June 01, 2026
+                            </div>
+                            <div class="scf-meta-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                7:00 PM
+                            </div>
+                            <div class="scf-meta-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                </svg>
+                                Stage B
+                            </div>
+                            <div class="scf-meta-item scf-price-tag">From $10</div>
+                        </div>
+                        <div class="scf-actions">
+                            <button class="btn-ghost view-details-btn" data-target="detail3">View Details ▾</button>
+                            <a href="tickets.html?show=Open+Mic+Night&price=10&tier=General+Entry"
+                                class="btn btn-cyan btn-sm" style="flex:1;text-align:center;color:#040408;">
+                                <span>Book Now</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="scf-detail-panel" id="detail3">
+                        <h4>What to Expect</h4>
+                        <ul class="scf-perks-list">
+                            <li>12+ performers with 5-7 min sets each</li>
+                            <li>New comics, fresh material, raw energy</li>
+                            <li>Audience scoring via live app integration</li>
+                            <li>Complimentary non-alcoholic beverage for all attendees</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Show 4 -->
+                <div class="show-card-full" data-category="headline">
+                    <div class="scf-img-wrap">
+                        <img src="assets/comedian_1.png" alt="Marcus Chen">
+                        <div class="scf-img-overlay"></div>
+                        <span class="scf-badge"
+                            style="background:rgba(176,38,255,0.3);color:#b026ff;border:1px solid rgba(176,38,255,0.5);">Headline
+                            Show</span>
+                        <span class="scf-countdown" id="showTimer4">Loading...</span>
+                    </div>
+                    <div class="scf-body">
+                        <div class="scf-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-val">4.8 (156 reviews)</span>
+                        </div>
+                        <h3 class="scf-title">Marcus Chen: Unplugged</h3>
+                        <p class="scf-desc">A masterclass in stand-up comedy — Marcus mixes storytelling, crowd interaction,
+                            and razor-sharp observations in a high-energy 90-minute set.</p>
+                        <div class="scf-meta">
+                            <div class="scf-meta-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                June 07, 2026
+                            </div>
+                            <div class="scf-meta-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                8:00 PM
+                            </div>
+                            <div class="scf-meta-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                </svg>
+                                Main Stage
+                            </div>
+                            <div class="scf-meta-item scf-price-tag">From $35</div>
+                        </div>
+                        <div class="scf-actions">
+                            <button class="btn-ghost view-details-btn" data-target="detail4">View Details ▾</button>
+                            <a href="tickets.html?show=Marcus+Chen%3A+Unplugged&price=35&tier=Premium+Comfort"
+                                class="btn btn-purple btn-sm" style="flex:1;text-align:center;">
+                                <span>Book Now</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="scf-detail-panel" id="detail4">
+                        <h4>What to Expect</h4>
+                        <ul class="scf-perks-list">
+                            <li>90 minutes of masterful stand-up comedy</li>
+                            <li>Storytelling and observational humor at its best</li>
+                            <li>Limited signed merchandise at venue</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Show 5 -->
+                <div class="show-card-full" data-category="special">
+                    <div class="scf-img-wrap">
+                        <img src="assets/crowd_laughing.png" alt="Neon All-Stars">
+                        <div class="scf-img-overlay"></div>
+                        <span class="scf-badge"
+                            style="background:rgba(176,38,255,0.3);color:#b026ff;border:1px solid rgba(176,38,255,0.5);">Special
+                            Event</span>
+                        <span class="scf-countdown" id="showTimer5">Loading...</span>
+                    </div>
+                    <div class="scf-body">
+                        <div class="scf-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-val">5.0 (Pre-release)</span>
+                        </div>
+                        <h3 class="scf-title">Comedy All-Stars Night</h3>
+                        <p class="scf-desc">The ultimate multi-headliner event featuring Roxy Vance, Jax Carter, and
+                            Marcus Chen on the same stage. A once-in-a-season night of non-stop laughter.</p>
+                        <div class="scf-meta">
+                            <div class="scf-meta-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                June 14, 2026
+                            </div>
+                            <div class="scf-meta-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                9:00 PM
+                            </div>
+                            <div class="scf-meta-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                </svg>
+                                Full Arena
+                            </div>
+                            <div class="scf-meta-item scf-price-tag">From $50</div>
+                        </div>
+                        <div class="scf-actions">
+                            <button class="btn-ghost view-details-btn" data-target="detail5">View Details ▾</button>
+                            <a href="tickets.html?show=Comedy+All-Stars+Night&price=50&tier=Premium+Comfort"
+                                class="btn btn-pink btn-sm"
+                                style="flex:1;text-align:center;background:var(--color-pink);color:#fff;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 18px;font-weight:600;font-family:var(--font-alt);">
+                                <span>Book Now</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="scf-detail-panel" id="detail5">
+                        <h4>What to Expect</h4>
+                        <ul class="scf-perks-list">
+                            <li>3+ hours of non-stop comedy from 3 headliners</li>
+                            <li>Full arena experience — all 400 seats</li>
+                            <li>Red-carpet check-in with photo opportunities</li>
+                            <li>Exclusive premium merch bundle for VIP holders</li>
+                            <li>Post-show after-party access (VIP tier only)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Show 6 -->
+                <div class="show-card-full" data-category="openmic">
+                    <div class="scf-img-wrap">
+                        <img src="assets/club_interior.png" alt="Solstice Open Mic">
+                        <div class="scf-img-overlay"></div>
+                        <span class="scf-badge"
+                            style="background:rgba(0,240,255,0.2);color:#00f0ff;border:1px solid rgba(0,240,255,0.4);">Open
+                            Mic Night</span>
+                        <span class="scf-countdown" id="showTimer6">Loading...</span>
+                    </div>
+                    <div class="scf-body">
+                        <div class="scf-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-val">4.6 (Pre-release)</span>
+                        </div>
+                        <h3 class="scf-title">Open Mic: Summer Special</h3>
+                        <p class="scf-desc">A special summer edition of our beloved open mic night. Performers bring their
+                            best material for a night of fresh comedy and surprise guests.</p>
+                        <div class="scf-meta">
+                            <div class="scf-meta-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                June 21, 2026
+                            </div>
+                            <div class="scf-meta-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                7:30 PM
+                            </div>
+                            <div class="scf-meta-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                </svg>
+                                Stage B
+                            </div>
+                            <div class="scf-meta-item scf-price-tag">From $10</div>
+                        </div>
+                        <div class="scf-actions">
+                            <button class="btn-ghost view-details-btn" data-target="detail6">View Details ▾</button>
+                            <a href="tickets.html?show=Open+Mic%3A+Summer+Special&price=10&tier=General+Entry"
+                                class="btn btn-cyan btn-sm" style="flex:1;text-align:center;color:#040408;">
+                                <span>Book Now</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="scf-detail-panel" id="detail6">
+                        <h4>What to Expect</h4>
+                        <ul class="scf-perks-list">
+                            <li>Cosmic/space comedy theme encouraged</li>
+                            <li>8-10 performers with 5-7 min sets</li>
+                            <li>Special UV solstice lighting effects</li>
+                            <li>Themed cocktail menu for the night</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div><!-- /shows-full-grid -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-glow-line"></div>
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Brand Info -->
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <img src="assets/logo.png" alt="Laughora Logo" class="brand-logo-img">
+                        <span class="logo-neon">Laugh</span><span class="logo-accent">ora</span>
+                    </a>
+                    <p>The premier stand-up comedy club. Three stages, non-stop laughs, and an unforgettable night out.</p>
+                    <div class="footer-socials">
+                        <a href="#" aria-label="Twitter"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.53v.05c0 2.08 1.48 3.82 3.44 4.21-.36.1-.74.15-1.13.15-.27 0-.54-.03-.8-.08.54 1.7 2.11 2.93 3.97 2.97-1.46 1.14-3.3 1.82-5.31 1.82-.35 0-.69-.02-1.02-.06C2.82 20.31 5.09 21 7.5 21c9 0 13.92-7.46 13.92-13.92 0-.21 0-.42-.02-.63.95-.7 1.78-1.56 2.43-2.54z" />
+                            </svg></a>
+                        <a href="#" aria-label="Instagram"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg></a>
+                        <a href="#" aria-label="YouTube"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"></path>
+                                <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" />
+                            </svg></a>
+                    </div>
+                </div>
+
+                <!-- Fast Links -->
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="home2.html">Alternate Stage</a></li>
+                        <li><a href="shows.html">Comedy Shows</a></li>
+                        <li><a href="openmic.html">Open Mic Slots</a></li>
+                        <li><a href="performers.html">The Comedians</a></li>
+                        <li><a href="tickets.html">Seating Tickets</a></li>
+                    </ul>
+                </div>
+
+                <!-- Quick Help -->
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="footer-newsletter">
+                    <h4>Stay Updated</h4>
+                    <p>Subscribe to receive secret discount codes, lineup updates, and priority open mic notifications.</p>
+                    <form id="newsletterForm" class="newsletter-form">
+                        <input type="email" id="newsletterEmail" placeholder="Enter your email" required>
+                        <button type="submit" aria-label="Subscribe to newsletter">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </form>
+                    <p class="newsletter-feedback" id="newsletterFeedback"></p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Laughora Inc. All rights reserved.</p>
+                <a href="#" class="back-to-top">
+                    <span>Back to Top</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 15l-6-6-6 6" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // View Details toggle
+        document.querySelectorAll('.view-details-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.getAttribute('data-target');
+                const panel = document.getElementById(targetId);
+                if (panel) {
+                    panel.classList.toggle('open');
+                    btn.textContent = panel.classList.contains('open') ? 'Hide Details ▴' : 'View Details ▾';
+                }
+            });
+        });
+
+        // Mini countdown timers per show card
+        function miniCountdown(elementId, targetDateStr) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            function update() {
+                const diff = new Date(targetDateStr).getTime() - Date.now();
+                if (diff <= 0) { el.textContent = 'LIVE NOW'; el.style.color = '#ff007f'; return; }
+                const d = Math.floor(diff / 86400000);
+                const h = Math.floor((diff % 86400000) / 3600000);
+                const m = Math.floor((diff % 3600000) / 60000);
+                el.textContent = d > 0 ? `${d}d ${h}h left` : `${h}h ${m}m left`;
+            }
+            update();
+            setInterval(update, 60000);
+        }
+
+        miniCountdown('showTimer1', '2026-05-29T21:00:00');
+        miniCountdown('showTimer2', '2026-05-30T20:30:00');
+        miniCountdown('showTimer3', '2026-06-01T19:00:00');
+        miniCountdown('showTimer4', '2026-06-07T20:00:00');
+        miniCountdown('showTimer5', '2026-06-14T21:00:00');
+        miniCountdown('showTimer6', '2026-06-21T19:30:00');
+
+        // SCB Countdown banner (to June 14 all-stars)
+        function scbCountdown() {
+            const target = new Date('2026-06-14T21:00:00').getTime();
+            function update() {
+                const diff = target - Date.now();
+                if (diff <= 0) return;
+                document.getElementById('scbDays').textContent = String(Math.floor(diff / 86400000)).padStart(2, '0');
+                document.getElementById('scbHours').textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
+                document.getElementById('scbMins').textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+                document.getElementById('scbSecs').textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+            }
+            update();
+            setInterval(update, 1000);
+        }
+        scbCountdown();
+
+        // Filter logic
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.getAttribute('data-filter');
+                document.querySelectorAll('.show-card-full').forEach(card => {
+                    const cat = card.getAttribute('data-category');
+                    card.style.display = (filter === 'all' || cat === filter) ? 'flex' : 'none';
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

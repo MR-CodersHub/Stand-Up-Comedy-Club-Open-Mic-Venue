@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laughora | Stand-Up Comedy Club & Open Mic</title>
+    <meta name="description"
+        content="Experience the best stand-up comedy and open mic nights. Top comedians, live audiences, and great laughs. Book your seats today!">
+    <!-- Google Fonts -->
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Local Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Inline blocking theme loader -->
+    <script>
+        (function () {
+            const theme = localStorage.getItem('theme') || 'dark';
+            if (theme === 'light') {
+                document.documentElement.classList.add('light-theme');
+            }
+        })();
+    </script>
+</head>
+
+<body>
+
+    <!-- Transparent Fixed Glassmorphism Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/logo.png" alt="Laughora Logo" class="brand-logo-img">
+                <span class="logo-neon">Laugh</span><span class="logo-accent">ora</span>
+            </a>
+
+            <!-- Mobile Hamburger Menu Button -->
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+
+            <!-- Navigation Links -->
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="home2.html" class="nav-link">Home2</a>
+                <a href="shows.html" class="nav-link">Shows</a>
+                <a href="tickets.html" class="nav-link">Tickets</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="openmic.html" class="nav-link">Open Mic</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+                <a href="performers.html" class="nav-link">Performers</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </nav>
+
+            <!-- Navbar Actions (Theme Toggle, RTL/LTR, Account) -->
+            <div class="nav-actions">
+                <button id="rtlToggle" class="rtl-toggle-btn" aria-label="Toggle RTL/LTR">
+                    <svg class="ltr-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12H9M15 6l-6 6 6 6" />
+                    </svg>
+                    <svg class="rtl-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M3 12h12M9 18l6-6-6-6" />
+                    </svg>
+                </button>
+                <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle theme">
+                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2"></path>
+                        <path d="M12 20v2"></path>
+                        <path d="m4.93 4.93 1.41 1.41"></path>
+                        <path d="m17.66 17.66 1.41 1.41"></path>
+                        <path d="M2 12h2"></path>
+                        <path d="M20 12h2"></path>
+                        <path d="m6.34 17.66-1.41 1.41"></path>
+                        <path d="m19.07 4.93-1.41 1.41"></path>
+                    </svg>
+                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                    </svg>
+                </button>
+                <div class="user-dropdown">
+                    <button id="userDropdownBtn" class="user-dropdown-btn" aria-label="User Account">
+                        <svg class="user-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span class="user-badge-dot"></span>
+                    </button>
+                    <div class="user-dropdown-content">
+                        <div class="dropdown-header">
+                            <p class="user-name" id="navUserName">Comedy Fan</p>
+                            <p class="user-role" id="navUserRole">Spectator</p>
+                        </div>
+                        <a href="login.html" class="dropdown-item login-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3" />
+                                </svg>
+                            </span>
+                            <span>Sign In / Sign Up</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="user-dashboard.html" class="dropdown-item user-dash-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                    <circle cx="12" cy="7" r="4" />
+                                </svg>
+                            </span>
+                            <span>User Dashboard</span>
+                        </a>
+                        <a href="admin-dashboard.html" class="dropdown-item admin-dash-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                                </svg>
+                            </span>
+                            <span>Admin Dashboard</span>
+                        </a>
+                        <button class="dropdown-item signout-btn logged-in-only" id="signoutBtn">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
+                                </svg>
+                            </span>
+                            <span>Sign Out</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-spotlight"></div>
+        <div class="hero-cyan-beam"></div>
+        <div class="hero-content">
+            <span class="hero-badge">&#9733; LIVE STAND-UP COMEDY NIGHTS &#9733;</span>
+            <h1 class="hero-title">
+                <span class="hero-title-line">Laugh Out</span>
+                <span class="hero-title-line hero-title-highlight">Loud</span>
+            </h1>
+            <p class="hero-subtitle">
+                The best stand-up comedy &amp; open mic nights in town. Top comedians, live audiences, and non-stop
+                laughs.
+                Book your seats today!
+            </p>
+            <div class="hero-ctas">
+                <a href="tickets.html" class="btn btn-purple">
+                    <span>Get Tickets</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </a>
+                <a href="openmic.html" class="btn btn-outline-cyan">
+                    <span>Sign Up for Open Mic</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 5v14M5 12h14" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Special Event Countdown Section -->
+    <section class="countdown-section" id="special-countdown">
+        <div class="countdown-container">
+            <div class="countdown-info">
+                <span class="section-tag tag-pink">NEXT SHOW COUNTDOWN</span>
+                <h2 class="countdown-title">Comedy All-Stars Night</h2>
+                <p>3 headliners. 1 stage. One unforgettable night of non-stop stand-up comedy. Seating is strictly
+                    limited — book now.</p>
+                <div class="countdown-meta">
+                    <span class="meta-item">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                        June 14, 2026 — 9:00 PM
+                    </span>
+                    <span class="meta-item">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                            </path>
+                            <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        Full Arena — From $50
+                    </span>
+                </div>
+            </div>
+            <div class="countdown-timer-wrapper">
+                <div class="countdown-timer" id="countdownTimer" data-target-date="2026-06-14T21:00:00">
+                    <div class="timer-box">
+                        <span class="timer-num" id="days">00</span>
+                        <span class="timer-label">DAYS</span>
+                    </div>
+                    <div class="timer-divider">:</div>
+                    <div class="timer-box">
+                        <span class="timer-num" id="hours">00</span>
+                        <span class="timer-label">HOURS</span>
+                    </div>
+                    <div class="timer-divider">:</div>
+                    <div class="timer-box">
+                        <span class="timer-num" id="minutes">00</span>
+                        <span class="timer-label">MINS</span>
+                    </div>
+                    <div class="timer-divider">:</div>
+                    <div class="timer-box">
+                        <span class="timer-num" id="seconds">00</span>
+                        <span class="timer-label">SECS</span>
+                    </div>
+                </div>
+                <a href="tickets.html?show=Comedy+All-Stars+Night&price=50&tier=Premium+Comfort"
+                    class="btn btn-purple btn-block">Get Tickets — From $50</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Animated Counter Section -->
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stat-card">
+                <span class="stat-num" data-target="1200">0</span><span class="stat-suffix">+</span>
+                <span class="stat-label">Shows Hosted</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-num" data-target="98">0</span><span class="stat-suffix">%</span>
+                <span class="stat-label">Laughter Rate</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-num" data-target="450">0</span><span class="stat-suffix">+</span>
+                <span class="stat-label">Registered Comics</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-num" data-target="150">0</span><span class="stat-suffix">K</span>
+                <span class="stat-label">Happy Guests</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Comedy Shows Preview -->
+    <section class="shows-section" id="shows">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag tag-purple">EXPERIENCE LIVE COMEDY</span>
+                <h2 class="section-title">Upcoming Shows</h2>
+                <p class="section-desc">Check out our full lineup — dates, times, locations, prices, and instant
+                    booking.</p>
+            </div>
+
+            <!-- Shows Grid (6 cards with full details) -->
+            <div class="shows-grid" id="showsGrid">
+
+                <!-- Show 1: Roxy Vance -->
+                <div class="show-card" data-category="headline">
+                    <div class="show-img-wrapper">
+                        <img src="assets/comedian_stage_1.jpg" alt="Roxy Vance" class="show-img">
+                        <span class="show-badge badge-purple">Headline Show</span>
+                    </div>
+                    <div class="show-body">
+                        <div class="show-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-val">4.9</span>
+                        </div>
+                        <h3 class="show-title">Roxy Vance: Live & Unfiltered</h3>
+                        <div class="show-price-row">
+                            <span class="show-price-tag headline-price">$25</span>
+                            <span class="show-price-label">per seat · Premium tier available</span>
+                        </div>
+                        <p class="show-desc">An hour of razor-sharp stand-up packed with hilarious observations and
+                            fearless storytelling.</p>
+                        <div class="show-details">
+                            <div class="detail-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                                May 29, 2026
+                            </div>
+                            <div class="detail-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                9:00 PM
+                            </div>
+                            <div class="detail-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                Main Stage
+                            </div>
+                        </div>
+                        <a href="tickets.html?show=Roxy+Vance%3A+Live+%26+Unfiltered&price=25&tier=Premium+Comfort"
+                            class="btn btn-purple btn-sm"><span>Book Now</span></a>
+                    </div>
+                </div>
+
+                <!-- Show 2: Jax Carter -->
+                <div class="show-card" data-category="special">
+                    <div class="show-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1779906923879-798bc2f16709?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGNvbWVkeSUyMHNob3d8ZW58MHx8MHx8fDA%3D"
+                            alt="Jax Carter" class="show-img">
+                        <span class="show-badge badge-purple">Special Event</span>
+                    </div>
+                    <div class="show-body">
+                        <div class="show-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-val">4.7</span>
+                        </div>
+                        <h3 class="show-title">Jax Carter: No Filter</h3>
+                        <div class="show-price-row">
+                            <span class="show-price-tag special-price">$30</span>
+                            <span class="show-price-label">per seat · Premium tier available</span>
+                        </div>
+                        <p class="show-desc">Brutally honest takes on modern life, relationships, and everyday
+                            absurdities delivered with sharp physical comedy.</p>
+                        <div class="show-details">
+                            <div class="detail-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                                May 30, 2026
+                            </div>
+                            <div class="detail-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                8:30 PM
+                            </div>
+                            <div class="detail-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                Main Stage
+                            </div>
+                        </div>
+                        <a href="tickets.html?show=Jax+Carter%3A+No+Filter&price=30&tier=Premium+Comfort"
+                            class="btn btn-purple btn-sm"><span>Book Now</span></a>
+                    </div>
+                </div>
+
+                <!-- Show 3: Open Mic Night -->
+                <div class="show-card" data-category="openmic">
+                    <div class="show-img-wrapper">
+                        <img src="assets/comedian_stage_3.jpg" alt="Open Mic Night" class="show-img">
+                        <span class="show-badge badge-cyan">Open Mic Night</span>
+                    </div>
+                    <div class="show-body">
+                        <div class="show-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-val">4.5</span>
+                        </div>
+                        <h3 class="show-title">Open Mic Night</h3>
+                        <div class="show-price-row">
+                            <span class="show-price-tag openmic-price">$10</span>
+                            <span class="show-price-label">per seat · General entry</span>
+                        </div>
+                        <p class="show-desc">Watch rising comedians test fresh material. Raw talent, surprise
+                            punchlines, and unfiltered laughs.</p>
+                        <div class="show-details">
+                            <div class="detail-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                                June 1, 2026
+                            </div>
+                            <div class="detail-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                7:00 PM
+                            </div>
+                            <div class="detail-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                Stage B
+                            </div>
+                        </div>
+                        <a href="tickets.html?show=Open+Mic+Night&price=10&tier=General+Entry"
+                            class="btn btn-cyan btn-sm"><span>Book Now</span></a>
+                    </div>
+                </div>
+
+                <!-- Show 4: Marcus Chen -->
+                <div class="show-card" data-category="headline">
+                    <div class="show-img-wrapper">
+                        <img src="https://plus.unsplash.com/premium_photo-1705883064045-28587884cb7f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fGNvbWVkeSUyMHNob3d8ZW58MHx8MHx8fDA%3D"
+                            alt="Marcus Chen" class="show-img">
+                        <span class="show-badge badge-purple">Headline Show</span>
+                    </div>
+                    <div class="show-body">
+                        <div class="show-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-val">4.8</span>
+                        </div>
+                        <h3 class="show-title">Marcus Chen: Unplugged</h3>
+                        <div class="show-price-row">
+                            <span class="show-price-tag headline-price">$35</span>
+                            <span class="show-price-label">per seat · Premium tier available</span>
+                        </div>
+                        <p class="show-desc">A masterclass in stand-up — storytelling, crowd work, and razor-sharp
+                            observations in a 90-minute set.</p>
+                        <div class="show-details">
+                            <div class="detail-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                                June 7, 2026
+                            </div>
+                            <div class="detail-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                8:00 PM
+                            </div>
+                            <div class="detail-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                Main Stage
+                            </div>
+                        </div>
+                        <a href="tickets.html?show=Marcus+Chen%3A+Unplugged&price=35&tier=Premium+Comfort"
+                            class="btn btn-purple btn-sm"><span>Book Now</span></a>
+                    </div>
+                </div>
+
+                <!-- Show 5: Comedy All-Stars -->
+                <div class="show-card" data-category="special">
+                    <div class="show-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1762028895876-52b2318d8e75?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGpva2UlMjBzaG93fGVufDB8fDB8fHww"
+                            alt="Comedy All-Stars Night" class="show-img">
+                        <span class="show-badge badge-purple">Special Event</span>
+                    </div>
+                    <div class="show-body">
+                        <div class="show-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-val">5.0</span>
+                        </div>
+                        <h3 class="show-title">Comedy All-Stars Night</h3>
+                        <div class="show-price-row">
+                            <span class="show-price-tag special-price">$50</span>
+                            <span class="show-price-label">per seat · Premium & VIP tiers</span>
+                        </div>
+                        <p class="show-desc">Three headliners on one stage — an unforgettable night of non-stop comedy
+                            featuring Roxy, Jax, and Marcus.</p>
+                        <div class="show-details">
+                            <div class="detail-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                                June 14, 2026
+                            </div>
+                            <div class="detail-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                9:00 PM
+                            </div>
+                            <div class="detail-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                Full Arena
+                            </div>
+                        </div>
+                        <a href="tickets.html?show=Comedy+All-Stars+Night&price=50&tier=Premium+Comfort"
+                            class="btn btn-purple btn-sm"><span>Book Now</span></a>
+                    </div>
+                </div>
+
+                <!-- Show 6: Open Mic Summer Special -->
+                <div class="show-card" data-category="openmic">
+                    <div class="show-img-wrapper">
+                        <img src="https://plus.unsplash.com/premium_photo-1664391945593-952720632360?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8am9rZSUyMHNob3d8ZW58MHx8MHx8fDA%3D"
+                            alt="Open Mic Summer Special" class="show-img">
+                        <span class="show-badge badge-cyan">Open Mic Night</span>
+                    </div>
+                    <div class="show-body">
+                        <div class="show-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-val">4.6</span>
+                        </div>
+                        <h3 class="show-title">Open Mic: Summer Special</h3>
+                        <div class="show-price-row">
+                            <span class="show-price-tag openmic-price">$10</span>
+                            <span class="show-price-label">per seat · General entry</span>
+                        </div>
+                        <p class="show-desc">A special summer edition featuring fresh talent, surprise guest headliners,
+                            and the best open mic acts.</p>
+                        <div class="show-details">
+                            <div class="detail-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                                June 21, 2026
+                            </div>
+                            <div class="detail-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                7:00 PM
+                            </div>
+                            <div class="detail-item">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                Stage B
+                            </div>
+                        </div>
+                        <a href="tickets.html?show=Open+Mic+Summer+Special&price=10&tier=General+Entry"
+                            class="btn btn-cyan btn-sm"><span>Book Now</span></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="text-align:center;margin-top:2.5rem;">
+                <a href="shows.html" class="btn btn-outline-purple">
+                    <span>View Full Schedule</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meet the Comedians -->
+    <section class="meet-comedians-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag tag-pink">MEET THE COMEDIANS</span>
+                <h2 class="section-title">Our Resident Headliners</h2>
+                <p class="section-desc">Get to know the hilarious talents who call our stage home. Years of experience,
+                    comedy styles, and audience reach — all right here.</p>
+            </div>
+
+            <div class="comedians-preview-grid">
+                <!-- Roxy Vance -->
+                <div class="comedian-preview-card">
+                    <div class="cpc-img-wrap">
+                        <img src="assets/comedian_stage_7.jpg" alt="Roxy Vance">
+                        <div class="cpc-img-overlay"></div>
+                    </div>
+                    <div class="cpc-body">
+                        <span class="cpc-style-tag"
+                            style="background:rgba(176,38,255,0.12);color:var(--color-purple);border:1px solid rgba(176,38,255,0.3);">Dry
+                            Wit</span>
+                        <h3 class="cpc-name">Roxy Vance</h3>
+                        <p class="cpc-alias">"Queen of Sharp Wit"</p>
+                        <div class="cpc-metrics">
+                            <div class="cpc-metric"><strong>12</strong> Years Exp.</div>
+                            <div class="cpc-metric"><strong>850+</strong> Shows</div>
+                            <div class="cpc-metric"><strong>2.1M</strong> Reach</div>
+                        </div>
+                        <p class="cpc-brief">Razor-sharp observational comedy meets fearless storytelling. Roxy's
+                            ability to find humor in everyday moments leaves audiences in stitches.</p>
+                        <a href="performers.html#roxy" class="btn btn-outline-purple btn-sm"><span>Full Bio</span></a>
+                    </div>
+                </div>
+
+                <!-- Jax Carter -->
+                <div class="comedian-preview-card">
+                    <div class="cpc-img-wrap">
+                        <img src="assets/comedian_speaker.png" alt="Jax Carter">
+                        <div class="cpc-img-overlay"></div>
+                    </div>
+                    <div class="cpc-body">
+                        <span class="cpc-style-tag"
+                            style="background:rgba(0,240,255,0.1);color:var(--color-cyan);border:1px solid rgba(0,240,255,0.3);">Physical
+                            Comedy</span>
+                        <h3 class="cpc-name">Jax Carter</h3>
+                        <p class="cpc-alias">"The Crowd Favorite"</p>
+                        <div class="cpc-metrics">
+                            <div class="cpc-metric"><strong>8</strong> Years Exp.</div>
+                            <div class="cpc-metric"><strong>600+</strong> Shows</div>
+                            <div class="cpc-metric"><strong>1.5M</strong> Reach</div>
+                        </div>
+                        <p class="cpc-brief">High-energy physical comedy with unmatched crowd work. Jax makes every show
+                            feel personal — no two sets are ever the same.</p>
+                        <a href="performers.html#jax" class="btn btn-outline-cyan btn-sm"><span>Full Bio</span></a>
+                    </div>
+                </div>
+
+                <!-- Marcus Chen -->
+                <div class="comedian-preview-card">
+                    <div class="cpc-img-wrap">
+                        <img src="assets/woman_mic_stage.png" alt="Marcus Chen">
+                        <div class="cpc-img-overlay"></div>
+                    </div>
+                    <div class="cpc-body">
+                        <span class="cpc-style-tag"
+                            style="background:rgba(176,38,255,0.1);color:var(--color-purple);border:1px solid rgba(176,38,255,0.3);">Storytelling</span>
+                        <h3 class="cpc-name">Marcus Chen</h3>
+                        <p class="cpc-alias">"The Storyteller"</p>
+                        <div class="cpc-metrics">
+                            <div class="cpc-metric"><strong>15</strong> Years Exp.</div>
+                            <div class="cpc-metric"><strong>1.2K</strong> Shows</div>
+                            <div class="cpc-metric"><strong>3.5M</strong> Reach</div>
+                        </div>
+                        <p class="cpc-brief">A master of narrative stand-up who weaves hilarious stories from everyday
+                            life. Impeccable timing and unforgettable journeys.</p>
+                        <a href="performers.html#marcus" class="btn btn-purple btn-sm"><span>Full Bio</span></a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align:center;margin-top:2.5rem;">
+                <a href="performers.html" class="btn btn-outline-purple">
+                    <span>View All Comedians</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="why-section" id="why">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag tag-purple">THE VENUE EXPERIENCE</span>
+                <h2 class="section-title">Why Choose Laughora?</h2>
+                <p class="section-desc">We bring together premium entertainment, an intimate venue, and an atmosphere
+                    built for laughter.</p>
+            </div>
+
+            <div class="why-grid">
+                <!-- Card 1 -->
+                <div class="why-card glass-card">
+                    <div class="why-icon-box purple-glow">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#b026ff" stroke-width="2">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                        </svg>
+                    </div>
+                    <h3>Intimate &amp; Welcoming</h3>
+                    <p>Our rooms are designed for comedy — great sightlines from every seat, crystal-clear sound, and an
+                        intimate atmosphere.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="why-card glass-card">
+                    <div class="why-icon-box cyan-glow">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" />
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8" />
+                        </svg>
+                    </div>
+                    <h3>Crystal-Clear Sound</h3>
+                    <p>Hear every punchline perfectly with our premium sound system designed for live comedy.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="why-card glass-card">
+                    <div class="why-icon-box cyan-glow">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-cyan)"
+                            stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                        </svg>
+                    </div>
+                    <h3>Top-Tier Talent</h3>
+                    <p>From national headliners to the freshest rising stars — every show features comedians at the top
+                        of their game.</p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="why-card glass-card">
+                    <div class="why-icon-box pink-glow">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ff007f" stroke-width="2">
+                            <path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
+                            <line x1="6" y1="1" x2="6" y2="4" />
+                            <line x1="10" y1="1" x2="10" y2="4" />
+                            <line x1="14" y1="1" x2="14" y2="4" />
+                        </svg>
+                    </div>
+                    <h3>Bar &amp; Lounge</h3>
+                    <p>Sip on hand-crafted signature cocktails, craft mocktails, and local microbrews.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Book a Show -->
+    <section class="book-show-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag tag-purple">BOOK A SHOW</span>
+                <h2 class="section-title">Secure Your Seats Now</h2>
+                <p class="section-desc">Choose your preferred experience and book directly. Premium, VIP, and general
+                    admission available for every show.</p>
+            </div>
+
+            <div class="book-show-grid">
+                <div class="book-option-card glass-card">
+                    <div class="book-option-icon purple-glow">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--color-purple)"
+                            stroke-width="2">
+                            <path
+                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                        </svg>
+                    </div>
+                    <h3>Headline Shows</h3>
+                    <p>Premium seating with dedicated cocktail service. From $25 per seat.</p>
+                    <div class="book-option-features">
+                        <span>Reserved seating</span>
+                        <span>Meet & greet upgrade</span>
+                        <span>Souvenir program</span>
+                    </div>
+                    <a href="shows.html?filter=headline" class="btn btn-purple btn-block"><span>Browse Headline
+                            Shows</span></a>
+                </div>
+
+                <div class="book-option-card glass-card featured-option">
+                    <div class="card-glow-badge">MOST POPULAR</div>
+                    <div class="book-option-icon cyan-glow">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--color-cyan)"
+                            stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M23 21v-2a4 4 0 00-3-3.87" />
+                            <path d="M16 3.13a4 4 0 010 7.75" />
+                        </svg>
+                    </div>
+                    <h3>Special Events</h3>
+                    <p>Multi-headliner nights and one-time specials. The ultimate comedy experience.</p>
+                    <div class="book-option-features">
+                        <span>Full arena capacity</span>
+                        <span>Red carpet check-in</span>
+                        <span>VIP after-party access</span>
+                    </div>
+                    <a href="shows.html?filter=special" class="btn btn-cyan btn-block"><span>Book Special
+                            Events</span></a>
+                </div>
+
+                <div class="book-option-card glass-card">
+                    <div class="book-option-icon purple-glow">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--color-purple)"
+                            stroke-width="2">
+                            <path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" />
+                        </svg>
+                    </div>
+                    <h3>Open Mic Nights</h3>
+                    <p>Affordable comedy featuring rising talents. General entry from just $10.</p>
+                    <div class="book-option-features">
+                        <span>General admission</span>
+                        <span>12+ performers</span>
+                        <span>Complimentary drink</span>
+                    </div>
+                    <a href="openmic.html" class="btn btn-purple btn-block"><span>Join Open Mic</span></a>
+                </div>
+            </div>
+
+            <div class="book-show-bottom">
+                <p>Need help choosing? <a href="contact.html" style="color:var(--color-purple);font-weight:600;">Contact
+                        our box office</a> or call <strong style="color:var(--color-text-white);">(555)
+                        123-4567</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Past Shows -->
+    <section class="past-shows-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag tag-cyan">PAST SHOWS</span>
+                <h2 class="section-title">Recent Comedy Nights</h2>
+                <p class="section-desc">Missed a show? Relive the highlights from our recent sold-out events.</p>
+            </div>
+
+            <div class="past-shows-grid">
+                <div class="past-show-card">
+                    <div class="psc-img">
+                        <img src="assets/comedian_stage_lights.png" alt="Crowd at Roxy's show">
+                    </div>
+                    <div class="psc-body">
+                        <span class="psc-date">May 22, 2026</span>
+                        <h3>Roxy Vance: Live & Unfiltered</h3>
+                        <p>Sold out! A record-breaking night with 200+ roaring fans. Roxy delivered a blistering
+                            75-minute set of sharp wit and fearless honesty.</p>
+                        <div class="psc-highlights">
+                            <span class="psc-hl"><svg width="12" height="12" fill="none" stroke="currentColor"
+                                    stroke-width="2" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                </svg> 4.9 Rating</span>
+                            <span class="psc-hl"><svg width="12" height="12" fill="none" stroke="currentColor"
+                                    stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                                    <circle cx="9" cy="7" r="4" />
+                                    <path d="M23 21v-2a4 4 0 00-3-3.87" />
+                                    <path d="M16 3.13a4 4 0 010 7.75" />
+                                </svg> 200 Sold</span>
+                            <span class="psc-hl"><svg width="12" height="12" fill="none" stroke="currentColor"
+                                    stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" />
+                                </svg> Encore Set</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="past-show-card">
+                    <div class="psc-img">
+                        <img src="assets/comedian_stage_8.jpg" alt="Jax Carter on stage">
+                    </div>
+                    <div class="psc-body">
+                        <span class="psc-date">May 15, 2026</span>
+                        <h3>Jax Carter: No Filter</h3>
+                        <p>A night of unfiltered comedy that pushed boundaries. Jax's crowd work had the audience in
+                            tears of laughter from start to finish.</p>
+                        <div class="psc-highlights">
+                            <span class="psc-hl"><svg width="12" height="12" fill="none" stroke="currentColor"
+                                    stroke-width="2" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                </svg> 4.7 Rating</span>
+                            <span class="psc-hl"><svg width="12" height="12" fill="none" stroke="currentColor"
+                                    stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                                    <circle cx="9" cy="7" r="4" />
+                                    <path d="M23 21v-2a4 4 0 00-3-3.87" />
+                                    <path d="M16 3.13a4 4 0 010 7.75" />
+                                </svg> 180 Sold</span>
+                            <span class="psc-hl"><svg width="12" height="12" fill="none" stroke="currentColor"
+                                    stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" />
+                                </svg> VIP Meet</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="past-show-card">
+                    <div class="psc-img">
+                        <img src="assets/performer_stage.png" alt="Marcus Chen">
+                    </div>
+                    <div class="psc-body">
+                        <span class="psc-date">May 8, 2026</span>
+                        <h3>Marcus Chen: Unplugged</h3>
+                        <p>Marcus took the audience on a hilarious journey with his storytelling mastery. An intimate
+                            evening of narrative comedy at its finest.</p>
+                        <div class="psc-highlights">
+                            <span class="psc-hl"><svg width="12" height="12" fill="none" stroke="currentColor"
+                                    stroke-width="2" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                </svg> 4.8 Rating</span>
+                            <span class="psc-hl"><svg width="12" height="12" fill="none" stroke="currentColor"
+                                    stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                                    <circle cx="9" cy="7" r="4" />
+                                    <path d="M23 21v-2a4 4 0 00-3-3.87" />
+                                    <path d="M16 3.13a4 4 0 010 7.75" />
+                                </svg> 160 Sold</span>
+                            <span class="psc-hl"><svg width="12" height="12" fill="none" stroke="currentColor"
+                                    stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" />
+                                </svg> Book Signing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="past-show-card">
+                    <div class="psc-img">
+                        <img src="assets/microphone_close.png" alt="Open Mic Night crowd">
+                    </div>
+                    <div class="psc-body">
+                        <span class="psc-date">May 1, 2026</span>
+                        <h3>Open Mic Night: Spring Edition</h3>
+                        <p>14 fresh comedians took the stage in a sold-out showcase. Surprise headliner Nova Blaze
+                            closed the night with a killer 20-minute set.</p>
+                        <div class="psc-highlights">
+                            <span class="psc-hl"><svg width="12" height="12" fill="none" stroke="currentColor"
+                                    stroke-width="2" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                </svg> 4.5 Rating</span>
+                            <span class="psc-hl"><svg width="12" height="12" fill="none" stroke="currentColor"
+                                    stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                                    <circle cx="9" cy="7" r="4" />
+                                    <path d="M23 21v-2a4 4 0 00-3-3.87" />
+                                    <path d="M16 3.13a4 4 0 010 7.75" />
+                                </svg> 140 Sold</span>
+                            <span class="psc-hl"><svg width="12" height="12" fill="none" stroke="currentColor"
+                                    stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" />
+                                </svg> Guest Act</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Audience Reviews -->
+    <section class="reviews-section" id="reviews">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag tag-purple">AUDIENCE REVIEWS</span>
+                <h2 class="section-title">What Our Guests Say</h2>
+                <p class="section-desc">Real reviews from real comedy lovers. Don't just take our word for it.</p>
+            </div>
+
+            <div class="reviews-grid">
+                <div class="review-card glass-card">
+                    <div class="review-rating">★★★★★</div>
+                    <p class="review-text">"Absolutely incredible night! Roxy had the whole room crying with laughter.
+                        The atmosphere was electric — I've never experienced anything like it. Already booking my next
+                        visit."</p>
+                    <div class="review-user">
+                        <div class="user-avatar avatar-purple">SK</div>
+                        <div class="user-info">
+                            <h4>Sarah K.</h4>
+                            <span>Verified Attendee · May 2026</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card glass-card">
+                    <div class="review-rating">★★★★★</div>
+                    <p class="review-text">"Jax Carter is a comedy genius. His crowd work is next level — he had the
+                        entire audience engaged and laughing non-stop. The venue is gorgeous too. 10/10 experience."</p>
+                    <div class="review-user">
+                        <div class="user-avatar avatar-cyan">MR</div>
+                        <div class="user-info">
+                            <h4>Mike R.</h4>
+                            <span>Verified Attendee · May 2026</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card glass-card">
+                    <div class="review-rating">★★★★★</div>
+                    <p class="review-text">"Marcus Chen's storytelling is pure magic. He makes you feel like you're
+                        catching up with an old friend who just happens to be hilarious. The premium seating was worth
+                        every penny."</p>
+                    <div class="review-user">
+                        <div class="user-avatar avatar-purple">AL</div>
+                        <div class="user-info">
+                            <h4>Amanda L.</h4>
+                            <span>Verified Attendee · April 2026</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card glass-card">
+                    <div class="review-rating">★★★★☆</div>
+                    <p class="review-text">"Open Mic Night is a hidden gem. Saw some incredibly talented up-and-comers
+                        and a surprise visit from a national headliner. Best $10 I've spent all year!"</p>
+                    <div class="review-user">
+                        <div class="user-avatar avatar-purple">DJ</div>
+                        <div class="user-info">
+                            <h4>David J.</h4>
+                            <span>Verified Attendee · April 2026</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card glass-card">
+                    <div class="review-rating">★★★★★</div>
+                    <p class="review-text">"The Comedy All-Stars Night was the best show I've ever attended. Three
+                        world-class comedians on one stage, incredible production value, and the VIP lounge was
+                        stunning. A must-see event."</p>
+                    <div class="review-user">
+                        <div class="user-avatar avatar-cyan">JT</div>
+                        <div class="user-info">
+                            <h4>James T.</h4>
+                            <span>Verified Attendee · March 2026</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card glass-card">
+                    <div class="review-rating">★★★★★</div>
+                    <p class="review-text">"Best comedy club in the city! The sound system is crystal clear, the
+                        cocktails are amazing, and the lineup just keeps getting better. I've been to 8 shows and never
+                        been disappointed."</p>
+                    <div class="review-user">
+                        <div class="user-avatar avatar-purple">PW</div>
+                        <div class="user-info">
+                            <h4>Priya W.</h4>
+                            <span>VIP Member · 8 shows attended</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-glow-line"></div>
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Brand Info -->
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <img src="assets/logo.png" alt="Laughora Logo" class="brand-logo-img">
+                        <span class="logo-neon">Laugh</span><span class="logo-accent">ora</span>
+                    </a>
+                    <p>The premier stand-up comedy club. Three stages, non-stop laughs, and an unforgettable night out.
+                    </p>
+                    <div class="footer-socials">
+                        <a href="#" aria-label="Twitter"><svg width="20" height="20" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.53v.05c0 2.08 1.48 3.82 3.44 4.21-.36.1-.74.15-1.13.15-.27 0-.54-.03-.8-.08.54 1.7 2.11 2.93 3.97 2.97-1.46 1.14-3.3 1.82-5.31 1.82-.35 0-.69-.02-1.02-.06C2.82 20.31 5.09 21 7.5 21c9 0 13.92-7.46 13.92-13.92 0-.21 0-.42-.02-.63.95-.7 1.78-1.56 2.43-2.54z" />
+                            </svg></a>
+                        <a href="#" aria-label="Instagram"><svg width="20" height="20" fill="none" stroke="currentColor"
+                                stroke-width="2" viewBox="0 0 24 24">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg></a>
+                        <a href="#" aria-label="YouTube"><svg width="20" height="20" fill="none" stroke="currentColor"
+                                stroke-width="2" viewBox="0 0 24 24">
+                                <path
+                                    d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z">
+                                </path>
+                                <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" />
+                            </svg></a>
+                    </div>
+                </div>
+
+                <!-- Fast Links -->
+                <div class="footer-links">
+                    <h4>Navigate</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="home2.html">Alternate Stage</a></li>
+                        <li><a href="shows.html">Comedy Shows</a></li>
+                        <li><a href="openmic.html">Open Mic Slots</a></li>
+                        <li><a href="performers.html">The Comedians</a></li>
+                        <li><a href="tickets.html">Seating Tickets</a></li>
+                    </ul>
+                </div>
+
+                <!-- Quick Help -->
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Emergency Contact</a></li>
+                        <li><a href="#">Privacy Protocol</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="footer-newsletter">
+                    <h4>Stay Updated</h4>
+                    <p>Subscribe to receive secret discount codes, lineup updates, and priority open mic notifications.
+                    </p>
+                    <form id="newsletterForm" class="newsletter-form">
+                        <input type="email" id="newsletterEmail" placeholder="Enter your email" required>
+                        <button type="submit" aria-label="Subscribe to newsletter">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </form>
+                    <p class="newsletter-feedback" id="newsletterFeedback"></p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Laughora Inc. All rights reserved.</p>
+                <a href="#home" class="back-to-top">
+                    <span>Back to Top</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 15l-6-6-6 6" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Page Load Glow Script Connection -->
+    <script src="script.js"></script>
+</body>
+
+</html>

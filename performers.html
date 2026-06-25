@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laughora | Resident Performers</title>
+    <meta name="description" content="Meet Laughora's resident comedian lineup. Discover the bios, styles, and upcoming shows of our star-studded comedy roster.">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Inline blocking theme loader -->
+    <script>
+        (function () {
+            const theme = localStorage.getItem('theme') || 'dark';
+            if (theme === 'light') {
+                document.documentElement.classList.add('light-theme');
+            }
+        })();
+    </script>
+    <style>
+        .page-hero {
+            padding: 160px 24px 80px;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(ellipse at 50% 0%, rgba(255,0,127,0.1) 0%, transparent 60%);
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--color-pink), var(--color-cyan), transparent);
+            opacity: 0.4;
+        }
+        .page-hero-title { font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 800; color: var(--color-text-white); margin-bottom: 1rem; }
+        .page-hero-title span { background: linear-gradient(135deg, var(--color-pink), var(--color-orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .page-hero p { max-width: 600px; margin: 0 auto; font-size: 1.05rem; color: var(--color-text-slate); }
+
+        .performers-page { padding: 60px 0 100px; }
+
+        /* Featured performer hero card */
+        .featured-performer-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(176,38,255,0.3);
+            border-radius: 24px;
+            padding: 0;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .featured-performer-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-purple), var(--color-cyan), var(--color-pink));
+        }
+
+        .fpc-img-side {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fpc-img-side img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .fpc-img-side::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, transparent 60%, rgba(4,4,8,0.95) 100%);
+        }
+
+        .fpc-glow {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 30% 50%, rgba(176,38,255,0.2) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .fpc-info-side {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .fpc-featured-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--color-purple);
+            margin-bottom: 1.25rem;
+        }
+
+        .fpc-featured-tag::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--color-purple);
+            box-shadow: 0 0 10px var(--color-purple);
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+
+        .fpc-name {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--color-text-white);
+            margin-bottom: 0.4rem;
+        }
+
+        .fpc-alias {
+            font-size: 1rem;
+            color: var(--color-purple);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .fpc-bio {
+            font-size: 0.95rem;
+            color: var(--color-text-slate);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .fpc-stats {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .fpc-stat { text-align: center; }
+        .fpc-stat .fpc-stat-num { font-size: 1.8rem; font-weight: 800; color: var(--color-text-white); font-family: var(--font-heading); line-height: 1; }
+        .fpc-stat .fpc-stat-label { font-size: 0.7rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+        .fpc-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .fpc-tag {
+            padding: 5px 14px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .fpc-tag.t-purple { background: rgba(176,38,255,0.12); color: var(--color-purple); border: 1px solid rgba(176,38,255,0.3); }
+        .fpc-tag.t-cyan { background: rgba(0,240,255,0.12); color: var(--color-cyan); border: 1px solid rgba(0,240,255,0.3); }
+        .fpc-tag.t-orange { background: rgba(255,107,0,0.12); color: var(--color-orange); border: 1px solid rgba(255,107,0,0.3); }
+
+        .fpc-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        /* Roster Grid */
+        .roster-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .performer-bio-card {
+            border-radius: 20px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: var(--transition-smooth);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .performer-bio-card .pbc-body {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .performer-bio-card .pbc-footer {
+            margin-top: auto;
+        }
+
+        .performer-bio-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(176,38,255,0.3);
+            box-shadow: 0 20px 60px rgba(176,38,255,0.15);
+        }
+
+        .pbc-img-wrap {
+            position: relative;
+            height: 280px;
+            overflow: hidden;
+        }
+
+        .pbc-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .performer-bio-card:hover .pbc-img-wrap img {
+            transform: scale(1.06);
+        }
+
+        .pbc-img-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(4,4,8,1) 0%, rgba(4,4,8,0.2) 50%, transparent 100%);
+        }
+
+        .pbc-glow-color {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .performer-bio-card:hover .pbc-glow-color { opacity: 1; }
+
+        .pbc-glow-purple { background: radial-gradient(ellipse at 50% 100%, rgba(176,38,255,0.25) 0%, transparent 70%); }
+        .pbc-glow-cyan { background: radial-gradient(ellipse at 50% 100%, rgba(0,240,255,0.2) 0%, transparent 70%); }
+        .pbc-glow-orange { background: radial-gradient(ellipse at 50% 100%, rgba(255,107,0,0.2) 0%, transparent 70%); }
+        .pbc-glow-pink { background: radial-gradient(ellipse at 50% 100%, rgba(255,0,127,0.2) 0%, transparent 70%); }
+
+        .pbc-body {
+            padding: 1.5rem;
+        }
+
+        .pbc-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-text-white);
+            margin-bottom: 0.2rem;
+        }
+
+        .pbc-alias {
+            font-size: 0.85rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .pbc-alias.alias-purple { color: var(--color-purple); }
+        .pbc-alias.alias-cyan { color: var(--color-cyan); }
+        .pbc-alias.alias-orange { color: var(--color-orange); }
+        .pbc-alias.alias-pink { color: var(--color-pink); }
+
+        .pbc-bio-text {
+            font-size: 0.855rem;
+            color: var(--color-text-muted);
+            line-height: 1.7;
+            margin-bottom: 1.25rem;
+        }
+
+        .pbc-stats {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .pbc-stat-item {
+            flex: 1;
+            text-align: center;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+            padding: 8px 4px;
+        }
+
+        .pbc-stat-item .psn { font-size: 1.2rem; font-weight: 800; color: var(--color-text-white); font-family: var(--font-heading); }
+        .pbc-stat-item .psl { font-size: 0.62rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+        .pbc-genre-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .pbc-genre-tag {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 100px;
+        }
+
+        .pbc-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pbc-socials {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .pbc-social-link {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-text-muted);
+            transition: var(--transition-fast);
+        }
+
+        .pbc-social-link:hover {
+            background: rgba(176,38,255,0.15);
+            border-color: rgba(176,38,255,0.4);
+            color: var(--color-purple);
+        }
+
+        /* Guest comics section */
+        .guest-comics {
+            margin-top: 80px;
+            padding-top: 60px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .guest-comics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .guest-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: var(--transition-smooth);
+        }
+
+        .guest-card:hover {
+            border-color: rgba(0,240,255,0.3);
+            transform: translateY(-4px);
+        }
+
+        .guest-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 800;
+            font-family: var(--font-heading);
+            margin: 0 auto 1rem;
+            color: white;
+        }
+
+        .ga-purple { background: rgba(176,38,255,0.2); border: 2px solid rgba(176,38,255,0.5); color: var(--color-purple); }
+        .ga-cyan { background: rgba(0,240,255,0.15); border: 2px solid rgba(0,240,255,0.5); color: var(--color-cyan); }
+        .ga-pink { background: rgba(255,0,127,0.15); border: 2px solid rgba(255,0,127,0.5); color: var(--color-pink); }
+        .ga-orange { background: rgba(255,107,0,0.15); border: 2px solid rgba(255,107,0,0.5); color: var(--color-orange); }
+
+        .guest-card h4 { font-size: 0.95rem; color: var(--color-text-white); margin-bottom: 0.3rem; }
+        .guest-card p { font-size: 0.78rem; color: var(--color-text-muted); }
+
+        @media (max-width: 900px) {
+            .featured-performer-card { grid-template-columns: 1fr; }
+            .fpc-img-side { height: 320px; }
+            .fpc-img-side::after { background: linear-gradient(to top, rgba(4,4,8,0.95) 0%, transparent 70%); }
+        }
+
+        @media (max-width: 600px) {
+            .roster-grid { grid-template-columns: 1fr; }
+            .fpc-stats { gap: 1rem; flex-wrap: wrap; }
+        }
+
+        @media (max-width: 480px) {
+            .fpc-info-side { padding: 1.5rem; }
+            .fpc-name { font-size: 2rem; }
+            .fpc-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+            .page-hero-title { font-size: 2.2rem; }
+            .featured-performer-card { margin-bottom: 2.5rem; }
+        }
+        
+        @media (max-width: 360px) {
+            .fpc-info-side { padding: 1.25rem 1rem; }
+            .pbc-stats { flex-wrap: wrap; gap: 0.5rem; }
+            .pbc-stat-item { min-width: 45%; }
+            .pbc-body { padding: 1.25rem 1rem; }
+        }
+
+        /* ── Light Theme Overrides ── */
+        html.light-theme .featured-performer-card {
+            background: #ffffff;
+            border-color: rgba(176,38,255,0.2);
+            box-shadow: 0 20px 60px rgba(176,38,255,0.07);
+        }
+        html.light-theme .fpc-img-side::after {
+            background: linear-gradient(to right, transparent 60%, rgba(255,255,255,0.97) 100%);
+        }
+        @media (max-width: 900px) {
+            html.light-theme .fpc-img-side::after {
+                background: linear-gradient(to top, rgba(255,255,255,0.97) 0%, transparent 70%);
+            }
+        }
+        html.light-theme .fpc-name {
+            color: #0f172a;
+        }
+        html.light-theme .fpc-bio {
+            color: #475569;
+        }
+        html.light-theme .fpc-stat .fpc-stat-num {
+            color: #0f172a;
+        }
+        html.light-theme .fpc-stat .fpc-stat-label {
+            color: #64748b;
+        }
+        html.light-theme .performer-bio-card {
+            background: #ffffff;
+            border-color: rgba(15,23,42,0.08);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        }
+        html.light-theme .performer-bio-card:hover {
+            border-color: rgba(176,38,255,0.25);
+            box-shadow: 0 20px 50px rgba(176,38,255,0.08);
+        }
+        html.light-theme .pbc-img-overlay {
+            background: linear-gradient(to top, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.15) 50%, transparent 100%);
+        }
+        html.light-theme .pbc-name {
+            color: #0f172a;
+        }
+        html.light-theme .pbc-bio-text {
+            color: #64748b;
+        }
+        html.light-theme .pbc-stats {
+            border-bottom-color: rgba(15,23,42,0.07);
+        }
+        html.light-theme .pbc-stat-item {
+            background: #f8fafc;
+        }
+        html.light-theme .pbc-stat-item .psn {
+            color: #0f172a;
+        }
+        html.light-theme .pbc-stat-item .psl {
+            color: #64748b;
+        }
+        html.light-theme .pbc-social-link {
+            background: #f1f5f9;
+            border-color: rgba(15,23,42,0.08);
+            color: #64748b;
+        }
+        html.light-theme .pbc-social-link:hover {
+            background: rgba(176,38,255,0.06);
+            border-color: rgba(176,38,255,0.3);
+            color: #8b5cf6;
+        }
+        html.light-theme .guest-card {
+            background: #ffffff;
+            border-color: rgba(15,23,42,0.08);
+        }
+        html.light-theme .guest-card:hover {
+            border-color: rgba(0,240,255,0.4);
+            box-shadow: 0 10px 30px rgba(0,240,255,0.06);
+        }
+        html.light-theme .guest-card h4 {
+            color: #0f172a;
+        }
+        html.light-theme .guest-card p {
+            color: #64748b;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/logo.png" alt="Laughora Logo" class="brand-logo-img">
+                <span class="logo-neon">Laugh</span><span class="logo-accent">ora</span></a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="home2.html" class="nav-link">Home2</a>
+                <a href="shows.html" class="nav-link">Shows</a>
+                <a href="tickets.html" class="nav-link">Tickets</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="openmic.html" class="nav-link">Open Mic</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+                <a href="performers.html" class="nav-link active">Performers</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </nav>
+
+            <!-- Navbar Actions (Theme Toggle & Account) -->
+            <div class="nav-actions">
+                <button id="rtlToggle" class="rtl-toggle-btn" aria-label="Toggle RTL/LTR">
+                    <svg class="ltr-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12H9M15 6l-6 6 6 6"/></svg>
+                    <svg class="rtl-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h12M9 18l6-6-6-6"/></svg>
+                </button>
+                <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle theme">
+                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path>
+                        <path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path>
+                        <path d="M2 12h2"></path><path d="M20 12h2"></path>
+                        <path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>
+                    </svg>
+                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                    </svg>
+                </button>
+                <div class="user-dropdown">
+                    <button id="userDropdownBtn" class="user-dropdown-btn" aria-label="User Account">
+                        <svg class="user-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span class="user-badge-dot"></span>
+                    </button>
+                    <div class="user-dropdown-content">
+                        <div class="dropdown-header">
+                             <p class="user-name" id="navUserName">Comedy Fan</p>
+                            <p class="user-role" id="navUserRole">Spectator</p>
+                        </div>
+                        <a href="login.html" class="dropdown-item login-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+                            </span>
+                            <span>Sign In / Sign Up</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-divider"></div>
+                        <a href="user-dashboard.html" class="dropdown-item user-dash-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            </span>
+                            <span>User Dashboard</span>
+                        </a>
+                        <a href="admin-dashboard.html" class="dropdown-item admin-dash-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                            </span>
+                            <span>Admin Dashboard</span>
+                        </a>
+                        <button class="dropdown-item signout-btn logged-in-only" id="signoutBtn">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+                            </span>
+                            <span>Sign Out</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <div class="page-hero">
+        <span class="section-tag tag-pink">MEET THE ROSTER</span>
+        <h1 class="page-hero-title">Resident <span>Performers</span></h1>
+        <p>Meet the comedians who make our stage legendary. From razor-sharp wit to masterful storytelling — discover their styles, experience, and why audiences love them.</p>
+    </div>
+
+    <!-- Performers Content -->
+    <section class="performers-page">
+        <div class="container">
+
+            <!-- Featured Performer -->
+            <div class="section-header">
+                <span class="section-tag tag-purple">HEADLINER SPOTLIGHT</span>
+                <h2 class="section-title">This Month's Featured Act</h2>
+            </div>
+
+            <div class="featured-performer-card">
+                <div class="fpc-img-side">
+                    <img src="assets/comedian_female.png" alt="Roxy Vance">
+                    <div class="fpc-glow"></div>
+                </div>
+                <div class="fpc-info-side">
+                    <span class="fpc-featured-tag">Currently Featured Headliner</span>
+                    <h2 class="fpc-name">Roxy Vance</h2>
+                    <p class="fpc-alias">"Queen of Sharp Wit"</p>
+                    <p class="fpc-bio">
+                        Roxy Vance has spent 12 years redefining what stand-up comedy can be. Specializing in high-speed dry wit, razor-sharp observations, and fearless storytelling, Roxy's sets leave audiences in stitches from start to finish.
+                        <br><br>
+                        With over 850 live shows performed and 2.1M+ social media followers, her one-hour special "Live & Unfiltered" has sold out 17 consecutive nights at Laughora and is currently in production for a streaming platform release. <strong>Why she's popular:</strong> Fearless storytelling, razor-sharp timing, and the rare ability to connect with every single person in the room.
+                    </p>
+                    <div class="fpc-stats">
+                        <div class="fpc-stat">
+                            <div class="fpc-stat-num">12</div>
+                            <div class="fpc-stat-label">Years Exp.</div>
+                        </div>
+                        <div class="fpc-stat">
+                            <div class="fpc-stat-num">850+</div>
+                            <div class="fpc-stat-label">Live Shows</div>
+                        </div>
+                        <div class="fpc-stat">
+                            <div class="fpc-stat-num">2.1M</div>
+                            <div class="fpc-stat-label">Audience Reach</div>
+                        </div>
+                        <div class="fpc-stat">
+                            <div class="fpc-stat-num">4.9</div>
+                            <div class="fpc-stat-label">Rating</div>
+                        </div>
+                    </div>
+                    <div class="fpc-tags">
+                        <span class="fpc-tag t-purple">Dry Wit</span>
+                        <span class="fpc-tag t-cyan">Observational</span>
+                        <span class="fpc-tag t-cyan">Storytelling</span>
+                        <span class="fpc-tag t-orange">Crowd Work</span>
+                    </div>
+                    <div class="fpc-actions">
+                        <a href="tickets.html?show=Roxy+Vance%3A+Live+%26+Unfiltered&price=25&tier=Premium+Comfort" class="btn btn-purple">
+                            <span>Book Her Next Show</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                        <a href="shows.html" class="btn btn-outline-cyan">
+                            <span>View All Shows</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Roster Grid -->
+            <div class="section-header">
+                <span class="section-tag tag-pink">FULL ROSTER</span>
+                <h2 class="section-title">Laughora Ensemble</h2>
+                <p class="section-desc">Our rotating cast of comedy legends who call Laughora their home stage.</p>
+            </div>
+
+            <div class="roster-grid">
+
+                <!-- Card 1: Roxy -->
+                <div class="performer-bio-card">
+                    <div class="pbc-img-wrap">
+                        <img src="assets/comedian_3.png" alt="Roxy Vance">
+                        <div class="pbc-img-overlay"></div>
+                        <div class="pbc-glow-color pbc-glow-purple"></div>
+                    </div>
+                    <div class="pbc-body">
+                        <h3 class="pbc-name">Roxy Vance</h3>
+                        <p class="pbc-alias alias-purple">"Queen of Sharp Wit"</p>
+                        <p class="pbc-bio-text">Razor-sharp observational comedy meets fearless storytelling. Roxy's signature style dissects modern life with precision — and leaves you doubled over with laughter. <strong>Why popular:</strong> Her ability to find humor in everyday moments and deliver it with surgical precision.</p>
+                        <div class="pbc-stats">
+                            <div class="pbc-stat-item"><div class="psn" style="color:var(--color-purple);">12</div><div class="psl">Years Exp.</div></div>
+                            <div class="pbc-stat-item"><div class="psn">850+</div><div class="psl">Live Shows</div></div>
+                            <div class="pbc-stat-item"><div class="psn">2.1M</div><div class="psl">Reach</div></div>
+                        </div>
+                        <div class="pbc-genre-tags">
+                            <span class="pbc-genre-tag" style="background:rgba(176,38,255,0.12);color:var(--color-purple);border:1px solid rgba(176,38,255,0.3);">Dry Wit</span>
+                            <span class="pbc-genre-tag" style="background:rgba(0,240,255,0.1);color:var(--color-cyan);border:1px solid rgba(0,240,255,0.3);">Observational</span>
+                        </div>
+                        <div class="pbc-footer">
+                            <a href="tickets.html?show=Roxy+Vance%3A+Live+%26+Unfiltered&price=25&tier=Premium+Comfort" class="btn btn-purple btn-sm">
+                                <span>Book Show</span>
+                            </a>
+                            <div class="pbc-socials">
+                                <a href="#" class="pbc-social-link" aria-label="Twitter">
+                                    <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.53v.05c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 01-1.93.07 4.28 4.28 0 004 2.98 8.521 8.521 0 01-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.86-.63 1.6-1.43 2.18-2.34z"/></svg>
+                                </a>
+                                <a href="#" class="pbc-social-link" aria-label="Instagram">
+                                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Jax -->
+                <div class="performer-bio-card">
+                    <div class="pbc-img-wrap">
+                        <img src="assets/comedian_2.png" alt="Jax Carter">
+                        <div class="pbc-img-overlay"></div>
+                        <div class="pbc-glow-color pbc-glow-cyan"></div>
+                    </div>
+                    <div class="pbc-body">
+                        <h3 class="pbc-name">Jax Carter</h3>
+                        <p class="pbc-alias alias-cyan">"The Crowd Favorite"</p>
+                        <p class="pbc-bio-text">Combines high-energy physical comedy with brilliant crowd work and hilarious takes on modern life, relationships, and the absurdity of everyday situations. No topic is off limits. <strong>Why popular:</strong> His unmatched crowd interaction makes every show feel personal and unique.</p>
+                        <div class="pbc-stats">
+                            <div class="pbc-stat-item"><div class="psn" style="color:var(--color-cyan);">8</div><div class="psl">Years Exp.</div></div>
+                            <div class="pbc-stat-item"><div class="psn">600+</div><div class="psl">Live Shows</div></div>
+                            <div class="pbc-stat-item"><div class="psn">1.5M</div><div class="psl">Reach</div></div>
+                        </div>
+                        <div class="pbc-genre-tags">
+                            <span class="pbc-genre-tag" style="background:rgba(0,240,255,0.1);color:var(--color-cyan);border:1px solid rgba(0,240,255,0.3);">Physical</span>
+                            <span class="pbc-genre-tag" style="background:rgba(255,107,0,0.1);color:var(--color-orange);border:1px solid rgba(255,107,0,0.3);">Crowd Work</span>
+                        </div>
+                        <div class="pbc-footer">
+                            <a href="tickets.html?show=Jax+Carter%3A+No+Filter&price=30&tier=Premium+Comfort" class="btn btn-outline-cyan btn-sm">
+                                <span>Book Show</span>
+                            </a>
+                            <div class="pbc-socials">
+                                <a href="#" class="pbc-social-link" aria-label="Twitter">
+                                    <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.53v.05c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 01-1.93.07 4.28 4.28 0 004 2.98 8.521 8.521 0 01-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.86-.63 1.6-1.43 2.18-2.34z"/></svg>
+                                </a>
+                                <a href="#" class="pbc-social-link" aria-label="Instagram">
+                                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Marcus -->
+                <div class="performer-bio-card">
+                    <div class="pbc-img-wrap">
+                        <img src="assets/comedian_male.png" alt="Marcus Chen">
+                        <div class="pbc-img-overlay"></div>
+                        <div class="pbc-glow-color pbc-glow-orange"></div>
+                    </div>
+                    <div class="pbc-body">
+                        <h3 class="pbc-name">Marcus Chen</h3>
+                        <p class="pbc-alias alias-orange">"The Storyteller"</p>
+                        <p class="pbc-bio-text">A master of narrative stand-up, Marcus weaves hilarious stories from everyday life into comedy gold. His observational style and impeccable timing make every set a journey you won't forget. <strong>Why popular:</strong> Relatable storytelling that feels like catching up with your funniest friend — audiences leave feeling like they know him.</p>
+                        <div class="pbc-stats">
+                            <div class="pbc-stat-item"><div class="psn" style="color:var(--color-orange);">15</div><div class="psl">Years Exp.</div></div>
+                            <div class="pbc-stat-item"><div class="psn">1.2K</div><div class="psl">Live Shows</div></div>
+                            <div class="pbc-stat-item"><div class="psn">3.5M</div><div class="psl">Reach</div></div>
+                        </div>
+                        <div class="pbc-genre-tags">
+                            <span class="pbc-genre-tag" style="background:rgba(255,107,0,0.1);color:var(--color-orange);border:1px solid rgba(255,107,0,0.3);">Storytelling</span>
+                            <span class="pbc-genre-tag" style="background:rgba(176,38,255,0.12);color:var(--color-purple);border:1px solid rgba(176,38,255,0.3);">Observational</span>
+                        </div>
+                        <div class="pbc-footer">
+                            <a href="tickets.html?show=Marcus+Chen%3A+Unplugged&price=35&tier=Premium+Comfort" class="btn btn-orange btn-sm">
+                                <span>Book Show</span>
+                            </a>
+                            <div class="pbc-socials">
+                                <a href="#" class="pbc-social-link" aria-label="Twitter">
+                                    <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.53v.05c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 01-1.93.07 4.28 4.28 0 004 2.98 8.521 8.521 0 01-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.86-.63 1.6-1.43 2.18-2.34z"/></svg>
+                                </a>
+                                <a href="#" class="pbc-social-link" aria-label="YouTube">
+                                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4: Nova (guest) -->
+                <div class="performer-bio-card">
+                    <div class="pbc-img-wrap" style="background: linear-gradient(135deg, rgba(255,0,127,0.15), rgba(176,38,255,0.1)); display:flex;align-items:center;justify-content:center;">
+                        <div style="width:120px;height:120px;border-radius:50%;background:rgba(255,0,127,0.15);border:3px solid rgba(255,0,127,0.4);display:flex;align-items:center;justify-content:center;font-size:3rem;font-weight:800;color:var(--color-pink);font-family:var(--font-heading);">NB</div>
+                        <div class="pbc-img-overlay"></div>
+                        <div class="pbc-glow-color pbc-glow-pink"></div>
+                    </div>
+                    <div class="pbc-body">
+                        <h3 class="pbc-name">Nova Blaze</h3>
+                        <p class="pbc-alias alias-pink">"The Cosmic Disruptor"</p>
+                        <p class="pbc-bio-text">Fresh from a sold-out regional tour, Nova brings a whirlwind of dark humor, absurdist sketches, and mind-melting observations on social media culture and digital addiction. <strong>Why popular:</strong> Edgy, unfiltered takes that resonate with Gen Z and millennial audiences — her viral clips regularly hit 10M+ views.</p>
+                        <div class="pbc-stats">
+                            <div class="pbc-stat-item"><div class="psn" style="color:var(--color-pink);">6</div><div class="psl">Years Exp.</div></div>
+                            <div class="pbc-stat-item"><div class="psn">400+</div><div class="psl">Live Shows</div></div>
+                            <div class="pbc-stat-item"><div class="psn">890K</div><div class="psl">Reach</div></div>
+                        </div>
+                        <div class="pbc-genre-tags">
+                            <span class="pbc-genre-tag" style="background:rgba(255,0,127,0.12);color:var(--color-pink);border:1px solid rgba(255,0,127,0.3);">Dark Humor</span>
+                            <span class="pbc-genre-tag" style="background:rgba(176,38,255,0.12);color:var(--color-purple);border:1px solid rgba(176,38,255,0.3);">Absurdist</span>
+                        </div>
+                        <div class="pbc-footer">
+                            <a href="tickets.html" class="btn btn-outline-pink btn-sm">
+                                <span>Book Show</span>
+                            </a>
+                            <div class="pbc-socials">
+                                <a href="#" class="pbc-social-link" aria-label="Twitter">
+                                    <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.53v.05c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 01-1.93.07 4.28 4.28 0 004 2.98 8.521 8.521 0 01-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.86-.63 1.6-1.43 2.18-2.34z"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5: Kai -->
+                <div class="performer-bio-card">
+                    <div class="pbc-img-wrap" style="background: linear-gradient(135deg, rgba(0,240,255,0.12), rgba(176,38,255,0.08)); display:flex;align-items:center;justify-content:center;">
+                        <div style="width:120px;height:120px;border-radius:50%;background:rgba(0,240,255,0.12);border:3px solid rgba(0,240,255,0.4);display:flex;align-items:center;justify-content:center;font-size:3rem;font-weight:800;color:var(--color-cyan);font-family:var(--font-heading);">KS</div>
+                        <div class="pbc-img-overlay"></div>
+                        <div class="pbc-glow-color pbc-glow-cyan"></div>
+                    </div>
+                    <div class="pbc-body">
+                        <h3 class="pbc-name">Kai Storm</h3>
+                        <p class="pbc-alias alias-cyan">"The Chaos Architect"</p>
+                        <p class="pbc-bio-text">A whirlwind of absurdist sketch comedy and razor-sharp improvisation. Kai builds entire worlds on stage from a single audience suggestion, leaving crowds in disbelief at his quick wit and creativity. <strong>Why popular:</strong> Every show is completely unique — no two sets are ever the same.</p>
+                        <div class="pbc-stats">
+                            <div class="pbc-stat-item"><div class="psn" style="color:var(--color-cyan);">10</div><div class="psl">Years Exp.</div></div>
+                            <div class="pbc-stat-item"><div class="psn">700+</div><div class="psl">Live Shows</div></div>
+                            <div class="pbc-stat-item"><div class="psn">1.8M</div><div class="psl">Reach</div></div>
+                        </div>
+                        <div class="pbc-genre-tags">
+                            <span class="pbc-genre-tag" style="background:rgba(0,240,255,0.1);color:var(--color-cyan);border:1px solid rgba(0,240,255,0.3);">Absurdist</span>
+                            <span class="pbc-genre-tag" style="background:rgba(176,38,255,0.12);color:var(--color-purple);border:1px solid rgba(176,38,255,0.3);">Improv</span>
+                        </div>
+                        <div class="pbc-footer">
+                            <a href="tickets.html" class="btn btn-cyan btn-sm">
+                                <span>Book Show</span>
+                            </a>
+                            <div class="pbc-socials">
+                                <a href="#" class="pbc-social-link" aria-label="Instagram">
+                                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                                </a>
+                                <a href="#" class="pbc-social-link" aria-label="YouTube">
+                                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6: Luna -->
+                <div class="performer-bio-card">
+                    <div class="pbc-img-wrap" style="background: linear-gradient(135deg, rgba(255,107,0,0.12), rgba(255,0,127,0.08)); display:flex;align-items:center;justify-content:center;">
+                        <div style="width:120px;height:120px;border-radius:50%;background:rgba(255,107,0,0.12);border:3px solid rgba(255,107,0,0.4);display:flex;align-items:center;justify-content:center;font-size:3rem;font-weight:800;color:var(--color-orange);font-family:var(--font-heading);">LR</div>
+                        <div class="pbc-img-overlay"></div>
+                        <div class="pbc-glow-color pbc-glow-orange"></div>
+                    </div>
+                    <div class="pbc-body">
+                        <h3 class="pbc-name">Luna Reyes</h3>
+                        <p class="pbc-alias alias-orange">"The Vocal Virtuoso"</p>
+                        <p class="pbc-bio-text">Musical comedy meets dead-on impressions in Luna's high-energy performances. From spot-on celebrity voices to original comedic songs, she transforms the stage into a one-person variety show that never misses. <strong>Why popular:</strong> Her vocal range and comedic timing create a show that's part concert, part stand-up, pure entertainment.</p>
+                        <div class="pbc-stats">
+                            <div class="pbc-stat-item"><div class="psn" style="color:var(--color-orange);">7</div><div class="psl">Years Exp.</div></div>
+                            <div class="pbc-stat-item"><div class="psn">500+</div><div class="psl">Live Shows</div></div>
+                            <div class="pbc-stat-item"><div class="psn">1.2M</div><div class="psl">Reach</div></div>
+                        </div>
+                        <div class="pbc-genre-tags">
+                            <span class="pbc-genre-tag" style="background:rgba(255,107,0,0.1);color:var(--color-orange);border:1px solid rgba(255,107,0,0.3);">Musical</span>
+                            <span class="pbc-genre-tag" style="background:rgba(255,0,127,0.12);color:var(--color-pink);border:1px solid rgba(255,0,127,0.3);">Impressions</span>
+                        </div>
+                        <div class="pbc-footer">
+                            <a href="tickets.html" class="btn btn-orange btn-sm">
+                                <span>Book Show</span>
+                            </a>
+                            <div class="pbc-socials">
+                                <a href="#" class="pbc-social-link" aria-label="Twitter">
+                                    <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.53v.05c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 01-1.93.07 4.28 4.28 0 004 2.98 8.521 8.521 0 01-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.86-.63 1.6-1.43 2.18-2.34z"/></svg>
+                                </a>
+                                <a href="#" class="pbc-social-link" aria-label="YouTube">
+                                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /roster-grid -->
+
+            <!-- Guest Comics Section -->
+            <div class="guest-comics">
+                <div class="section-header">
+                    <span class="section-tag tag-orange">VISITING ACTS</span>
+                    <h2 class="section-title">Guest Comics This Month</h2>
+                    <p class="section-desc">Exciting touring artists making a stop at Laughora for one-night specials.</p>
+                </div>
+                <div class="guest-comics-grid">
+                    <div class="guest-card">
+                        <div class="guest-avatar ga-purple">AK</div>
+                        <h4>Alex Kyrin</h4>
+                        <p>June 5 · One-Night Special</p>
+                    </div>
+                    <div class="guest-card">
+                        <div class="guest-avatar ga-cyan">SZ</div>
+                        <h4>Sola Zane</h4>
+                        <p>June 12 · Headline Guest</p>
+                    </div>
+                    <div class="guest-card">
+                        <div class="guest-avatar ga-pink">PM</div>
+                        <h4>Pixel Max</h4>
+                        <p>June 19 · Special Feature</p>
+                    </div>
+                    <div class="guest-card">
+                        <div class="guest-avatar ga-orange">VX</div>
+                        <h4>Vera Xeno</h4>
+                        <p>June 26 · Touring Act</p>
+                    </div>
+                    <div class="guest-card">
+                        <div class="guest-avatar ga-purple">DS</div>
+                        <h4>Dax Storm</h4>
+                        <p>June 28 · Late Night Show</p>
+                    </div>
+                </div>
+                <div style="text-align:center;margin-top:2.5rem;">
+                    <a href="shows.html" class="btn btn-outline-purple">
+                        <span>View Full Show Schedule</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-glow-line"></div>
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Brand Info -->
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <img src="assets/logo.png" alt="Laughora Logo" class="brand-logo-img">
+                        <span class="logo-neon">Laugh</span><span class="logo-accent">ora</span>
+                    </a>
+                    <p>The premier stand-up comedy club. Three stages, non-stop laughs, and an unforgettable night out.</p>
+                    <div class="footer-socials">
+                        <a href="#" aria-label="Twitter"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.53v.05c0 2.08 1.48 3.82 3.44 4.21-.36.1-.74.15-1.13.15-.27 0-.54-.03-.8-.08.54 1.7 2.11 2.93 3.97 2.97-1.46 1.14-3.3 1.82-5.31 1.82-.35 0-.69-.02-1.02-.06C2.82 20.31 5.09 21 7.5 21c9 0 13.92-7.46 13.92-13.92 0-.21 0-.42-.02-.63.95-.7 1.78-1.56 2.43-2.54z" />
+                            </svg></a>
+                        <a href="#" aria-label="Instagram"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg></a>
+                        <a href="#" aria-label="YouTube"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"></path>
+                                <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" />
+                            </svg></a>
+                    </div>
+                </div>
+
+                <!-- Fast Links -->
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="home2.html">Alternate Stage</a></li>
+                        <li><a href="shows.html">Comedy Shows</a></li>
+                        <li><a href="openmic.html">Open Mic Slots</a></li>
+                        <li><a href="performers.html">The Comedians</a></li>
+                        <li><a href="tickets.html">Seating Tickets</a></li>
+                    </ul>
+                </div>
+
+                <!-- Quick Help -->
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="footer-newsletter">
+                    <h4>Stay Updated</h4>
+                    <p>Subscribe to receive secret discount codes, lineup updates, and priority open mic notifications.</p>
+                    <form id="newsletterForm" class="newsletter-form">
+                        <input type="email" id="newsletterEmail" placeholder="Enter your email" required>
+                        <button type="submit" aria-label="Subscribe to newsletter">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </form>
+                    <p class="newsletter-feedback" id="newsletterFeedback"></p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Laughora Inc. All rights reserved.</p>
+                <a href="#" class="back-to-top">
+                    <span>Back to Top</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 15l-6-6-6 6" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

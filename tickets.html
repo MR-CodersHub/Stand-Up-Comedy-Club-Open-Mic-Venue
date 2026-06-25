@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laughora | Tickets & Seating</title>
+    <meta name="description" content="Book your seats at Laughora. Choose from General Entry, Couple Pass, Premium Comfort, and VIP Pods. Interactive seating map included.">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Inline blocking theme loader -->
+    <script>
+        (function () {
+            const theme = localStorage.getItem('theme') || 'dark';
+            if (theme === 'light') {
+                document.documentElement.classList.add('light-theme');
+            }
+        })();
+    </script>
+    <style>
+        .page-hero {
+            padding: 160px 24px 80px;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(ellipse at 50% 0%, rgba(255,0,127,0.12) 0%, transparent 60%);
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--color-pink), var(--color-purple), transparent);
+            opacity: 0.4;
+        }
+        .page-hero-title { font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 800; color: var(--color-text-white); margin-bottom: 1rem; }
+        .page-hero-title span { background: linear-gradient(135deg, var(--color-pink), var(--color-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .page-hero p { max-width: 600px; margin: 0 auto; font-size: 1.05rem; color: var(--color-text-slate); }
+
+        .tickets-page { padding: 60px 0 100px; }
+
+        /* Pricing Grid */
+        .pricing-grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card-v2 {
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.07);
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card-v2:hover {
+            transform: translateY(-8px);
+        }
+
+        .pricing-card-v2.featured {
+            border-color: rgba(176,38,255,0.4);
+            background: rgba(176,38,255,0.05);
+            box-shadow: 0 0 40px rgba(176,38,255,0.1);
+            overflow: visible;
+        }
+
+        .pricing-card-v2.featured .card-glow-badge {
+            position: absolute;
+            top: 0.8rem;
+            left: auto;
+            transform: translateX(-50%);
+            z-index: 2;
+            white-space: nowrap;
+            padding: 6px 18px;
+        }
+        .pricing-card-v2.couple-card {
+            border-color: rgba(255,0,127,0.4);
+            background: rgba(255,0,127,0.04);
+        }
+
+        .pricing-card-v2::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+        }
+
+        .pricing-card-v2.general-card::before { background: linear-gradient(90deg, var(--color-pink), transparent); }
+        .pricing-card-v2.couple-card::before { background: linear-gradient(90deg, var(--color-pink), var(--color-purple)); }
+        .pricing-card-v2.featured::before { background: linear-gradient(90deg, var(--color-purple), var(--color-cyan)); }
+        .pricing-card-v2.vip-card::before { background: linear-gradient(90deg, var(--color-cyan), transparent); }
+
+        .tier-badge {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 100px;
+            margin-bottom: 1.25rem;
+        }
+
+        .tier-badge.tb-pink { background: rgba(255,0,127,0.15); color: var(--color-pink); border: 1px solid rgba(255,0,127,0.3); }
+        .tier-badge.tb-purple { background: rgba(176,38,255,0.15); color: var(--color-purple); border: 1px solid rgba(176,38,255,0.3); }
+        .tier-badge.tb-cyan { background: rgba(0,240,255,0.15); color: var(--color-cyan); border: 1px solid rgba(0,240,255,0.3); }
+
+        .pricing-card-v2 h3 { font-size: 1.3rem; color: var(--color-text-white); margin-bottom: 0.5rem; }
+
+        .price-big {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            margin-bottom: 1.25rem;
+        }
+
+        .price-big .p-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--color-text-white);
+            font-family: var(--font-heading);
+            line-height: 1;
+        }
+
+        .price-big .p-unit {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            padding-bottom: 8px;
+        }
+
+        .pricing-feats {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+            flex: 1;
+            margin-bottom: 1.75rem;
+        }
+
+        .pricing-feats li {
+            font-size: 0.875rem;
+            color: var(--color-text-slate);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pricing-feats li.feat-on { color: var(--color-text-white); }
+        .pricing-feats li.feat-off { opacity: 0.4; text-decoration: line-through; }
+
+        .feat-check { width: 16px; height: 16px; flex-shrink: 0; }
+
+        /* Couple Pass note */
+        .couple-note {
+            background: rgba(255,0,127,0.08);
+            border: 1px solid rgba(255,0,127,0.2);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            font-size: 0.78rem;
+            color: var(--color-pink);
+            margin-bottom: 1.25rem;
+            line-height: 1.5;
+        }
+
+        /* Booking Form Section */
+        .booking-section {
+            margin-top: 80px;
+            padding-top: 60px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .booking-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+            align-items: start;
+        }
+
+        .booking-form-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 20px;
+            padding: 2.5rem;
+        }
+
+        .booking-form-card h3 {
+            font-size: 1.4rem;
+            color: var(--color-text-white);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .booking-form-card h3 svg { color: var(--color-purple); }
+
+        /* Seating Map Card */
+        .seating-map-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .seating-map-card h3 {
+            font-size: 1.2rem;
+            color: var(--color-text-white);
+            margin-bottom: 1.5rem;
+        }
+
+        .stage-label {
+            text-align: center;
+            padding: 10px;
+            background: linear-gradient(90deg, rgba(176,38,255,0.2), rgba(0,240,255,0.2));
+            border: 1px solid rgba(176,38,255,0.4);
+            border-radius: 8px;
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            color: var(--color-text-white);
+            margin-bottom: 1.25rem;
+            font-weight: 600;
+        }
+
+        .seating-grid-v2 {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 6px;
+            margin-bottom: 1.25rem;
+        }
+
+        .seat-btn {
+            aspect-ratio: 1;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.55rem;
+            font-weight: 700;
+            transition: var(--transition-fast);
+            position: relative;
+        }
+
+        .seat-btn.avail {
+            background: rgba(0,240,255,0.1);
+            border: 1px solid rgba(0,240,255,0.3);
+            color: var(--color-cyan);
+        }
+
+        .seat-btn.avail:hover {
+            background: rgba(0,240,255,0.25);
+            box-shadow: 0 0 12px rgba(0,240,255,0.4);
+            transform: scale(1.15);
+        }
+
+        .seat-btn.selected {
+            background: var(--color-purple);
+            border: 1px solid var(--color-purple);
+            color: white;
+            box-shadow: 0 0 12px rgba(176,38,255,0.5);
+        }
+
+        .seat-btn.taken {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.15);
+            cursor: not-allowed;
+        }
+
+        .seat-legend {
+            display: flex;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .seat-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        .ld-avail { background: rgba(0,240,255,0.3); border: 1px solid rgba(0,240,255,0.5); }
+        .ld-selected { background: var(--color-purple); }
+        .ld-taken { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); }
+
+        /* Calculator */
+        .calc-panel {
+            background: rgba(176,38,255,0.06);
+            border: 1px solid rgba(176,38,255,0.2);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .calc-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            font-size: 0.875rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .calc-row:last-child { border-bottom: none; }
+
+        .calc-row .calc-label-txt { color: var(--color-text-muted); }
+        .calc-row .calc-val { color: var(--color-text-white); font-weight: 600; }
+
+        .calc-row.total-row .calc-label-txt { color: var(--color-text-white); font-size: 1rem; font-weight: 700; }
+        .calc-row.total-row .calc-val { color: var(--color-purple); font-size: 1.3rem; font-weight: 800; font-family: var(--font-heading); }
+
+        /* Success state */
+        .booking-success-v2 {
+            display: none;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .booking-success-v2.show { display: block; }
+
+        .bs-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(176,38,255,0.1);
+            border: 2px solid rgba(176,38,255,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .receipt-block {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+        }
+
+        .receipt-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .receipt-line:last-child { border-bottom: none; }
+        .receipt-line span { color: var(--color-text-muted); }
+        .receipt-line strong { color: var(--color-text-white); }
+
+        @media (max-width: 900px) {
+            .booking-layout { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            .pricing-grid-4 { grid-template-columns: 1fr; }
+            .seating-grid-v2 { grid-template-columns: repeat(6,1fr); }
+        }
+
+        /* Light Theme Overrides */
+        html.light-theme .pricing-card-v2 {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        }
+        html.light-theme .pricing-card-v2 h3 {
+            color: #0f172a;
+        }
+        html.light-theme .price-big .p-amount {
+            color: #0f172a;
+        }
+        html.light-theme .price-big .p-unit {
+            color: #64748b;
+        }
+        html.light-theme .pricing-feats li {
+            color: #475569;
+        }
+        html.light-theme .pricing-feats li.feat-on {
+            color: #0f172a;
+        }
+        html.light-theme .pricing-card-v2.featured {
+            background: rgba(176,38,255,0.03);
+            border-color: rgba(176,38,255,0.3);
+            box-shadow: 0 10px 30px rgba(176, 38, 255, 0.08);
+        }
+        html.light-theme .pricing-card-v2.couple-card {
+            background: rgba(255,0,127,0.03);
+            border-color: rgba(255,0,127,0.3);
+            box-shadow: 0 10px 30px rgba(255, 0, 127, 0.08);
+        }
+        html.light-theme .couple-note {
+            background: rgba(255,0,127,0.04);
+            border: 1px solid rgba(255,0,127,0.15);
+            color: #d0006f;
+        }
+        html.light-theme .booking-form-card {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+        }
+        html.light-theme .booking-form-card h3 {
+            color: #0f172a;
+        }
+        html.light-theme .seating-map-card {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+        }
+        html.light-theme .seating-map-card h3 {
+            color: #0f172a;
+        }
+        html.light-theme .stage-label {
+            background: linear-gradient(90deg, rgba(176,38,255,0.08), rgba(0,240,255,0.08));
+            border: 1px solid rgba(176,38,255,0.25);
+            color: #4f46e5;
+        }
+        html.light-theme .seat-btn.avail {
+            background: rgba(0,240,255,0.05);
+            border: 1px solid rgba(0,240,255,0.4);
+            color: #0891b2;
+        }
+        html.light-theme .seat-btn.avail:hover {
+            background: rgba(0,240,255,0.15);
+            box-shadow: 0 0 8px rgba(0,240,255,0.3);
+        }
+        html.light-theme .seat-btn.taken {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            color: #cbd5e1;
+        }
+        html.light-theme .ld-taken {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+        }
+        html.light-theme .calc-panel {
+            background: rgba(176,38,255,0.03);
+            border: 1px solid rgba(176,38,255,0.15);
+        }
+        html.light-theme .calc-row {
+            border-bottom: 1px solid rgba(15, 23, 42, 0.05);
+        }
+        html.light-theme .calc-row .calc-label-txt {
+            color: #64748b;
+        }
+        html.light-theme .calc-row .calc-val {
+            color: #0f172a;
+        }
+        html.light-theme .calc-row.total-row .calc-label-txt {
+            color: #0f172a;
+        }
+        html.light-theme .receipt-block {
+            background: #f8fafc;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+        }
+        html.light-theme .receipt-line {
+            border-bottom: 1px solid rgba(15, 23, 42, 0.05);
+        }
+        html.light-theme .receipt-line span {
+            color: #64748b;
+        }
+        html.light-theme .receipt-line strong {
+            color: #0f172a;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/logo.png" alt="Laughora Logo" class="brand-logo-img">
+                <span class="logo-neon">Laugh</span><span class="logo-accent">ora</span></a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="home2.html" class="nav-link">Home2</a>
+                <a href="shows.html" class="nav-link">Shows</a>
+                <a href="tickets.html" class="nav-link active">Tickets</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="openmic.html" class="nav-link">Open Mic</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+                <a href="performers.html" class="nav-link">Performers</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </nav>
+
+            <!-- Navbar Actions (Theme Toggle & Account) -->
+            <div class="nav-actions">
+                <button id="rtlToggle" class="rtl-toggle-btn" aria-label="Toggle RTL/LTR">
+                    <svg class="ltr-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12H9M15 6l-6 6 6 6"/></svg>
+                    <svg class="rtl-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h12M9 18l6-6-6-6"/></svg>
+                </button>
+                <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle theme">
+                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path>
+                        <path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path>
+                        <path d="M2 12h2"></path><path d="M20 12h2"></path>
+                        <path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>
+                    </svg>
+                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                    </svg>
+                </button>
+                <div class="user-dropdown">
+                    <button id="userDropdownBtn" class="user-dropdown-btn" aria-label="User Account">
+                        <svg class="user-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span class="user-badge-dot"></span>
+                    </button>
+                    <div class="user-dropdown-content">
+                        <div class="dropdown-header">
+                             <p class="user-name" id="navUserName">Comedy Fan</p>
+                            <p class="user-role" id="navUserRole">Spectator</p>
+                        </div>
+                        <a href="login.html" class="dropdown-item login-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+                            </span>
+                            <span>Sign In / Sign Up</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-divider"></div>
+                        <a href="user-dashboard.html" class="dropdown-item user-dash-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            </span>
+                            <span>User Dashboard</span>
+                        </a>
+                        <a href="admin-dashboard.html" class="dropdown-item admin-dash-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                            </span>
+                            <span>Admin Dashboard</span>
+                        </a>
+                        <button class="dropdown-item signout-btn logged-in-only" id="signoutBtn">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+                            </span>
+                            <span>Sign Out</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <div class="page-hero">
+        <span class="section-tag tag-pink">SECURE YOUR EXPERIENCE</span>
+        <h1 class="page-hero-title">Tickets &amp; <span>Seating</span></h1>
+        <p>Choose your seating tier, pick your seats on the interactive radar map, and complete your secure checkout in seconds.</p>
+    </div>
+
+    <!-- Tickets Page Content -->
+    <section class="tickets-page">
+        <div class="container">
+
+            <!-- Pricing Tiers -->
+            <div class="section-header">
+                <span class="section-tag tag-pink">SEATING TIERS</span>
+                <h2 class="section-title">Choose Your Seating Level</h2>
+                <p class="section-desc">Unlock premium entry, customized dining options, and prime view stages.</p>
+            </div>
+
+            <div class="pricing-grid-4">
+
+                <!-- General Entry -->
+                <div class="pricing-card-v2 general-card">
+                    <span class="tier-badge tb-pink">General Entry</span>
+                    <h3>Standard Access</h3>
+                    <div class="price-big">
+                        <span class="p-amount">$15</span>
+                        <span class="p-unit">/seat</span>
+                    </div>
+                    <ul class="pricing-feats">
+                        <li class="feat-on">
+                            <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="#ff007f" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                            Standard Row Seating
+                        </li>
+                        <li class="feat-on">
+                            <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="#ff007f" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                            Access to Main Bar Area
+                        </li>
+                        <li class="feat-on">
+                            <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="#ff007f" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                            High Quality Sound Coverage
+                        </li>
+                        <li class="feat-off">
+                            <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                            Complimentary Drinks
+                        </li>
+                        <li class="feat-off">
+                            <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                            VIP Lounge Access
+                        </li>
+                    </ul>
+                    <button class="btn btn-outline-pink btn-block select-tier-btn-v2" data-tier="General Entry" data-price="15" data-color="pink">Select General</button>
+                </div>
+
+                <!-- Couple Pass -->
+                <div class="pricing-card-v2 couple-card">
+                    <span class="tier-badge tb-pink">Couple Pass</span>
+                    <h3>For Two</h3>
+                    <div class="price-big">
+                        <span class="p-amount">$45</span>
+                        <span class="p-unit">/pair</span>
+                    </div>
+                    <div class="couple-note">
+                        💫 Save $15 vs. 2× General tickets! Includes 2 adjacent premium seats.
+                    </div>
+                    <ul class="pricing-feats">
+                        <li class="feat-on">
+                            <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="#ff007f" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                            2 Adjacent Cushion Seats
+                        </li>
+                        <li class="feat-on">
+                            <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="#ff007f" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                            Shared Table with Drink Stand
+                        </li>
+                        <li class="feat-on">
+                            <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="#ff007f" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                            1 Complimentary Cocktail per Person
+                        </li>
+                        <li class="feat-on">
+                            <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="#ff007f" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                            Priority Entry Line
+                        </li>
+                        <li class="feat-off">
+                            <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                            VIP Lounge Access
+                        </li>
+                    </ul>
+                    <button class="btn btn-outline-pink btn-block select-tier-btn-v2" data-tier="Couple Pass" data-price="45" data-color="pink">Select Couple Pass</button>
+                </div>
+
+                <!-- Premium (Featured) -->
+                <div class="pricing-card-v2 featured">
+                    <span class="card-glow-badge">MOST POPULAR</span>
+                    <span class="tier-badge tb-purple">Premium Comfort</span>
+                    <h3>Prime View</h3>
+                    <div class="price-big">
+                        <span class="p-amount">$30</span>
+                        <span class="p-unit">/seat</span>
+                    </div>
+                    <ul class="pricing-feats">
+                        <li class="feat-on">
+                            <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="#b026ff" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                            Front-Middle Row Cushion Seats
+                        </li>
+                        <li class="feat-on">
+                            <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="#b026ff" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                            1 Complimentary Signature Cocktail
+                        </li>
+                        <li class="feat-on">
+                            <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="#b026ff" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                            Priority Entry Line
+                        </li>
+                        <li class="feat-on">
+                            <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="#b026ff" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                            In-seat Digital Beverage Ordering
+                        </li>
+                        <li class="feat-off">
+                            <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                            VIP Lounge Access
+                        </li>
+                    </ul>
+                    <button class="btn btn-purple btn-block select-tier-btn-v2" data-tier="Premium Comfort" data-price="30" data-color="purple">Select Premium</button>
+                </div>
+
+                <!-- VIP -->
+                <div class="pricing-card-v2 vip-card">
+                    <span class="tier-badge tb-cyan">VIP Pods</span>
+                    <h3>Ultra Premium</h3>
+                    <div class="price-big">
+                        <span class="p-amount">$65</span>
+                        <span class="p-unit">/seat</span>
+                    </div>
+                    <ul class="pricing-feats">
+                        <li class="feat-on">
+                            <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                            Front Row Luxury Recliner Pods
+                        </li>
+                        <li class="feat-on">
+                            <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                            Unlimited Cocktails &amp; Gastronomy
+                        </li>
+                        <li class="feat-on">
+                            <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                            Post-show Meet &amp; Greet
+                        </li>
+                        <li class="feat-on">
+                            <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                            Exclusive VIP Lounge Access
+                        </li>
+                        <li class="feat-on">
+                            <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                            Private Table Service
+                        </li>
+                    </ul>
+                    <button class="btn btn-outline-cyan btn-block select-tier-btn-v2" data-tier="VIP Pods" data-price="65" data-color="cyan">Select VIP</button>
+                </div>
+
+            </div>
+
+            <!-- Booking Form Section -->
+            <div class="booking-section" id="bookingFormSection">
+                <div class="section-header">
+                    <span class="section-tag tag-purple">SECURE CHECKOUT</span>
+                    <h2 class="section-title">Configure Your Booking</h2>
+                    <p class="section-desc">Select your tier above, choose your seats, and complete the checkout below.</p>
+                </div>
+
+                <div class="booking-layout">
+
+                    <!-- Left: Seating Map -->
+                    <div class="seating-map-card">
+                        <h3>🎯 Radar Seat Map</h3>
+                        <div class="stage-label">— STAGE —</div>
+                        <div class="seating-grid-v2" id="seatingGridV2">
+                            <!-- Dynamically rendered by JS -->
+                        </div>
+                        <div class="seat-legend">
+                            <div class="seat-legend-item"><div class="legend-dot ld-avail"></div> Available</div>
+                            <div class="seat-legend-item"><div class="legend-dot ld-selected"></div> Selected</div>
+                            <div class="seat-legend-item"><div class="legend-dot ld-taken"></div> Taken</div>
+                        </div>
+
+                        <!-- Calculator -->
+                        <div class="calc-panel">
+                            <div class="calc-row">
+                                <span class="calc-label-txt">Selected Tier</span>
+                                <span class="calc-val" id="calcTierLabel">— Select a Tier</span>
+                            </div>
+                            <div class="calc-row">
+                                <span class="calc-label-txt">Seats Selected</span>
+                                <span class="calc-val" id="calcSeatsLabel">0 seats</span>
+                            </div>
+                            <div class="calc-row">
+                                <span class="calc-label-txt">Price per Seat</span>
+                                <span class="calc-val" id="calcPriceLabel">$0</span>
+                            </div>
+                            <div class="calc-row total-row">
+                                <span class="calc-label-txt">Total Amount</span>
+                                <span class="calc-val" id="calcTotalLabel">$0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Booking Form -->
+                    <div class="booking-form-card">
+                        <div id="bookingFormWrap">
+                            <h3>
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                Booking Details
+                            </h3>
+                            <form id="ticketBookingFormV2">
+                                <div class="form-group">
+                                    <label for="bookerNameV2">Full Name</label>
+                                    <input type="text" id="bookerNameV2" placeholder="Your Full Name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="bookerEmailV2">Email Address</label>
+                                    <input type="email" id="bookerEmailV2" placeholder="your@email.com" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="seatQtyV2">Number of Seats</label>
+                                    <select id="seatQtyV2">
+                                        <option value="1">1 Seat</option>
+                                        <option value="2">2 Seats</option>
+                                        <option value="3">3 Seats</option>
+                                        <option value="4">4 Seats (Max)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="showSelectV2">Select Show</label>
+                                    <select id="showSelectV2">
+                                        <option value="Roxy Vance: Live &amp; Unfiltered|25">Roxy Vance: Live &amp; Unfiltered — May 29</option>
+                                        <option value="Jax Carter: No Filter|30">Jax Carter: No Filter — May 30</option>
+                                        <option value="Open Mic Night|10">Open Mic Night — Jun 01</option>
+                                        <option value="Marcus Chen: Unplugged|35">Marcus Chen: Unplugged — Jun 07</option>
+                                        <option value="Comedy All-Stars Night|50">Comedy All-Stars Night — Jun 14</option>
+                                        <option value="Open Mic: Summer Special|10">Open Mic: Summer Special — Jun 21</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="promoCodeV2">Promo Code (Optional)</label>
+                                    <input type="text" id="promoCodeV2" placeholder="Enter promo code...">
+                                </div>
+                                <button type="submit" class="btn btn-purple btn-block" id="checkoutBtnV2" disabled>
+                                    <span id="checkoutBtnLabel">Select a Tier &amp; Seats to Continue</span>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Success State -->
+                        <div class="booking-success-v2" id="bookingSuccessV2">
+                            <div class="bs-icon">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#b026ff" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+                            </div>
+                            <h2 style="color:var(--color-text-white);margin-bottom:0.75rem;">Booking Confirmed!</h2>
+                            <p style="color:var(--color-text-muted);margin-bottom:1.5rem;">Your seats have been reserved. Check your email for confirmation.</p>
+                            <div class="receipt-block">
+                                <div class="receipt-line"><span>Transaction Code:</span><strong id="v2ReceiptTx">#TX-0000-NL</strong></div>
+                                <div class="receipt-line"><span>Show:</span><strong id="v2ReceiptShow">—</strong></div>
+                                <div class="receipt-line"><span>Seats:</span><strong id="v2ReceiptSeats">—</strong></div>
+                                <div class="receipt-line"><span>Tier:</span><strong id="v2ReceiptTier">—</strong></div>
+                                <div class="receipt-line"><span>Total Paid:</span><strong id="v2ReceiptTotal" style="color:var(--color-purple);">$0.00</strong></div>
+                            </div>
+                            <button class="btn btn-outline-purple btn-block" id="bookAgainBtn">Book Another Ticket</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-glow-line"></div>
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Brand Info -->
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <img src="assets/logo.png" alt="Laughora Logo" class="brand-logo-img">
+                        <span class="logo-neon">Laugh</span><span class="logo-accent">ora</span>
+                    </a>
+                    <p>The premier stand-up comedy club. Three stages, non-stop laughs, and an unforgettable night out.</p>
+                    <div class="footer-socials">
+                        <a href="#" aria-label="Twitter"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.53v.05c0 2.08 1.48 3.82 3.44 4.21-.36.1-.74.15-1.13.15-.27 0-.54-.03-.8-.08.54 1.7 2.11 2.93 3.97 2.97-1.46 1.14-3.3 1.82-5.31 1.82-.35 0-.69-.02-1.02-.06C2.82 20.31 5.09 21 7.5 21c9 0 13.92-7.46 13.92-13.92 0-.21 0-.42-.02-.63.95-.7 1.78-1.56 2.43-2.54z" />
+                            </svg></a>
+                        <a href="#" aria-label="Instagram"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg></a>
+                        <a href="#" aria-label="YouTube"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"></path>
+                                <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" />
+                            </svg></a>
+                    </div>
+                </div>
+
+                <!-- Fast Links -->
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="home2.html">Alternate Stage</a></li>
+                        <li><a href="shows.html">Comedy Shows</a></li>
+                        <li><a href="openmic.html">Open Mic Slots</a></li>
+                        <li><a href="performers.html">The Comedians</a></li>
+                        <li><a href="tickets.html">Seating Tickets</a></li>
+                    </ul>
+                </div>
+
+                <!-- Quick Help -->
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Emergency Contact</a></li>
+                        <li><a href="#">Privacy Protocol</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="footer-newsletter">
+                    <h4>Stay Updated</h4>
+                    <p>Subscribe to receive secret discount codes, lineup updates, and priority open mic notifications.</p>
+                    <form id="newsletterForm" class="newsletter-form">
+                        <input type="email" id="newsletterEmail" placeholder="Enter your email" required>
+                        <button type="submit" aria-label="Subscribe to newsletter">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </form>
+                    <p class="newsletter-feedback" id="newsletterFeedback"></p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Laughora Inc. All rights reserved.</p>
+                <a href="#" class="back-to-top">
+                    <span>Back to Top</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 15l-6-6-6 6" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // ---- Tickets Page Logic ----
+        let currentTier = null;
+        let currentPrice = 0;
+        let selectedSeats = [];
+        const maxSeats = 4;
+
+        // Render seating grid
+        function renderSeatingGrid() {
+            const grid = document.getElementById('seatingGridV2');
+            if (!grid) return;
+            grid.innerHTML = '';
+            const rows = ['A','B','C','D','E'];
+            const cols = 8;
+            rows.forEach(row => {
+                for (let i = 1; i <= cols; i++) {
+                    const seatId = `${row}${i}`;
+                    const btn = document.createElement('button');
+                    btn.classList.add('seat-btn');
+                    btn.textContent = seatId;
+                    btn.setAttribute('aria-label', `Seat ${seatId}`);
+
+                    const taken = Math.random() < 0.28;
+                    if (taken) {
+                        btn.classList.add('taken');
+                        btn.disabled = true;
+                    } else {
+                        btn.classList.add('avail');
+                        btn.addEventListener('click', () => toggleSeat(btn, seatId));
+                    }
+
+                    grid.appendChild(btn);
+                }
+            });
+        }
+
+        function toggleSeat(btn, seatId) {
+            if (btn.classList.contains('selected')) {
+                btn.classList.remove('selected');
+                btn.classList.add('avail');
+                selectedSeats = selectedSeats.filter(s => s !== seatId);
+            } else {
+                const maxAllowed = parseInt(document.getElementById('seatQtyV2').value);
+                if (selectedSeats.length >= maxAllowed) {
+                    // remove oldest
+                    const oldest = selectedSeats.shift();
+                    const oldBtn = Array.from(document.querySelectorAll('.seat-btn')).find(b => b.textContent === oldest);
+                    if (oldBtn) { oldBtn.classList.remove('selected'); oldBtn.classList.add('avail'); }
+                }
+                btn.classList.remove('avail');
+                btn.classList.add('selected');
+                selectedSeats.push(seatId);
+            }
+            updateCalculator();
+        }
+
+        function updateCalculator() {
+            document.getElementById('calcTierLabel').textContent = currentTier || '— Select a Tier';
+            document.getElementById('calcSeatsLabel').textContent = `${selectedSeats.length} seat${selectedSeats.length !== 1 ? 's' : ''}`;
+            document.getElementById('calcPriceLabel').textContent = currentTier ? `$${currentPrice}` : '$0';
+            document.getElementById('calcTotalLabel').textContent = `$${(selectedSeats.length * currentPrice).toFixed(2)}`;
+
+            const checkoutBtn = document.getElementById('checkoutBtnV2');
+            const checkoutLabel = document.getElementById('checkoutBtnLabel');
+            if (currentTier && selectedSeats.length > 0) {
+                checkoutBtn.disabled = false;
+                checkoutLabel.textContent = `Complete Your Booking — $${(selectedSeats.length * currentPrice).toFixed(2)}`;
+            } else {
+                checkoutBtn.disabled = true;
+                checkoutLabel.textContent = currentTier ? 'Select at least 1 seat' : 'Select a Tier & Seats to Continue';
+            }
+        }
+
+        // Tier selection
+        document.querySelectorAll('.select-tier-btn-v2').forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentTier = btn.getAttribute('data-tier');
+                currentPrice = parseInt(btn.getAttribute('data-price'));
+                selectedSeats = [];
+                renderSeatingGrid();
+                updateCalculator();
+                document.getElementById('bookingFormSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Seat quantity change
+        document.getElementById('seatQtyV2').addEventListener('change', () => {
+            const max = parseInt(document.getElementById('seatQtyV2').value);
+            while (selectedSeats.length > max) {
+                const removed = selectedSeats.pop();
+                const btn = Array.from(document.querySelectorAll('.seat-btn')).find(b => b.textContent === removed);
+                if (btn) { btn.classList.remove('selected'); btn.classList.add('avail'); }
+            }
+            updateCalculator();
+        });
+
+        // Check URL params (from shows.html Book Now links)
+        const urlP = new URLSearchParams(window.location.search);
+        const showParam = urlP.get('show');
+        const priceParam = urlP.get('price');
+        const tierParam = urlP.get('tier');
+
+        if (tierParam && priceParam) {
+            currentTier = tierParam;
+            currentPrice = parseInt(priceParam);
+            updateCalculator();
+            // Pre-select the show dropdown
+            if (showParam) {
+                const sel = document.getElementById('showSelectV2');
+                for (let i = 0; i < sel.options.length; i++) {
+                    if (sel.options[i].value.startsWith(showParam.replace(/\+/g,' '))) {
+                        sel.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Booking form submit
+        document.getElementById('ticketBookingFormV2').addEventListener('submit', e => {
+            e.preventDefault();
+            const showVal = document.getElementById('showSelectV2').value.split('|');
+            const showName = showVal[0];
+            const totalAmt = (selectedSeats.length * currentPrice).toFixed(2);
+            const txCode = `#TX-${Math.floor(1000 + Math.random() * 9000)}-NL`;
+
+            document.getElementById('v2ReceiptTx').textContent = txCode;
+            document.getElementById('v2ReceiptShow').textContent = showName;
+            document.getElementById('v2ReceiptSeats').textContent = selectedSeats.length > 0 ? selectedSeats.join(', ') : 'Auto-assigned';
+            document.getElementById('v2ReceiptTier').textContent = currentTier;
+            document.getElementById('v2ReceiptTotal').textContent = `$${totalAmt}`;
+
+            document.getElementById('bookingFormWrap').style.display = 'none';
+            document.getElementById('bookingSuccessV2').classList.add('show');
+        });
+
+        document.getElementById('bookAgainBtn').addEventListener('click', () => {
+            document.getElementById('bookingFormWrap').style.display = 'block';
+            document.getElementById('bookingSuccessV2').classList.remove('show');
+            document.getElementById('ticketBookingFormV2').reset();
+            selectedSeats = [];
+            renderSeatingGrid();
+            updateCalculator();
+        });
+
+        // Initialize
+        renderSeatingGrid();
+        updateCalculator();
+    </script>
+</body>
+</html>

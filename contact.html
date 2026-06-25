@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laughora | Contact & Location</title>
+    <meta name="description" content="Get in touch with Laughora. Find our location, contact details, and send us a transmission for bookings, press inquiries, and feedback.">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Inline blocking theme loader -->
+    <script>
+        (function () {
+            const theme = localStorage.getItem('theme') || 'dark';
+            if (theme === 'light') {
+                document.documentElement.classList.add('light-theme');
+            }
+        })();
+    </script>
+    <style>
+        .page-hero {
+            padding: 160px 24px 80px;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(ellipse at 50% 0%, rgba(176,38,255,0.1) 0%, transparent 60%);
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--color-purple), var(--color-orange), transparent);
+            opacity: 0.4;
+        }
+        .page-hero-title { font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 800; color: var(--color-text-white); margin-bottom: 1rem; }
+        .page-hero-title span { background: linear-gradient(135deg, var(--color-purple), var(--color-orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .page-hero p { max-width: 600px; margin: 0 auto; font-size: 1.05rem; color: var(--color-text-slate); }
+
+        .contact-page { padding: 60px 0 100px; }
+
+        /* Quick info cards */
+        .contact-info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 4rem;
+        }
+
+        .cic-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 16px;
+            padding: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cic-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .cic-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+        }
+
+        .cic-card.cic-purple::before { background: linear-gradient(90deg, var(--color-purple), transparent); }
+        .cic-card.cic-cyan::before { background: linear-gradient(90deg, var(--color-cyan), transparent); }
+        .cic-card.cic-pink::before { background: linear-gradient(90deg, var(--color-pink), transparent); }
+        .cic-card.cic-orange::before { background: linear-gradient(90deg, var(--color-orange), transparent); }
+
+        .cic-card:hover.cic-purple { border-color: rgba(176,38,255,0.3); box-shadow: 0 0 20px rgba(176,38,255,0.1); }
+        .cic-card:hover.cic-cyan { border-color: rgba(0,240,255,0.3); box-shadow: 0 0 20px rgba(0,240,255,0.1); }
+        .cic-card:hover.cic-pink { border-color: rgba(255,0,127,0.3); box-shadow: 0 0 20px rgba(255,0,127,0.1); }
+        .cic-card:hover.cic-orange { border-color: rgba(255,107,0,0.3); box-shadow: 0 0 20px rgba(255,107,0,0.1); }
+
+        .cic-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cic-icon.cic-icon-purple { background: rgba(176,38,255,0.12); }
+        .cic-icon.cic-icon-cyan { background: rgba(0,240,255,0.12); }
+        .cic-icon.cic-icon-pink { background: rgba(255,0,127,0.12); }
+        .cic-icon.cic-icon-orange { background: rgba(255,107,0,0.12); }
+
+        .cic-card h4 { font-size: 0.85rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
+        .cic-card p { font-size: 0.95rem; color: var(--color-text-white); font-weight: 500; }
+        .cic-card span { font-size: 0.78rem; color: var(--color-text-muted); }
+
+        /* Main contact layout */
+        .contact-main-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        /* Dark Map Section */
+        .map-section h3 { font-size: 1.3rem; color: var(--color-text-white); margin-bottom: 1.5rem; }
+        html.light-theme .map-section h3 { color: #0f172a; }
+
+        .dark-map-frame {
+            width: 100%;
+            height: 380px;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            background: #090a18;
+            border: 1px solid rgba(176,38,255,0.3);
+            box-shadow: 0 0 40px rgba(176,38,255,0.1);
+            margin-bottom: 2rem;
+            transition: background var(--transition-smooth), border-color var(--transition-smooth);
+        }
+
+        html.light-theme .dark-map-frame {
+            background: #e8eaf6;
+            border-color: rgba(139, 92, 246, 0.2);
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.06);
+        }
+
+        .dark-map-frame::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(176,38,255,0.4), rgba(0,240,255,0.2), rgba(255,0,127,0.3));
+            z-index: -1;
+        }
+
+        .dark-map-grid {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        /* Animated grid lines */
+        .dark-map-grid::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(176,38,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(176,38,255,0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* Radar sweep */
+        .map-radar {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 1px solid rgba(0,240,255,0.15);
+        }
+
+        .map-radar::before {
+            content: '';
+            position: absolute;
+            inset: 25%;
+            border-radius: 50%;
+            border: 1px solid rgba(0,240,255,0.25);
+        }
+
+        .map-radar::after {
+            content: '';
+            position: absolute;
+            inset: 50%;
+            border-radius: 50%;
+            border: 1px solid rgba(176,38,255,0.4);
+            box-shadow: 0 0 10px rgba(176,38,255,0.4);
+        }
+
+        .map-radar-outer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 1px solid rgba(176,38,255,0.08);
+        }
+
+        /* Sweep beam */
+        .map-sweep {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150px;
+            height: 150px;
+            transform-origin: 0 0;
+            animation: radar-sweep 4s linear infinite;
+        }
+
+        .map-sweep::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: conic-gradient(rgba(0,240,255,0.25) 0deg, transparent 60deg, transparent 360deg);
+            border-radius: 0 100% 0 0;
+        }
+
+        @keyframes radar-sweep {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Location pin */
+        .map-pin {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .map-pin-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--color-pink);
+            box-shadow: 0 0 20px var(--color-pink), 0 0 40px rgba(255,0,127,0.3);
+            animation: pin-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pin-pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 20px var(--color-pink); }
+            50% { transform: scale(1.3); box-shadow: 0 0 40px var(--color-pink), 0 0 60px rgba(255,0,127,0.4); }
+        }
+
+        .map-pin-label {
+            background: rgba(0,0,0,0.8);
+            border: 1px solid rgba(255,0,127,0.5);
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 0.7rem;
+            color: var(--color-pink);
+            font-weight: 700;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        /* Coordinate markers */
+        .map-coord {
+            position: absolute;
+            font-size: 0.6rem;
+            color: rgba(0,240,255,0.4);
+            font-family: monospace;
+        }
+
+        .map-coord.coord-tl { top: 1rem; left: 1rem; }
+        .map-coord.coord-tr { top: 1rem; right: 1rem; }
+        .map-coord.coord-bl { bottom: 1rem; left: 1rem; }
+        .map-coord.coord-br { bottom: 1rem; right: 1rem; }
+
+        /* Map overlay label */
+        .map-label-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.8);
+            border-top: 1px solid rgba(176,38,255,0.3);
+            padding: 10px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .map-label-bar span { font-size: 0.75rem; color: var(--color-text-muted); }
+        .map-label-bar strong { font-size: 0.8rem; color: var(--color-cyan); }
+
+        /* Hours grid */
+        .hours-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .hours-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+        }
+
+        .hours-card h5 { font-size: 0.8rem; color: var(--color-text-white); margin-bottom: 0.3rem; }
+        .hours-card p { font-size: 0.75rem; color: var(--color-text-muted); }
+        .hours-card .hours-time { color: var(--color-cyan); font-weight: 600; }
+
+        /* Contact Form */
+        .contact-form-section {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 20px;
+            padding: 2.5rem;
+        }
+
+        .contact-form-section h3 { font-size: 1.4rem; color: var(--color-text-white); margin-bottom: 0.5rem; }
+        .contact-form-section > p { font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 2rem; }
+
+        /* Inquiry type selector */
+        .inquiry-types {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .inquiry-btn {
+            padding: 8px 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+            color: var(--color-text-muted);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            text-align: center;
+        }
+
+        .inquiry-btn.active,
+        .inquiry-btn:hover {
+            background: rgba(176,38,255,0.1);
+            border-color: rgba(176,38,255,0.4);
+            color: var(--color-purple);
+        }
+
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* Character counter */
+        .char-counter {
+            text-align: right;
+            font-size: 0.7rem;
+            color: var(--color-text-muted);
+            margin-top: 4px;
+        }
+
+        /* Success state */
+        .contact-success {
+            display: none;
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+        }
+
+        .contact-success.show { display: block; }
+
+        .cs-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: rgba(176,38,255,0.1);
+            border: 2px solid rgba(176,38,255,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.25rem;
+        }
+
+        /* Social media links */
+        .social-links-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .social-link-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 10px;
+            transition: var(--transition-fast);
+            font-size: 0.85rem;
+            color: var(--color-text-slate);
+        }
+
+        .social-link-card:hover {
+            border-color: rgba(176,38,255,0.4);
+            color: var(--color-purple);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 900px) {
+            .contact-main-layout { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            .contact-info-cards { grid-template-columns: 1fr 1fr; }
+            .form-grid-2 { grid-template-columns: 1fr; }
+            .inquiry-types { grid-template-columns: repeat(2, 1fr); }
+            .hours-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 400px) {
+            .contact-info-cards { grid-template-columns: 1fr; }
+            .map-label-bar { padding: 8px 10px; flex-direction: column; align-items: flex-start; gap: 4px; }
+            .map-label-bar span { white-space: normal; word-break: break-word; }
+            .page-hero-title { font-size: 2.2rem; }
+            .contact-form-section { padding: 1.5rem 1rem; }
+            .social-links-row { gap: 0.5rem; }
+            .social-link-card { padding: 10px 12px; font-size: 0.85rem; }
+        }
+
+        @media (max-width: 360px) {
+            #contactSuccessState h2 { font-size: 1.6rem !important; }
+            #contactSuccessState p { font-size: 0.9rem !important; }
+        }
+
+        /* ── Light Theme Overrides ── */
+        html.light-theme .cic-card {
+            background: #ffffff;
+            border: 1px solid rgba(15,23,42,0.08);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+        }
+        html.light-theme .cic-card h4 {
+            color: #64748b;
+        }
+        html.light-theme .cic-card p {
+            color: #0f172a;
+        }
+        html.light-theme .cic-card span {
+            color: #64748b;
+        }
+        html.light-theme .cic-card:hover.cic-purple { border-color: rgba(176,38,255,0.25); box-shadow: 0 8px 24px rgba(176,38,255,0.07); }
+        html.light-theme .cic-card:hover.cic-cyan   { border-color: rgba(0,240,255,0.25);   box-shadow: 0 8px 24px rgba(0,240,255,0.07); }
+        html.light-theme .cic-card:hover.cic-pink   { border-color: rgba(255,0,127,0.25);   box-shadow: 0 8px 24px rgba(255,0,127,0.07); }
+        html.light-theme .cic-card:hover.cic-orange { border-color: rgba(255,107,0,0.25);   box-shadow: 0 8px 24px rgba(255,107,0,0.07); }
+        html.light-theme .contact-form-section {
+            background: #ffffff;
+            border: 1px solid rgba(15,23,42,0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+        html.light-theme .contact-form-section h3 {
+            color: #0f172a;
+        }
+        html.light-theme .contact-form-section > p {
+            color: #64748b;
+        }
+        html.light-theme .inquiry-btn {
+            background: #f8fafc;
+            border: 1px solid rgba(15,23,42,0.10);
+            color: #475569;
+        }
+        html.light-theme .inquiry-btn.active,
+        html.light-theme .inquiry-btn:hover {
+            background: rgba(176,38,255,0.06);
+            border-color: rgba(176,38,255,0.35);
+            color: #8b5cf6;
+        }
+        html.light-theme .hours-card {
+            background: #f8fafc;
+            border: 1px solid rgba(15,23,42,0.07);
+        }
+        html.light-theme .hours-card h5 {
+            color: #0f172a;
+        }
+        html.light-theme .hours-card p {
+            color: #64748b;
+        }
+        html.light-theme .map-pin-label {
+            background: rgba(255,255,255,0.92);
+            border: 1px solid rgba(255,0,127,0.4);
+            color: #be185d;
+        }
+        html.light-theme .map-label-bar {
+            background: rgba(255,255,255,0.92);
+            border-top: 1px solid rgba(176,38,255,0.2);
+        }
+        html.light-theme .map-label-bar span {
+            color: #64748b;
+        }
+        html.light-theme .map-label-bar strong {
+            color: #0891b2;
+        }
+        html.light-theme .social-link-card {
+            background: #ffffff;
+            border: 1px solid rgba(15,23,42,0.08);
+            color: #475569;
+        }
+        html.light-theme .social-link-card:hover {
+            border-color: rgba(176,38,255,0.3);
+            color: #8b5cf6;
+            background: rgba(176,38,255,0.04);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/logo.png" alt="Laughora Logo" class="brand-logo-img">
+                <span class="logo-neon">Laugh</span><span class="logo-accent">ora</span></a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="home2.html" class="nav-link">Home2</a>
+                <a href="shows.html" class="nav-link">Shows</a>
+                <a href="tickets.html" class="nav-link">Tickets</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="openmic.html" class="nav-link">Open Mic</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+                <a href="performers.html" class="nav-link">Performers</a>
+                <a href="contact.html" class="nav-link active">Contact</a>
+            </nav>
+
+            <!-- Navbar Actions (Theme Toggle & Account) -->
+            <div class="nav-actions">
+                <button id="rtlToggle" class="rtl-toggle-btn" aria-label="Toggle RTL/LTR">
+                    <svg class="ltr-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12H9M15 6l-6 6 6 6"/></svg>
+                    <svg class="rtl-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h12M9 18l6-6-6-6"/></svg>
+                </button>
+                <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle theme">
+                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path>
+                        <path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path>
+                        <path d="M2 12h2"></path><path d="M20 12h2"></path>
+                        <path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>
+                    </svg>
+                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                    </svg>
+                </button>
+                <div class="user-dropdown">
+                    <button id="userDropdownBtn" class="user-dropdown-btn" aria-label="User Account">
+                        <svg class="user-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span class="user-badge-dot"></span>
+                    </button>
+                    <div class="user-dropdown-content">
+                        <div class="dropdown-header">
+                             <p class="user-name" id="navUserName">Comedy Fan</p>
+                            <p class="user-role" id="navUserRole">Spectator</p>
+                        </div>
+                        <a href="login.html" class="dropdown-item login-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+                            </span>
+                            <span>Sign In / Sign Up</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-divider"></div>
+                        <a href="user-dashboard.html" class="dropdown-item user-dash-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            </span>
+                            <span>User Dashboard</span>
+                        </a>
+                        <a href="admin-dashboard.html" class="dropdown-item admin-dash-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                            </span>
+                            <span>Admin Dashboard</span>
+                        </a>
+                        <button class="dropdown-item signout-btn logged-in-only" id="signoutBtn">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+                            </span>
+                            <span>Sign Out</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <div class="page-hero">
+        <span class="section-tag tag-purple">GET IN TOUCH</span>
+        <h1 class="page-hero-title">Get In <span>Touch</span></h1>
+        <p>Have a private event inquiry, sponsorship proposals, or feedback? Send us a transmission and our team will respond within 24 hours.</p>
+    </div>
+
+    <!-- Contact Content -->
+    <section class="contact-page">
+        <div class="container">
+
+            <!-- Quick Info Cards -->
+            <div class="contact-info-cards">
+                <div class="cic-card cic-purple">
+                    <div class="cic-icon cic-icon-purple">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b026ff" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.26 12 19.79 19.79 0 0 1 1.19 3.4 2 2 0 0 1 3.17 1h3a2 2 0 0 1 2 1.72c.127.96.36 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.34 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <h4>Voice Line</h4>
+                    <p>+1 (555) 777-NEON</p>
+                    <span>Mon–Sat, 2 PM – Midnight</span>
+                </div>
+                <div class="cic-card cic-cyan">
+                    <div class="cic-icon cic-icon-cyan">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </div>
+                    <h4>Text Stream</h4>
+                    <p>ops@theneonlaugh.com</p>
+                    <span>Response within 24 hours</span>
+                </div>
+                <div class="cic-card cic-pink">
+                    <div class="cic-icon cic-icon-pink">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff007f" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <h4>Location</h4>
+                    <p>742 Comedy Avenue</p>
+                    <span>Los Angeles, CA 90001</span>
+                </div>
+                <div class="cic-card cic-orange">
+                    <div class="cic-icon cic-icon-orange">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff6b00" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <h4>Show Hours</h4>
+                    <p>Doors Open: 6:00 PM</p>
+                    <span>Shows: 7–11 PM (Fri–Sun Late)</span>
+                </div>
+            </div>
+
+            <!-- Main Layout -->
+            <div class="contact-main-layout">
+
+                <!-- Left: Map + Hours -->
+                <div class="map-section">
+                    <h3>📍 Venue Location</h3>
+
+                    <!-- Dark Map Frame -->
+                    <div class="dark-map-frame">
+                        <div class="dark-map-grid"></div>
+                        <div class="map-radar-outer"></div>
+                        <div class="map-radar"></div>
+                        <div class="map-sweep"></div>
+                        <div class="map-pin">
+                            <div class="map-pin-dot"></div>
+                            <div class="map-pin-label">Laughora</div>
+                        </div>
+
+                        <div class="map-coord coord-tl">34°02'N 118°28'W</div>
+                        <div class="map-coord coord-tr">FIND US</div>
+                        <div class="map-coord coord-bl">742 COMEDY AVE</div>
+                        <div class="map-coord coord-br">OPENING HOURS</div>
+
+                        <div class="map-label-bar">
+                            <span>742 Comedy Avenue, Los Angeles</span>
+                            <strong>🔴 LIVE</strong>
+                        </div>
+                    </div>
+
+                    <!-- Venue Hours -->
+                    <h3 style="margin-bottom:1.25rem;">🕐 Operating Hours</h3>
+                    <div class="hours-grid">
+                        <div class="hours-card">
+                            <h5>Monday – Thursday</h5>
+                            <p class="hours-time">7:00 PM – 11:00 PM</p>
+                            <p>Regular Programming</p>
+                        </div>
+                        <div class="hours-card">
+                            <h5>Friday – Saturday</h5>
+                            <p class="hours-time">6:00 PM – 1:00 AM</p>
+                            <p>Extended Headline Nights</p>
+                        </div>
+                        <div class="hours-card">
+                            <h5>Sunday</h5>
+                            <p class="hours-time">5:00 PM – 10:00 PM</p>
+                            <p>Early Shows &amp; Open Mic</p>
+                        </div>
+                        <div class="hours-card">
+                            <h5>Box Office Opens</h5>
+                            <p class="hours-time">2 Hours Before Show</p>
+                            <p>Walk-in Tickets Available</p>
+                        </div>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="social-links-row">
+                        <a href="#" class="social-link-card">
+                            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.53v.05c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 01-1.93.07 4.28 4.28 0 004 2.98 8.521 8.521 0 01-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.86-.63 1.6-1.43 2.18-2.34z"/></svg>
+                            @NeonLaughClub
+                        </a>
+                        <a href="#" class="social-link-card">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                            @theneonlaugh
+                        </a>
+                        <a href="#" class="social-link-card">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+                            Laughora
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right: Contact Form -->
+                <div class="contact-form-section">
+                    <div id="contactFormWrap">
+                        <h3>Contact Us</h3>
+                        <p>Select an inquiry type and send us a message. Our team responds within 24 hours.</p>
+
+                        <div class="inquiry-types">
+                            <button class="inquiry-btn active" data-inquiry="General">General</button>
+                            <button class="inquiry-btn" data-inquiry="Booking">Booking</button>
+                            <button class="inquiry-btn" data-inquiry="Press">Press</button>
+                            <button class="inquiry-btn" data-inquiry="Sponsorship">Sponsor</button>
+                            <button class="inquiry-btn" data-inquiry="Open Mic">Open Mic</button>
+                            <button class="inquiry-btn" data-inquiry="Feedback">Feedback</button>
+                        </div>
+
+                        <form id="contactFormPage">
+                            <input type="hidden" id="inquiryTypeField" value="General">
+                            <div class="form-grid-2">
+                                <div class="form-group">
+                                    <label for="contactNameP">Your Name</label>
+                                    <input type="text" id="contactNameP" placeholder="Full Name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactEmailP">Email Address</label>
+                                    <input type="email" id="contactEmailP" placeholder="your@email.com" required>
+                                </div>
+                            </div>
+                            <div class="form-grid-2">
+                                <div class="form-group">
+                                    <label for="contactPhoneP">Phone (Optional)</label>
+                                    <input type="tel" id="contactPhoneP" placeholder="+1 555 000 0000">
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactOrgP">Organization (Optional)</label>
+                                    <input type="text" id="contactOrgP" placeholder="Company / Venue Name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactSubjectP">Subject</label>
+                                <input type="text" id="contactSubjectP" placeholder="What's your inquiry about?" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactMsgP">Message</label>
+                                <textarea id="contactMsgP" rows="5" placeholder="Write your message here... (max 500 characters)" maxlength="500" required></textarea>
+                                <div class="char-counter"><span id="charCount">0</span>/500</div>
+                            </div>
+                            <div class="form-group" style="flex-direction:row;align-items:flex-start;gap:0.75rem;">
+                                <input type="checkbox" id="agreePrivacyContact" style="width:18px;height:18px;margin-top:3px;accent-color:var(--color-purple);flex-shrink:0;" required>
+                                <label for="agreePrivacyContact" style="font-size:0.82rem;color:var(--color-text-muted);cursor:pointer;">I agree to the privacy policy and consent to being contacted by Laughora team.</label>
+                            </div>
+                            <button type="submit" class="btn btn-purple btn-block">
+                                <span>Send Message</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Success State -->
+                    <div class="contact-success" id="contactSuccessPage">
+                        <div class="cs-icon">
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#b026ff" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+                        </div>
+                        <h2 style="color:var(--color-text-white);font-size:1.5rem;margin-bottom:0.75rem;">Message Sent!</h2>
+                        <p style="color:var(--color-text-muted);margin-bottom:1.5rem;">Your message has been received. We will reply via email within 24 hours.</p>
+                        <div style="background:rgba(176,38,255,0.06);border:1px solid rgba(176,38,255,0.2);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;font-size:0.85rem;text-align:left;">
+                            <p style="color:var(--color-purple);font-weight:600;margin-bottom:0.5rem;">Your Message Details:</p>
+                            <p style="color:var(--color-text-muted);" id="contactConfirmDetails">Inquiry submitted successfully.</p>
+                        </div>
+                        <button class="btn btn-outline-purple btn-block" id="contactResetBtn">Send New Message</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-glow-line"></div>
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Brand Info -->
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <img src="assets/logo.png" alt="Laughora Logo" class="brand-logo-img">
+                        <span class="logo-neon">Laugh</span><span class="logo-accent">ora</span>
+                    </a>
+                    <p>The premier stand-up comedy club. Three stages, non-stop laughs, and an unforgettable night out.</p>
+                    <div class="footer-socials">
+                        <a href="#" aria-label="Twitter"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.53v.05c0 2.08 1.48 3.82 3.44 4.21-.36.1-.74.15-1.13.15-.27 0-.54-.03-.8-.08.54 1.7 2.11 2.93 3.97 2.97-1.46 1.14-3.3 1.82-5.31 1.82-.35 0-.69-.02-1.02-.06C2.82 20.31 5.09 21 7.5 21c9 0 13.92-7.46 13.92-13.92 0-.21 0-.42-.02-.63.95-.7 1.78-1.56 2.43-2.54z" />
+                            </svg></a>
+                        <a href="#" aria-label="Instagram"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg></a>
+                        <a href="#" aria-label="YouTube"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"></path>
+                                <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" />
+                            </svg></a>
+                    </div>
+                </div>
+
+                <!-- Fast Links -->
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="home2.html">Alternate Stage</a></li>
+                        <li><a href="shows.html">Comedy Shows</a></li>
+                        <li><a href="openmic.html">Open Mic Slots</a></li>
+                        <li><a href="performers.html">The Comedians</a></li>
+                        <li><a href="tickets.html">Seating Tickets</a></li>
+                    </ul>
+                </div>
+
+                <!-- Quick Help -->
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="footer-newsletter">
+                    <h4>Stay Updated</h4>
+                    <p>Subscribe to receive secret discount codes, lineup updates, and priority open mic notifications.</p>
+                    <form id="newsletterForm" class="newsletter-form">
+                        <input type="email" id="newsletterEmail" placeholder="Enter your email" required>
+                        <button type="submit" aria-label="Subscribe to newsletter">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </form>
+                    <p class="newsletter-feedback" id="newsletterFeedback"></p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Laughora Inc. All rights reserved.</p>
+                <a href="#" class="back-to-top">
+                    <span>Back to Top</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 15l-6-6-6 6" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Inquiry type selector
+        const inquiryBtns = document.querySelectorAll('.inquiry-btn');
+        const inquiryField = document.getElementById('inquiryTypeField');
+
+        inquiryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                inquiryBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                inquiryField.value = btn.getAttribute('data-inquiry');
+            });
+        });
+
+        // Character counter
+        const contactMsg = document.getElementById('contactMsgP');
+        const charCount = document.getElementById('charCount');
+
+        if (contactMsg && charCount) {
+            contactMsg.addEventListener('input', () => {
+                charCount.textContent = contactMsg.value.length;
+                charCount.style.color = contactMsg.value.length > 450 ? 'var(--color-orange)' : 'var(--color-text-muted)';
+            });
+        }
+
+        // Contact form submit
+        const contactFormPage = document.getElementById('contactFormPage');
+        const contactSuccessPage = document.getElementById('contactSuccessPage');
+        const contactFormWrap = document.getElementById('contactFormWrap');
+        const contactResetBtn = document.getElementById('contactResetBtn');
+
+        if (contactFormPage) {
+            contactFormPage.addEventListener('submit', e => {
+                e.preventDefault();
+                const name = document.getElementById('contactNameP').value;
+                const email = document.getElementById('contactEmailP').value;
+                const inquiry = inquiryField.value;
+
+                document.getElementById('contactConfirmDetails').innerHTML =
+                    `Type: <strong style="color:var(--color-purple);">${inquiry}</strong><br>Name: ${name}<br>Email: ${email}<br>Ref: #MSG-${Math.floor(1000 + Math.random() * 9000)}-NL`;
+
+                contactFormWrap.style.display = 'none';
+                contactSuccessPage.classList.add('show');
+            });
+        }
+
+        if (contactResetBtn) {
+            contactResetBtn.addEventListener('click', () => {
+                contactFormWrap.style.display = 'block';
+                contactSuccessPage.classList.remove('show');
+                contactFormPage.reset();
+                charCount.textContent = '0';
+                inquiryBtns.forEach((b, i) => b.classList.toggle('active', i === 0));
+                inquiryField.value = 'General';
+            });
+        }
+    </script>
+</body>
+</html>

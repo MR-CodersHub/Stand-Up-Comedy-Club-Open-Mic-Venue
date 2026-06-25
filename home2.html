@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laughora | Stage Experience – Home2</title>
+    <meta name="description" content="Step into Laughora's alternate stage experience. Glowing spotlights, kinetic typography, and immersive visuals await.">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* ---- Home2 Specific Redesign Variables ---- */
+        :root {
+            --h2-vibe-primary: 176, 38, 255;
+            --h2-vibe-secondary: 0, 240, 255;
+            --h2-vibe-accent: 255, 107, 0;
+            
+            --h2-bg-base: #040408;
+            --h2-text-main: #ffffff;
+            --h2-text-glow: rgba(176, 38, 255, 0.4);
+            --h2-spot-opacity-glow: 0.12;
+            --h2-spot-opacity-falloff: 0.06;
+            
+            --h2-card-bg: rgba(9, 10, 24, 0.7);
+            --h2-card-border: rgba(255, 255, 255, 0.06);
+            --h2-card-glow: 0 0 40px rgba(176, 38, 255, 0.15);
+        }
+
+        html.light-theme {
+            --h2-vibe-primary: 139, 92, 246;
+            --h2-vibe-secondary: 6, 182, 212;
+            --h2-vibe-accent: 234, 88, 12;
+            
+            --h2-bg-base: #f8fafc;
+            --h2-text-main: #0f172a;
+            --h2-text-glow: rgba(139, 92, 246, 0.2);
+            --h2-spot-opacity-glow: 0.06;
+            --h2-spot-opacity-falloff: 0.03;
+            
+            --h2-card-bg: rgba(255, 255, 255, 0.75);
+            --h2-card-border: rgba(15, 23, 42, 0.08);
+            --h2-card-glow: 0 0 30px rgba(139, 92, 246, 0.08);
+        }
+
+        /* --- Vibe Overrides for Dark Mode --- */
+        .home2-hero.vibe-purple {
+            --h2-vibe-primary: 176, 38, 255;
+            --h2-vibe-secondary: 0, 240, 255;
+            --h2-vibe-accent: 255, 107, 0;
+            --h2-text-glow: rgba(176, 38, 255, 0.4);
+            --h2-card-glow: 0 0 40px rgba(176, 38, 255, 0.15);
+        }
+        .home2-hero.vibe-cyan {
+            --h2-vibe-primary: 0, 240, 255;
+            --h2-vibe-secondary: 176, 38, 255;
+            --h2-vibe-accent: 255, 0, 127;
+            --h2-text-glow: rgba(0, 240, 255, 0.4);
+            --h2-card-glow: 0 0 40px rgba(0, 240, 255, 0.15);
+        }
+        .home2-hero.vibe-pink {
+            --h2-vibe-primary: 255, 0, 127;
+            --h2-vibe-secondary: 0, 240, 255;
+            --h2-vibe-accent: 255, 107, 0;
+            --h2-text-glow: rgba(255, 0, 127, 0.4);
+            --h2-card-glow: 0 0 40px rgba(255, 0, 127, 0.15);
+        }
+        .home2-hero.vibe-orange {
+            --h2-vibe-primary: 255, 107, 0;
+            --h2-vibe-secondary: 176, 38, 255;
+            --h2-vibe-accent: 0, 240, 255;
+            --h2-text-glow: rgba(255, 107, 0, 0.4);
+            --h2-card-glow: 0 0 40px rgba(255, 107, 0, 0.15);
+        }
+
+        /* --- Vibe Overrides for Light Mode --- */
+        html.light-theme .home2-hero.vibe-purple {
+            --h2-vibe-primary: 139, 92, 246;
+            --h2-vibe-secondary: 6, 182, 212;
+            --h2-vibe-accent: 234, 88, 12;
+            --h2-text-glow: rgba(139, 92, 246, 0.2);
+            --h2-card-glow: 0 0 30px rgba(139, 92, 246, 0.08);
+        }
+        html.light-theme .home2-hero.vibe-cyan {
+            --h2-vibe-primary: 6, 182, 212;
+            --h2-vibe-secondary: 139, 92, 246;
+            --h2-vibe-accent: 219, 39, 119;
+            --h2-text-glow: rgba(6, 182, 212, 0.2);
+            --h2-card-glow: 0 0 30px rgba(6, 182, 212, 0.08);
+        }
+        html.light-theme .home2-hero.vibe-pink {
+            --h2-vibe-primary: 219, 39, 119;
+            --h2-vibe-secondary: 6, 182, 212;
+            --h2-vibe-accent: 234, 88, 12;
+            --h2-text-glow: rgba(219, 39, 119, 0.2);
+            --h2-card-glow: 0 0 30px rgba(219, 39, 119, 0.08);
+        }
+        html.light-theme .home2-hero.vibe-orange {
+            --h2-vibe-primary: 234, 88, 12;
+            --h2-vibe-secondary: 139, 92, 246;
+            --h2-vibe-accent: 6, 182, 212;
+            --h2-text-glow: rgba(234, 88, 12, 0.2);
+            --h2-card-glow: 0 0 30px rgba(234, 88, 12, 0.08);
+        }
+
+        /* Grid background overlay */
+        .hero-grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 50% 30%, rgba(var(--h2-vibe-primary), 0.08) 0%, transparent 60%),
+                linear-gradient(rgba(255, 255, 255, 0.007) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.007) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        html.light-theme .hero-grid-overlay {
+            background-image: 
+                radial-gradient(circle at 50% 30%, rgba(var(--h2-vibe-primary), 0.04) 0%, transparent 60%),
+                linear-gradient(rgba(0, 0, 0, 0.005) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.005) 1px, transparent 1px);
+        }
+
+        .home2-hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: var(--h2-bg-base);
+            transition: background var(--transition-smooth);
+            padding: 80px 0;
+        }
+
+        .home2-hero-container {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 24px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .home2-hero-left {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        .home2-pre-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(var(--h2-vibe-primary), 0.1);
+            border: 1px solid rgba(var(--h2-vibe-primary), 0.35);
+            color: rgb(var(--h2-vibe-primary));
+            font-size: 0.72rem;
+            letter-spacing: 3px;
+            font-weight: 600;
+            padding: 8px 18px;
+            border-radius: 100px;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            font-family: var(--font-alt);
+            transition: all var(--transition-smooth);
+        }
+
+        .home2-pre-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgb(var(--h2-vibe-primary));
+            box-shadow: 0 0 10px rgba(var(--h2-vibe-primary), 0.8);
+            animation: badge-pulse 2s ease-in-out infinite;
+            transition: background var(--transition-smooth);
+        }
+
+        @keyframes badge-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.4); }
+        }
+
+        .home2-hero-title {
+            font-size: clamp(2.8rem, 5vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.05;
+            color: var(--h2-text-main);
+            margin-bottom: 0.5rem;
+            font-family: var(--font-heading);
+            text-align: left;
+            transition: color var(--transition-smooth);
+        }
+
+        .home2-hero-title .word-1 {
+            display: block;
+            background: linear-gradient(135deg, var(--h2-text-main) 0%, rgba(var(--h2-text-main), 0.85) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .home2-hero-title .word-2 {
+            display: block;
+            background: linear-gradient(135deg, rgb(var(--h2-vibe-primary)) 0%, rgb(var(--h2-vibe-secondary)) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 15px rgba(var(--h2-vibe-primary), 0.4));
+            animation: kinetic-text 4s ease-in-out infinite;
+            transition: filter var(--transition-smooth);
+        }
+
+        @keyframes kinetic-text {
+            0%, 100% { filter: drop-shadow(0 0 15px rgba(var(--h2-vibe-primary), 0.35)); }
+            50% { filter: drop-shadow(0 0 25px rgba(var(--h2-vibe-secondary), 0.5)); }
+        }
+
+        .home2-hero-tagline {
+            font-family: var(--font-alt);
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: rgb(var(--h2-vibe-secondary));
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            transition: color var(--transition-smooth);
+        }
+
+        .home2-hero-sub {
+            font-size: 1rem;
+            color: var(--color-text-slate);
+            max-width: 550px;
+            margin: 0 0 2.5rem;
+            line-height: 1.8;
+            text-align: left;
+        }
+
+        .home2-ctas {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        /* Local Button Overrides for adaptive vibe colors */
+        .home2-hero .btn.btn-purple {
+            background: linear-gradient(135deg, rgb(var(--h2-vibe-primary)) 0%, rgba(var(--h2-vibe-primary), 0.8) 100%);
+            box-shadow: 0 0 15px rgba(var(--h2-vibe-primary), 0.3);
+            border: none;
+            color: #ffffff !important;
+            transition: all var(--transition-smooth);
+        }
+        .home2-hero .btn.btn-purple:hover {
+            box-shadow: 0 0 25px rgba(var(--h2-vibe-primary), 0.6);
+            transform: translateY(-2px);
+        }
+        .home2-hero .btn.btn-outline-cyan {
+            border: 1px solid rgb(var(--h2-vibe-secondary));
+            color: rgb(var(--h2-vibe-secondary)) !important;
+            background: transparent;
+            transition: all var(--transition-smooth);
+        }
+        .home2-hero .btn.btn-outline-cyan:hover {
+            background: rgba(var(--h2-vibe-secondary), 0.1);
+            box-shadow: 0 0 20px rgba(var(--h2-vibe-secondary), 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Tactile HUD Vibe Control Panel */
+        .vibe-control-panel {
+            background: var(--h2-card-bg);
+            border: 1px solid var(--h2-card-border);
+            border-radius: 14px;
+            padding: 1.25rem 1.5rem;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: var(--h2-card-glow);
+            transition: all var(--transition-smooth);
+            position: relative;
+        }
+
+        .vibe-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-alt);
+            font-size: 0.68rem;
+            letter-spacing: 2px;
+            border-bottom: 1px solid var(--h2-card-border);
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--color-text-muted);
+        }
+
+        .vibe-panel-status {
+            color: rgb(var(--h2-vibe-secondary));
+            font-weight: 700;
+            transition: color var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .vibe-panel-status::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            box-shadow: 0 0 8px currentColor;
+        }
+
+        .vibe-panel-body {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .vibe-label {
+            font-family: var(--font-alt);
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: var(--color-text-slate);
+            text-transform: uppercase;
+        }
+
+        .vibe-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .vibe-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            background: var(--btn-color);
+            cursor: pointer;
+            position: relative;
+            transition: all var(--transition-fast);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        }
+
+        html.light-theme .vibe-btn {
+            border: 2px solid rgba(15, 23, 42, 0.15);
+        }
+
+        .vibe-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1.5px solid var(--btn-color);
+            opacity: 0;
+            transition: all var(--transition-smooth);
+        }
+
+        .vibe-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px var(--btn-color);
+        }
+
+        .vibe-btn.active {
+            transform: scale(1.1);
+            border-color: #ffffff;
+            box-shadow: 0 0 20px var(--btn-color);
+        }
+
+        html.light-theme .vibe-btn.active {
+            border-color: #0f172a;
+        }
+
+        .vibe-btn.active::after {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        /* Right Column: Holographic Projection Stage Box */
+        .stage-hologram-box {
+            position: relative;
+            height: 480px;
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+            background: rgba(var(--h2-vibe-primary), 0.015);
+            border: 1px solid rgba(var(--h2-vibe-primary), 0.15);
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            box-shadow: inset 0 0 30px rgba(var(--h2-vibe-primary), 0.05),
+                        0 15px 45px rgba(0, 0, 0, 0.45);
+            transition: all var(--transition-smooth);
+        }
+
+        html.light-theme .stage-hologram-box {
+            background: rgba(var(--h2-vibe-primary), 0.01);
+            border-color: rgba(var(--h2-vibe-primary), 0.12);
+            box-shadow: inset 0 0 30px rgba(var(--h2-vibe-primary), 0.02),
+                        0 10px 30px rgba(15, 23, 42, 0.05);
+        }
+
+        /* HUD corner accents */
+        .hud-corner {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border: 2px solid rgba(var(--h2-vibe-secondary), 0.35);
+            transition: border-color var(--transition-smooth);
+        }
+        .hud-corner.top-left { top: 12px; left: 12px; border-right: none; border-bottom: none; }
+        .hud-corner.top-right { top: 12px; right: 12px; border-left: none; border-bottom: none; }
+        .hud-corner.bottom-left { bottom: 12px; left: 12px; border-right: none; border-top: none; }
+        .hud-corner.bottom-right { bottom: 12px; right: 12px; border-left: none; border-top: none; }
+
+        /* Hologram scanner effect */
+        .hologram-scanner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(var(--h2-vibe-secondary), 0.5), transparent);
+            pointer-events: none;
+            z-index: 5;
+            animation: hologram-scan 4s linear infinite;
+        }
+        @keyframes hologram-scan {
+            0% { top: 0%; opacity: 0; }
+            5% { opacity: 0.6; }
+            95% { opacity: 0.6; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        /* Projection source base ring */
+        .hologram-projection {
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 6;
+        }
+
+        .projection-glow-ring {
+            position: absolute;
+            bottom: -15px;
+            width: 70px;
+            height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(ellipse at center, rgba(var(--h2-vibe-secondary), 0.4) 0%, transparent 70%);
+            filter: blur(4px);
+            animation: projection-pulse 3s ease-in-out infinite;
+            transition: background var(--transition-smooth);
+        }
+        @keyframes projection-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.15); opacity: 0.85; }
+        }
+
+        .stage-hologram-box .home2-mic-icon {
+            margin: 0;
+            animation: hologram-float 5s ease-in-out infinite;
+        }
+        @keyframes hologram-float {
+            0%, 100% { transform: translateY(0) rotateY(0deg); filter: drop-shadow(0 0 10px rgba(var(--h2-vibe-primary), 0.3)); }
+            50% { transform: translateY(-12px) rotateY(10deg); filter: drop-shadow(0 0 20px rgba(var(--h2-vibe-secondary), 0.55)); }
+        }
+
+        /* Spotlights inside hologram box */
+        .stage-hologram-box .spotlight {
+            position: absolute;
+            top: -20px;
+            width: 180px;
+            height: 120%;
+            opacity: 0;
+            pointer-events: none;
+            transform-origin: top center;
+            z-index: 3;
+        }
+
+        .stage-hologram-box .spotlight-1 {
+            left: 5%;
+            background: conic-gradient(from -6deg at 50% 0%, transparent 0%, rgba(var(--h2-vibe-primary), var(--h2-spot-opacity-glow)) 6%, rgba(var(--h2-vibe-primary), var(--h2-spot-opacity-falloff)) 12%, transparent 18%);
+            animation: spotlight-sweep-1 8s ease-in-out infinite;
+        }
+        .stage-hologram-box .spotlight-2 {
+            right: 5%;
+            background: conic-gradient(from -6deg at 50% 0%, transparent 0%, rgba(var(--h2-vibe-secondary), var(--h2-spot-opacity-glow)) 6%, rgba(var(--h2-vibe-secondary), var(--h2-spot-opacity-falloff)) 12%, transparent 18%);
+            animation: spotlight-sweep-2 8s ease-in-out infinite;
+        }
+        .stage-hologram-box .spotlight-3 {
+            left: 32%;
+            background: conic-gradient(from -6deg at 50% 0%, transparent 0%, rgba(var(--h2-vibe-accent), var(--h2-spot-opacity-glow)) 6%, rgba(var(--h2-vibe-accent), var(--h2-spot-opacity-falloff)) 12%, transparent 18%);
+            animation: spotlight-sweep-3 12s ease-in-out infinite;
+        }
+
+        /* SVG Grid stage floor inside box */
+        .hologram-stage-floor {
+            width: 100%;
+            opacity: 0.9;
+            z-index: 4;
+            border-top: 1px solid rgba(var(--h2-vibe-primary), 0.2);
+            background: linear-gradient(to top, rgba(var(--h2-vibe-primary), 0.08) 0%, transparent 100%);
+            transition: background var(--transition-smooth), border-color var(--transition-smooth);
+        }
+
+        /* Media Queries for Split layout */
+        @media (max-width: 991px) {
+            .home2-hero-container {
+                grid-template-columns: 1fr;
+                gap: 3.5rem;
+                text-align: center;
+                padding-top: 7rem;
+                padding-bottom: 3rem;
+            }
+            .home2-hero-left {
+                align-items: center;
+                text-align: center;
+            }
+            .home2-hero-title {
+                text-align: center;
+            }
+            .home2-hero-tagline {
+                text-align: center;
+                font-size: 1.15rem;
+            }
+            .home2-hero-sub {
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .home2-ctas {
+                justify-content: center;
+            }
+            .vibe-control-panel {
+                margin: 0 auto;
+            }
+            .stage-hologram-box {
+                height: 400px;
+                max-width: 360px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .home2-hero-container {
+                padding-top: 6rem;
+                gap: 2.5rem;
+            }
+            .stage-hologram-box {
+                height: 340px;
+                max-width: 320px;
+            }
+            .vibe-control-panel {
+                padding: 1rem;
+            }
+        }
+
+        /* Scroll indicator */
+        .home2-scroll {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--color-text-muted);
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .home2-scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--color-purple), transparent);
+            animation: scroll-line 2s ease-in-out infinite;
+        }
+
+        @keyframes scroll-line {
+            0% { transform: scaleY(0); transform-origin: top; }
+            50% { transform: scaleY(1); transform-origin: top; }
+            50.01% { transform-origin: bottom; }
+            100% { transform: scaleY(0); transform-origin: bottom; }
+        }
+
+        /* Vibe Highlights Section */
+        .vibe-section {
+            padding: 100px 0;
+            background: linear-gradient(180deg, #040408 0%, #090a18 50%, #040408 100%);
+            transition: background var(--transition-smooth);
+        }
+
+        html.light-theme .vibe-section {
+            background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 50%, #f8fafc 100%);
+        }
+
+        .vibe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .vibe-card {
+            padding: 2.5rem;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        html.light-theme .vibe-card {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(15, 23, 42, 0.08);
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+        }
+
+        .vibe-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255,255,255,0.12);
+        }
+
+        html.light-theme .vibe-card:hover {
+            border-color: rgba(139, 92, 246, 0.25);
+            box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+        }
+
+        .vibe-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        .vibe-card.vc-purple::before { background: linear-gradient(90deg, var(--color-purple), transparent); }
+        .vibe-card.vc-cyan::before { background: linear-gradient(90deg, var(--color-cyan), transparent); }
+        .vibe-card.vc-pink::before { background: linear-gradient(90deg, var(--color-pink), transparent); }
+        .vibe-card.vc-orange::before { background: linear-gradient(90deg, var(--color-orange), transparent); }
+
+        .vibe-num {
+            font-size: 4rem;
+            font-weight: 800;
+            font-family: var(--font-heading);
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .vibe-num.purple-text { color: var(--color-purple); filter: drop-shadow(0 0 10px rgba(176,38,255,0.5)); }
+        .vibe-num.cyan-text { color: var(--color-cyan); filter: drop-shadow(0 0 10px rgba(0,240,255,0.5)); }
+        .vibe-num.pink-text { color: var(--color-pink); filter: drop-shadow(0 0 10px rgba(255,0,127,0.5)); }
+        .vibe-num.orange-text { color: var(--color-orange); filter: drop-shadow(0 0 10px rgba(255,107,0,0.5)); }
+
+        html.light-theme .vibe-num.purple-text { filter: drop-shadow(0 0 6px rgba(139,92,246,0.25)); }
+        html.light-theme .vibe-num.cyan-text { filter: drop-shadow(0 0 6px rgba(6,182,212,0.25)); }
+        html.light-theme .vibe-num.pink-text { filter: drop-shadow(0 0 6px rgba(219,39,119,0.25)); }
+        html.light-theme .vibe-num.orange-text { filter: drop-shadow(0 0 6px rgba(234,88,12,0.25)); }
+
+        .vibe-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--color-text-white);
+            margin-bottom: 0.75rem;
+        }
+
+        html.light-theme .vibe-card h3 {
+            color: #0f172a;
+        }
+
+        .vibe-card p {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            line-height: 1.7;
+        }
+
+        /* REDESIGNED NEXT ON STAGE SHOWS STRIP */
+        .shows-strip {
+            padding: 100px 0;
+            background: radial-gradient(circle at 50% 0%, rgba(var(--h2-vibe-primary), 0.05) 0%, transparent 70%);
+            border-top: 1px solid rgba(var(--h2-vibe-primary), 0.1);
+            border-bottom: 1px solid rgba(var(--h2-vibe-primary), 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: border-color var(--transition-smooth), background var(--transition-smooth);
+        }
+
+        html.light-theme .shows-strip {
+            background: radial-gradient(circle at 50% 0%, rgba(var(--h2-vibe-primary), 0.03) 0%, transparent 60%);
+            border-color: rgba(var(--h2-vibe-primary), 0.06);
+        }
+
+        .shows-timeline-container {
+            display: flex;
+            gap: 2rem;
+            padding: 2.5rem 1rem;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(var(--h2-vibe-primary), 0.4) rgba(255,255,255,0.02);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        html.light-theme .shows-timeline-container {
+            scrollbar-color: rgba(var(--h2-vibe-primary), 0.3) rgba(15,23,42,0.02);
+        }
+
+        .shows-timeline-container::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .shows-timeline-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+
+        html.light-theme .shows-timeline-container::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.02);
+        }
+
+        .shows-timeline-container::-webkit-scrollbar-thumb {
+            background: rgba(var(--h2-vibe-primary), 0.4);
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .shows-timeline-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(var(--h2-vibe-primary), 0.7);
+        }
+
+        .show-timeline-card {
+            flex: 0 0 340px;
+            border-radius: 20px;
+            background: var(--h2-card-bg);
+            border: 1px solid var(--h2-card-border);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 380px;
+            box-shadow: var(--h2-card-glow);
+            transition: all var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .show-timeline-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 0%, rgba(var(--card-accent-rgb), 0.15) 0%, transparent 65%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .show-timeline-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(var(--card-accent-rgb), 0.4);
+            box-shadow: 0 15px 40px rgba(var(--card-accent-rgb), 0.15), 
+                        inset 0 0 20px rgba(var(--card-accent-rgb), 0.05);
+        }
+
+        .show-timeline-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Card glowing accents */
+        .show-timeline-card.accent-purple { --card-accent-rgb: 176, 38, 255; }
+        .show-timeline-card.accent-cyan { --card-accent-rgb: 0, 240, 255; }
+        .show-timeline-card.accent-pink { --card-accent-rgb: 255, 0, 127; }
+        .show-timeline-card.accent-orange { --card-accent-rgb: 255, 107, 0; }
+
+        html.light-theme .show-timeline-card.accent-purple { --card-accent-rgb: 139, 92, 246; }
+        html.light-theme .show-timeline-card.accent-cyan { --card-accent-rgb: 6, 182, 212; }
+        html.light-theme .show-timeline-card.accent-pink { --card-accent-rgb: 219, 39, 119; }
+        html.light-theme .show-timeline-card.accent-orange { --card-accent-rgb: 234, 88, 12; }
+
+        /* Card Header details */
+        .card-header-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-availability-pill {
+            font-size: 0.65rem;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 100px;
+            text-transform: uppercase;
+            font-family: var(--font-alt);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-availability-pill.spots-open {
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid rgba(0, 240, 255, 0.35);
+            color: #00f0ff;
+        }
+        html.light-theme .card-availability-pill.spots-open {
+            background: rgba(6, 182, 212, 0.08);
+            border-color: rgba(6, 182, 212, 0.25);
+            color: #0891b2;
+        }
+
+        .card-availability-pill.sold-out {
+            background: rgba(255, 0, 127, 0.1);
+            border: 1px solid rgba(255, 0, 127, 0.35);
+            color: #ff007f;
+        }
+        html.light-theme .card-availability-pill.sold-out {
+            background: rgba(219, 39, 119, 0.08);
+            border-color: rgba(219, 39, 119, 0.25);
+            color: #db2777;
+        }
+
+        .card-availability-pill.selling-fast {
+            background: rgba(255, 107, 0, 0.1);
+            border: 1px solid rgba(255, 107, 0, 0.35);
+            color: #ff6b00;
+        }
+        html.light-theme .card-availability-pill.selling-fast {
+            background: rgba(234, 88, 12, 0.08);
+            border-color: rgba(234, 88, 12, 0.25);
+            color: #ea580c;
+        }
+
+        .card-availability-pill::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            box-shadow: 0 0 6px currentColor;
+        }
+
+        /* Large Immersive Date Box */
+        .card-countdown-date {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            font-family: var(--font-heading);
+            color: var(--h2-text-main);
+        }
+
+        .card-countdown-date .c-day {
+            font-size: 2.8rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .card-countdown-date .c-month {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: rgba(var(--card-accent-rgb), 1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Performer Spotlight & Info */
+        .card-performer-panel {
+            position: relative;
+            z-index: 2;
+            margin-top: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-performer-tag {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(var(--card-accent-rgb), 0.9);
+            font-weight: 700;
+            font-family: var(--font-alt);
+            margin-bottom: 0.4rem;
+        }
+
+        .card-show-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--h2-text-main);
+            line-height: 1.3;
+            margin-bottom: 0.6rem;
+            transition: color var(--transition-smooth);
+        }
+
+        .show-timeline-card:hover .card-show-title {
+            color: rgb(var(--card-accent-rgb));
+        }
+
+        .card-venue-info {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-venue-info svg {
+            opacity: 0.6;
+        }
+
+        /* Bottom panel action button & pricing */
+        .card-action-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 1.25rem;
+            position: relative;
+            z-index: 2;
+            transition: border-color var(--transition-smooth);
+        }
+
+        html.light-theme .card-action-panel {
+            border-top-color: rgba(15,23,42,0.06);
+        }
+
+        .show-timeline-card:hover .card-action-panel {
+            border-top-color: rgba(var(--card-accent-rgb), 0.25);
+        }
+
+        .card-price-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-price-info .cp-label {
+            font-size: 0.65rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-price-info .cp-amount {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--h2-text-main);
+            font-family: var(--font-heading);
+        }
+
+        .card-arrow-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--h2-text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-smooth);
+        }
+
+        html.light-theme .card-arrow-btn {
+            background: rgba(15, 23, 42, 0.03);
+            border-color: rgba(15, 23, 42, 0.08);
+        }
+
+        .show-timeline-card:hover .card-arrow-btn {
+            background: rgb(var(--card-accent-rgb));
+            border-color: rgb(var(--card-accent-rgb));
+            color: #ffffff !important;
+            transform: translateX(4px);
+            box-shadow: 0 0 15px rgba(var(--card-accent-rgb), 0.4);
+        }
+
+        /* Dynamic background particle glow effects inside section */
+        .shows-strip::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, rgba(var(--h2-vibe-secondary), 0.06) 0%, transparent 70%);
+            filter: blur(40px);
+            pointer-events: none;
+            z-index: 0;
+            transition: background var(--transition-smooth);
+        }
+
+        /* Timeline Navigation buttons */
+        .timeline-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .timeline-control-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--h2-card-bg);
+            border: 1px solid var(--h2-card-border);
+            color: var(--h2-text-main);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-smooth);
+            box-shadow: var(--h2-card-glow);
+        }
+
+        .timeline-control-btn:hover {
+            border-color: rgb(var(--h2-vibe-primary));
+            color: rgb(var(--h2-vibe-primary));
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(var(--h2-vibe-primary), 0.25);
+        }
+
+        @media (max-width: 768px) {
+            .home2-hero-title { font-size: clamp(2.2rem, 10vw, 4rem); }
+            .home2-stage-visual { display: none; }
+        }
+    </style>
+    <!-- Inline blocking theme loader -->
+    <script>
+        (function () {
+            const theme = localStorage.getItem('theme') || 'dark';
+            if (theme === 'light') {
+                document.documentElement.classList.add('light-theme');
+            }
+        })();
+    </script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/logo.png" alt="Laughora Logo" class="brand-logo-img">
+                <span class="logo-neon">Laugh</span><span class="logo-accent">ora</span>
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="home2.html" class="nav-link active">Home2</a>
+                <a href="shows.html" class="nav-link">Shows</a>
+                <a href="tickets.html" class="nav-link">Tickets</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="openmic.html" class="nav-link">Open Mic</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+                <a href="performers.html" class="nav-link">Performers</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </nav>
+
+            <!-- Navbar Actions (Theme Toggle & Account) -->
+            <div class="nav-actions">
+                <button id="rtlToggle" class="rtl-toggle-btn" aria-label="Toggle RTL/LTR">
+                    <svg class="ltr-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12H9M15 6l-6 6 6 6"/></svg>
+                    <svg class="rtl-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h12M9 18l6-6-6-6"/></svg>
+                </button>
+                <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle theme">
+                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path>
+                        <path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path>
+                        <path d="M2 12h2"></path><path d="M20 12h2"></path>
+                        <path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>
+                    </svg>
+                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                    </svg>
+                </button>
+                <div class="user-dropdown">
+                    <button id="userDropdownBtn" class="user-dropdown-btn" aria-label="User Account">
+                        <svg class="user-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span class="user-badge-dot"></span>
+                    </button>
+                    <div class="user-dropdown-content">
+                        <div class="dropdown-header">
+                             <p class="user-name" id="navUserName">Comedy Fan</p>
+                            <p class="user-role" id="navUserRole">Spectator</p>
+                        </div>
+                        <a href="login.html" class="dropdown-item login-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+                            </span>
+                            <span>Sign In / Sign Up</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-divider"></div>
+                        <a href="user-dashboard.html" class="dropdown-item user-dash-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            </span>
+                            <span>User Dashboard</span>
+                        </a>
+                        <a href="admin-dashboard.html" class="dropdown-item admin-dash-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                            </span>
+                            <span>Admin Dashboard</span>
+                        </a>
+                        <button class="dropdown-item signout-btn logged-in-only" id="signoutBtn">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+                            </span>
+                            <span>Sign Out</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Home2 Hero: Stage Experience -->
+    <section class="home2-hero" id="home2-top">
+        <!-- Grid background overlay -->
+        <div class="hero-grid-overlay"></div>
+
+        <div class="home2-hero-container">
+            <!-- Left Column: Content & Controls -->
+            <div class="home2-hero-left">
+                <span class="home2-pre-badge">Stage Experience — Live & Unfiltered</span>
+
+                <h1 class="home2-hero-title">
+                    <span class="word-1">THE ULTIMATE</span>
+                    <span class="word-2">COMEDY STAGE</span>
+                    <span class="word-3">Where Laughter Rewires Reality</span>
+                </h1>
+
+                <p class="home2-hero-sub">
+                    Step into a dimension where comedy meets cyberpunk. Our stage pulses with neon energy, the crowd crackles with anticipation, and every performer ignites the room.
+                </p>
+
+                <div class="home2-ctas">
+                    <a href="shows.html" class="btn btn-purple">
+                        <span>Browse All Shows</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    <a href="openmic.html" class="btn btn-outline-cyan">
+                        <span>Take the Stage</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 5v14M5 12h14"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Stage Vibe Control Panel -->
+                <div class="vibe-control-panel">
+                    <div class="vibe-panel-header">
+                        <span>STAGE MONITOR v2.06</span>
+                        <span class="vibe-panel-status" id="vibeStatus">PURPLE ACTIVE</span>
+                    </div>
+                    <div class="vibe-panel-body">
+                        <span class="vibe-label">Chamber Vibe:</span>
+                        <div class="vibe-buttons">
+                            <button class="vibe-btn active" data-vibe="purple" title="Cyber Purple" style="--btn-color: #b026ff;"></button>
+                            <button class="vibe-btn" data-vibe="cyan" title="Vapor Cyan" style="--btn-color: #00f0ff;"></button>
+                            <button class="vibe-btn" data-vibe="pink" title="Neon Pink" style="--btn-color: #ff007f;"></button>
+                            <button class="vibe-btn" data-vibe="orange" title="Acid Orange" style="--btn-color: #ff6b00;"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Holographic Projection Box -->
+            <div class="home2-hero-right">
+                <div class="stage-hologram-box">
+                    <!-- HUD Corners -->
+                    <div class="hud-corner top-left"></div>
+                    <div class="hud-corner top-right"></div>
+                    <div class="hud-corner bottom-left"></div>
+                    <div class="hud-corner bottom-right"></div>
+
+                    <!-- Scanline Animation -->
+                    <div class="hologram-scanner"></div>
+
+                    <!-- Spotlight Beams -->
+                    <div class="spotlight spotlight-1"></div>
+                    <div class="spotlight spotlight-2"></div>
+                    <div class="spotlight spotlight-3"></div>
+
+                    <!-- Floating Hologram Emitter / Mic -->
+                    <div class="hologram-projection">
+                        <div class="projection-glow-ring"></div>
+                        <div class="home2-mic-icon">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="url(#micGrad)" stroke-width="1.5">
+                                <defs>
+                                    <linearGradient id="micGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="rgb(var(--h2-vibe-primary))"/>
+                                        <stop offset="100%" stop-color="rgb(var(--h2-vibe-secondary))"/>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/>
+                                <path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Stage Floor Grid lines (radiating from center horizon inside the box) -->
+                    <div class="hologram-stage-floor">
+                        <svg viewBox="0 0 420 120" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                            <defs>
+                                <linearGradient id="stageGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="rgba(var(--h2-vibe-primary), 0)"/>
+                                    <stop offset="20%" stop-color="rgba(var(--h2-vibe-primary), 0.3)"/>
+                                    <stop offset="50%" stop-color="rgba(var(--h2-vibe-secondary), 0.5)"/>
+                                    <stop offset="80%" stop-color="rgba(var(--h2-vibe-primary), 0.3)"/>
+                                    <stop offset="100%" stop-color="rgba(var(--h2-vibe-primary), 0)"/>
+                                </linearGradient>
+                                <filter id="glow">
+                                    <feGaussianBlur stdDeviation="4" result="blur"/>
+                                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                </filter>
+                            </defs>
+                            <!-- Stage platform edge -->
+                            <rect x="0" y="5" width="420" height="2" fill="url(#stageGrad)" filter="url(#glow)" opacity="0.8"/>
+                            <!-- Stage floor grid lines (horizontal depth progression) -->
+                            <line x1="0" y1="110" x2="420" y2="110" stroke="rgba(var(--h2-vibe-primary), 0.15)" stroke-width="1.2"/>
+                            <line x1="0" y1="80" x2="420" y2="80" stroke="rgba(var(--h2-vibe-primary), 0.12)" stroke-width="1"/>
+                            <line x1="0" y1="55" x2="420" y2="55" stroke="rgba(var(--h2-vibe-primary), 0.09)" stroke-width="0.8"/>
+                            <line x1="0" y1="35" x2="420" y2="35" stroke="rgba(var(--h2-vibe-primary), 0.06)" stroke-width="0.8"/>
+                            <line x1="0" y1="20" x2="420" y2="20" stroke="rgba(var(--h2-vibe-primary), 0.03)" stroke-width="0.5"/>
+                            
+                            <!-- Stage floor vanishing perspective lines radiating from horizon center (210, 5) -->
+                            <line x1="210" y1="5" x2="210" y2="120" stroke="rgba(var(--h2-vibe-secondary), 0.2)" stroke-width="1.2"/>
+                            <line x1="210" y1="5" x2="140" y2="120" stroke="rgba(var(--h2-vibe-primary), 0.12)" stroke-width="1"/>
+                            <line x1="210" y1="5" x2="70" y2="120" stroke="rgba(var(--h2-vibe-primary), 0.09)" stroke-width="1"/>
+                            <line x1="210" y1="5" x2="0" y2="120" stroke="rgba(var(--h2-vibe-primary), 0.07)" stroke-width="1"/>
+                            
+                            <line x1="210" y1="5" x2="280" y2="120" stroke="rgba(var(--h2-vibe-primary), 0.12)" stroke-width="1"/>
+                            <line x1="210" y1="5" x2="350" y2="120" stroke="rgba(var(--h2-vibe-primary), 0.09)" stroke-width="1"/>
+                            <line x1="210" y1="5" x2="420" y2="120" stroke="rgba(var(--h2-vibe-primary), 0.07)" stroke-width="1"/>
+                            
+                            <!-- Horizon points -->
+                            <circle cx="210" cy="8" r="4" fill="rgb(var(--h2-vibe-secondary))" opacity="0.8" filter="url(#glow)"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="home2-scroll">
+            <div class="home2-scroll-line"></div>
+            <span>Scroll</span>
+        </div>
+    </section>
+
+    <!-- Vibe Highlights Section -->
+    <section class="vibe-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag tag-cyan">THE NEON EXPERIENCE</span>
+                <h2 class="section-title">Why The Stage Hits Different</h2>
+                <p class="section-desc">Four pillars that define the electric atmosphere of Laughora.</p>
+            </div>
+
+            <div class="vibe-grid">
+                <div class="vibe-card vc-purple">
+                    <div class="vibe-num purple-text">01</div>
+                    <h3>Cinematic Stage Lighting</h3>
+                    <p>Our 360° dynamic rig uses AI-choreographed neon beams that react to crowd energy, creating a fully immersive show each night.</p>
+                </div>
+                <div class="vibe-card vc-cyan">
+                    <div class="vibe-num cyan-text">02</div>
+                    <h3>Pulse Acoustic System</h3>
+                    <p>Ultra-directional speaker arrays ensure crystal-clear audio in every seat—from the front row pod to the back lounge bay.</p>
+                </div>
+                <div class="vibe-card vc-pink">
+                    <div class="vibe-num pink-text">03</div>
+                    <h3>Live Crowd Reaction Feed</h3>
+                    <p>Our proprietary laugh-meter captures and visualizes crowd energy in real-time, displayed on twin side-screens during the show.</p>
+                </div>
+                <div class="vibe-card vc-orange">
+                    <div class="vibe-num orange-text">04</div>
+                    <h3>UV Cocktail Lounge</h3>
+                    <p>Pre-show and interval cocktails at our glowing bar—each drink served with UV-reactive garnishes for the full cyber-tavern effect.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upcoming Shows Strip -->
+    <section class="shows-strip">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag tag-purple">DON'T MISS OUT</span>
+                <h2 class="section-title">Next on Stage</h2>
+                <p class="section-desc">Swipe or click through upcoming performances lighting up Laughora arena this month.</p>
+            </div>
+            
+            <div class="shows-timeline-container" id="showsTimeline">
+                <!-- Card 1 -->
+                <div class="show-timeline-card accent-purple" onclick="window.location.href='tickets.html'">
+                    <div class="card-header-meta">
+                        <span class="card-availability-pill selling-fast">Selling Fast</span>
+                        <div class="card-countdown-date">
+                            <span class="c-day">29</span>
+                            <span class="c-month">May</span>
+                        </div>
+                    </div>
+                    <div class="card-performer-panel">
+                        <div class="card-performer-tag">Headliner Spotlight</div>
+                        <h3 class="card-show-title">Roxy Vance: Live &amp; Unfiltered</h3>
+                        <div class="card-venue-info">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                            </svg>
+                            <span>9:00 PM · Main Stage Arena</span>
+                        </div>
+                    </div>
+                    <div class="card-action-panel">
+                        <div class="card-price-info">
+                            <span class="cp-label">Ticket Rate</span>
+                            <span class="cp-amount">From $25</span>
+                        </div>
+                        <button class="card-arrow-btn" aria-label="Book Tickets">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="show-timeline-card accent-cyan" onclick="window.location.href='tickets.html'">
+                    <div class="card-header-meta">
+                        <span class="card-availability-pill spots-open">Spots Open</span>
+                        <div class="card-countdown-date">
+                            <span class="c-day">30</span>
+                            <span class="c-month">May</span>
+                        </div>
+                    </div>
+                    <div class="card-performer-panel">
+                        <div class="card-performer-tag">Featured Act</div>
+                        <h3 class="card-show-title">Jax Carter: No Filter</h3>
+                        <div class="card-venue-info">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                            </svg>
+                            <span>8:30 PM · Main Stage Arena</span>
+                        </div>
+                    </div>
+                    <div class="card-action-panel">
+                        <div class="card-price-info">
+                            <span class="cp-label">Ticket Rate</span>
+                            <span class="cp-amount">From $30</span>
+                        </div>
+                        <button class="card-arrow-btn" aria-label="Book Tickets">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="show-timeline-card accent-pink" onclick="window.location.href='openmic.html'">
+                    <div class="card-header-meta">
+                        <span class="card-availability-pill spots-open">Registering</span>
+                        <div class="card-countdown-date">
+                            <span class="c-day">01</span>
+                            <span class="c-month">Jun</span>
+                        </div>
+                    </div>
+                    <div class="card-performer-panel">
+                        <div class="card-performer-tag">Interactive Event</div>
+                        <h3 class="card-show-title">Open Mic Night</h3>
+                        <div class="card-venue-info">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                            </svg>
+                            <span>7:00 PM · Stage B Arena</span>
+                        </div>
+                    </div>
+                    <div class="card-action-panel">
+                        <div class="card-price-info">
+                            <span class="cp-label">Admission Fee</span>
+                            <span class="cp-amount">From $10</span>
+                        </div>
+                        <button class="card-arrow-btn" aria-label="Book Spot">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="show-timeline-card accent-orange" onclick="window.location.href='tickets.html'">
+                    <div class="card-header-meta">
+                        <span class="card-availability-pill sold-out">SOLD OUT</span>
+                        <div class="card-countdown-date">
+                            <span class="c-day">07</span>
+                            <span class="c-month">Jun</span>
+                        </div>
+                    </div>
+                    <div class="card-performer-panel">
+                        <div class="card-performer-tag">Classic Standup</div>
+                        <h3 class="card-show-title">Marcus Chen: Unplugged</h3>
+                        <div class="card-venue-info">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                            </svg>
+                            <span>8:00 PM · Main Stage Arena</span>
+                        </div>
+                    </div>
+                    <div class="card-action-panel">
+                        <div class="card-price-info">
+                            <span class="cp-label">Ticket Rate</span>
+                            <span class="cp-amount">From $35</span>
+                        </div>
+                        <button class="card-arrow-btn" aria-label="Sold Out" style="opacity: 0.5; pointer-events: none;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="show-timeline-card accent-purple" onclick="window.location.href='tickets.html'">
+                    <div class="card-header-meta">
+                        <span class="card-availability-pill selling-fast">Selling Fast</span>
+                        <div class="card-countdown-date">
+                            <span class="c-day">14</span>
+                            <span class="c-month">Jun</span>
+                        </div>
+                    </div>
+                    <div class="card-performer-panel">
+                        <div class="card-performer-tag">Special Showcase</div>
+                        <h3 class="card-show-title">Comedy All-Stars Night</h3>
+                        <div class="card-venue-info">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                            </svg>
+                            <span>9:00 PM · Main Stage Arena</span>
+                        </div>
+                    </div>
+                    <div class="card-action-panel">
+                        <div class="card-price-info">
+                            <span class="cp-label">Ticket Rate</span>
+                            <span class="cp-amount">From $50</span>
+                        </div>
+                        <button class="card-arrow-btn" aria-label="Book Tickets">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="show-timeline-card accent-pink" onclick="window.location.href='openmic.html'">
+                    <div class="card-header-meta">
+                        <span class="card-availability-pill spots-open">Spots Open</span>
+                        <div class="card-countdown-date">
+                            <span class="c-day">21</span>
+                            <span class="c-month">Jun</span>
+                        </div>
+                    </div>
+                    <div class="card-performer-panel">
+                        <div class="card-performer-tag">Summer Special</div>
+                        <h3 class="card-show-title">Open Mic: Summer Special</h3>
+                        <div class="card-venue-info">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                            </svg>
+                            <span>7:30 PM · Stage B Arena</span>
+                        </div>
+                    </div>
+                    <div class="card-action-panel">
+                        <div class="card-price-info">
+                            <span class="cp-label">Admission Fee</span>
+                            <span class="cp-amount">From $10</span>
+                        </div>
+                        <button class="card-arrow-btn" aria-label="Book Spot">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline controls -->
+            <div class="timeline-controls">
+                <button class="timeline-control-btn" id="timelinePrevBtn" aria-label="Scroll Left">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+                <button class="timeline-control-btn" id="timelineNextBtn" aria-label="Scroll Right">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div style="text-align:center;margin-top:3.5rem;">
+                <a href="shows.html" class="btn btn-purple">
+                    <span>See Full Schedule</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-glow-line"></div>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <img src="assets/logo.png" alt="Laughora Logo" class="brand-logo-img">
+                        <span class="logo-neon">Laugh</span><span class="logo-accent">ora</span>
+                    </a>
+                    <p>The premier stand-up comedy club. Three stages, non-stop laughs, and an unforgettable night out.</p>
+                    <div class="footer-socials">
+                        <a href="#" aria-label="Twitter"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.53v.05c0 2.08 1.48 3.82 3.44 4.21-.36.1-.74.15-1.13.15-.27 0-.54-.03-.8-.08.54 1.7 2.11 2.93 3.97 2.97-1.46 1.14-3.3 1.82-5.31 1.82-.35 0-.69-.02-1.02-.06C2.82 20.31 5.09 21 7.5 21c9 0 13.92-7.46 13.92-13.92 0-.21 0-.42-.02-.63.95-.7 1.78-1.56 2.43-2.54z"/></svg></a>
+                        <a href="#" aria-label="Instagram"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="home2.html">Stage Experience</a></li>
+                        <li><a href="shows.html">Comedy Shows</a></li>
+                        <li><a href="openmic.html">Open Mic Slots</a></li>
+                        <li><a href="performers.html">The Comedians</a></li>
+                        <li><a href="tickets.html">Seating Tickets</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="performers.html">The Comedians</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Emergency Contact</a></li>
+                        <li><a href="#">Privacy Protocol</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h4>Stay Updated</h4>
+                    <p>Subscribe to receive secret discount codes, lineup updates, and priority open mic notifications.</p>
+                    <form id="newsletterForm" class="newsletter-form">
+                        <input type="email" id="newsletterEmail" placeholder="Enter your email" required>
+                        <button type="submit" aria-label="Subscribe">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </form>
+                    <p class="newsletter-feedback" id="newsletterFeedback"></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Laughora Inc. All rights reserved.</p>
+                <a href="#home2-top" class="back-to-top">
+                    <span>Back to Top</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const timeline = document.getElementById('showsTimeline');
+            const prevBtn = document.getElementById('timelinePrevBtn');
+            const nextBtn = document.getElementById('timelineNextBtn');
+
+            if (timeline && prevBtn && nextBtn) {
+                const scrollAmount = 360; // Card width + gap
+
+                prevBtn.addEventListener('click', () => {
+                    timeline.scrollBy({
+                        left: -scrollAmount,
+                        behavior: 'smooth'
+                    });
+                });
+
+                nextBtn.addEventListener('click', () => {
+                    timeline.scrollBy({
+                        left: scrollAmount,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

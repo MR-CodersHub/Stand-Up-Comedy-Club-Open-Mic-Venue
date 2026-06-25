@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laughora | Neon Frame Gallery</title>
+    <meta name="description" content="Step inside Laughora with our immersive photo gallery. Explore glowing stage setups, packed venue shots, and unforgettable comedy moments.">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Inline blocking theme loader -->
+    <script>
+        (function () {
+            const theme = localStorage.getItem('theme') || 'dark';
+            if (theme === 'light') {
+                document.documentElement.classList.add('light-theme');
+            }
+        })();
+    </script>
+    <style>
+        /* Modernized Hero Section */
+        .page-hero {
+            padding: 180px 24px 100px;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(ellipse at 50% 0%, rgba(176,38,255,0.15) 0%, transparent 60%);
+            overflow: hidden;
+        }
+
+        /* Cyberpunk grid background effect */
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(176, 38, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(176, 38, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: center top;
+            mask-image: radial-gradient(ellipse at 50% 0%, black 20%, transparent 80%);
+            -webkit-mask-image: radial-gradient(ellipse at 50% 0%, black 20%, transparent 80%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .page-hero-title {
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            font-weight: 900;
+            font-family: var(--font-heading);
+            color: var(--color-text-white);
+            margin-bottom: 1.2rem;
+            letter-spacing: -1.5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-hero-title span {
+            background: linear-gradient(135deg, var(--color-purple), var(--color-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(176, 38, 255, 0.3);
+        }
+
+        .page-hero p {
+            max-width: 650px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: var(--color-text-slate);
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Redesigned Gallery Section */
+        .gallery-page {
+            padding: 40px 0 100px;
+            position: relative;
+        }
+
+        /* Interactive Filter Tabs */
+        .gallery-filter-wrap {
+            display: inline-flex;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--color-border);
+            border-radius: 50px;
+            padding: 6px;
+            margin: 0 auto 3rem auto;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+            box-shadow: 
+                0 10px 30px rgba(0,0,0,0.3),
+                0 0 20px rgba(176, 38, 255, 0.03);
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .gallery-filter-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            outline: none;
+            color: var(--color-text-slate);
+            font-family: var(--font-alt);
+            font-size: 0.88rem;
+            font-weight: 600;
+            padding: 10px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .gallery-filter-btn:hover {
+            color: var(--color-text-white);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .gallery-filter-btn.active {
+            background: rgba(176, 38, 255, 0.12);
+            border-color: rgba(176, 38, 255, 0.35);
+            color: var(--color-text-white);
+            text-shadow: 0 0 10px rgba(176, 38, 255, 0.5);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        /* Masonry Grid Layout */
+        .gallery-masonry {
+            columns: 3;
+            column-gap: 1.5rem;
+            transition: all 0.5s ease;
+        }
+
+        @media (max-width: 992px) { .gallery-masonry { columns: 2; } }
+        @media (max-width: 600px) { .gallery-masonry { columns: 1; } }
+
+        /* Premium Gallery Item Cards */
+        .gallery-masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            display: block;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--color-border);
+            transition: 
+                transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15),
+                box-shadow 0.4s ease,
+                border-color 0.4s ease;
+            transform-origin: center;
+        }
+
+        /* Responsive category badge */
+        .gmi-badge {
+            position: absolute;
+            top: 1.25rem;
+            left: 1.25rem;
+            z-index: 10;
+            font-size: 0.68rem;
+            font-weight: 700;
+            font-family: var(--font-alt);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 5px 12px;
+            border-radius: 30px;
+            background: rgba(4, 4, 8, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all var(--transition-fast);
+        }
+
+        .gmi-img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Hover Zoom & Tilt */
+        .gallery-masonry-item:hover {
+            transform: translateY(-5px) scale(1.015);
+        }
+
+        .gallery-masonry-item:hover .gmi-img {
+            transform: scale(1.05);
+        }
+
+        /* Smooth Glass Overlay */
+        .gmi-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                rgba(4, 4, 10, 0.95) 0%,
+                rgba(4, 4, 10, 0.4) 50%,
+                transparent 100%
+            );
+            opacity: 0;
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+            z-index: 2;
+        }
+
+        .gallery-masonry-item:hover .gmi-overlay {
+            opacity: 1;
+        }
+
+        /* Info slide-in animation */
+        .gmi-overlay-content {
+            transform: translateY(15px);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+        }
+
+        .gallery-masonry-item:hover .gmi-overlay-content {
+            transform: translateY(0);
+        }
+
+        .gmi-overlay-content h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            font-family: var(--font-heading);
+            color: var(--color-text-white);
+            margin-bottom: 0.4rem;
+        }
+
+        .gmi-overlay-content p {
+            font-size: 0.85rem;
+            color: var(--color-text-slate);
+            line-height: 1.4;
+        }
+
+        /* Zoom Circle Trigger button */
+        .gmi-zoom-btn {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(4, 4, 8, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all var(--transition-smooth);
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .gallery-masonry-item:hover .gmi-zoom-btn {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Neon Color Frame & Glow Bindings */
+        .gmi-purple { border-color: rgba(176,38,255,0.2); }
+        .gmi-cyan   { border-color: rgba(0,240,255,0.2); }
+        .gmi-pink   { border-color: rgba(255,0,127,0.2); }
+        .gmi-orange { border-color: rgba(255,107,0,0.2); }
+
+        .gmi-purple .gmi-badge { color: var(--color-purple); border-color: rgba(176,38,255,0.3); }
+        .gmi-cyan .gmi-badge   { color: var(--color-cyan); border-color: rgba(0,240,255,0.3); }
+        .gmi-pink .gmi-badge   { color: var(--color-pink); border-color: rgba(255,0,127,0.3); }
+        .gmi-orange .gmi-badge { color: var(--color-orange); border-color: rgba(255,107,0,0.3); }
+
+        .gallery-masonry-item:hover.gmi-purple {
+            border-color: rgba(176,38,255,0.6);
+            box-shadow: 0 10px 30px rgba(176,38,255,0.25), 0 0 15px rgba(176,38,255,0.1);
+        }
+        .gallery-masonry-item:hover.gmi-cyan {
+            border-color: rgba(0,240,255,0.6);
+            box-shadow: 0 10px 30px rgba(0,240,255,0.25), 0 0 15px rgba(0,240,255,0.1);
+        }
+        .gallery-masonry-item:hover.gmi-pink {
+            border-color: rgba(255,0,127,0.6);
+            box-shadow: 0 10px 30px rgba(255,0,127,0.25), 0 0 15px rgba(255,0,127,0.1);
+        }
+        .gallery-masonry-item:hover.gmi-orange {
+            border-color: rgba(255,107,0,0.6);
+            box-shadow: 0 10px 30px rgba(255,107,0,0.25), 0 0 15px rgba(255,107,0,0.1);
+        }
+
+        .gmi-zoom-btn:hover {
+            transform: scale(1.1) !important;
+            background: var(--color-purple);
+            border-color: var(--color-purple);
+            box-shadow: 0 0 15px var(--color-purple);
+        }
+        
+        .gmi-cyan .gmi-zoom-btn:hover {
+            background: var(--color-cyan);
+            border-color: var(--color-cyan);
+            box-shadow: 0 0 15px var(--color-cyan);
+            color: #000;
+        }
+        .gmi-pink .gmi-zoom-btn:hover {
+            background: var(--color-pink);
+            border-color: var(--color-pink);
+            box-shadow: 0 0 15px var(--color-pink);
+        }
+        .gmi-orange .gmi-zoom-btn:hover {
+            background: var(--color-orange);
+            border-color: var(--color-orange);
+            box-shadow: 0 0 15px var(--color-orange);
+        }
+
+        /* Abstract Gradient Panels Redesign */
+        .abstract-panel {
+            width: 100%;
+            height: 100%;
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1.25rem;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            z-index: 1;
+        }
+
+        /* Abstract panel background grid patterns */
+        .abstract-panel::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(255,255,255,0.06) 1.5px, transparent 1.5px);
+            background-size: 16px 16px;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .abstract-panel.ap-purple { background: linear-gradient(135deg, #18092a 0%, #04040a 100%); }
+        .abstract-panel.ap-cyan   { background: linear-gradient(135deg, #091f2a 0%, #04040a 100%); }
+        .abstract-panel.ap-pink   { background: linear-gradient(135deg, #2a0918 0%, #04040a 100%); }
+        .abstract-panel.ap-orange { background: linear-gradient(135deg, #2a1409 0%, #04040a 100%); }
+
+        .abstract-panel svg {
+            filter: drop-shadow(0 0 8px currentColor);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+            z-index: 1;
+            position: relative;
+        }
+
+        .gallery-masonry-item:hover .abstract-panel svg {
+            transform: scale(1.15) translateY(-5px);
+        }
+
+        .abstract-panel span {
+            font-size: 0.8rem;
+            font-weight: 700;
+            font-family: var(--font-alt);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            z-index: 1;
+            position: relative;
+        }
+
+        /* Enhanced Cinematic Lightbox */
+        .lb-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 2, 5, 0.93);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 20px;
+        }
+
+        .lb-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .lb-content {
+            position: relative;
+            max-width: 960px;
+            width: 100%;
+            text-align: center;
+            transform: scale(0.95) translateY(10px);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .lb-overlay.active .lb-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .lb-content img {
+            max-width: 100%;
+            max-height: 75vh;
+            object-fit: contain;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 
+                0 25px 60px rgba(0, 0, 0, 0.8),
+                0 0 40px rgba(176, 38, 255, 0.15);
+            background: rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .lb-abstract-view {
+            max-width: 100%;
+            width: 100%;
+            height: 420px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 
+                0 25px 60px rgba(0, 0, 0, 0.8),
+                0 0 45px rgba(176, 38, 255, 0.15);
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .lb-abstract-view::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(255,255,255,0.04) 1.5px, transparent 1.5px);
+            background-size: 20px 20px;
+            pointer-events: none;
+        }
+
+        .lb-caption {
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+            color: var(--color-text-slate);
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 50px;
+            display: inline-block;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 90%;
+        }
+
+        .lb-caption strong { 
+            color: var(--color-text-white); 
+            font-weight: 700;
+            margin-right: 6px;
+        }
+
+        /* Redesigned Control Buttons */
+        .lb-close {
+            position: absolute;
+            top: -55px;
+            right: 0;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+        }
+
+        .lb-close:hover {
+            background: var(--color-pink);
+            border-color: var(--color-pink);
+            box-shadow: 0 0 15px var(--color-pink);
+            transform: rotate(90deg);
+        }
+
+        .lb-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            z-index: 100;
+        }
+
+        .lb-nav:hover { 
+            background: var(--color-purple);
+            border-color: var(--color-purple);
+            box-shadow: 0 0 15px var(--color-purple);
+        }
+        
+        .lb-prev { left: -75px; }
+        .lb-next { right: -75px; }
+        
+        .lb-prev:hover { transform: translateY(-50%) translateX(-3px); }
+        .lb-next:hover { transform: translateY(-50%) translateX(3px); }
+
+        @media (max-width: 1100px) {
+            .lb-prev { left: -20px; background: rgba(0,0,0,0.6); }
+            .lb-next { right: -20px; background: rgba(0,0,0,0.6); }
+        }
+
+        @media (max-width: 768px) {
+            .lb-nav { display: none; }
+        }
+
+        /* Filter tab animation support */
+        .gallery-masonry-item {
+            opacity: 1;
+            transform: scale(1);
+            transition: 
+                transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15), 
+                box-shadow 0.4s ease, 
+                border-color 0.4s ease,
+                opacity 0.35s ease-out;
+        }
+
+        .gallery-masonry-item.gmi-filtered-out {
+            opacity: 0;
+            transform: scale(0.9);
+            pointer-events: none;
+            position: absolute;
+            visibility: hidden;
+            width: 0;
+            height: 0;
+            margin: 0;
+            border: none;
+            box-shadow: none;
+        }
+
+        /* ── Light Theme Overrides ── */
+        html.light-theme .gallery-filter-wrap {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(139, 92, 246, 0.15);
+            box-shadow: 
+                0 10px 30px rgba(15, 23, 42, 0.05),
+                0 0 20px rgba(139, 92, 246, 0.02);
+        }
+        
+        html.light-theme .gallery-filter-btn {
+            color: #475569;
+        }
+        
+        html.light-theme .gallery-filter-btn:hover {
+            color: #0f172a;
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        html.light-theme .gallery-filter-btn.active {
+            background: rgba(139, 92, 246, 0.08);
+            border-color: rgba(139, 92, 246, 0.25);
+            color: #7c3aed;
+            text-shadow: none;
+        }
+
+        html.light-theme .gallery-masonry-item {
+            background: #ffffff;
+            border-color: rgba(15, 23, 42, 0.06);
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.02);
+        }
+
+        html.light-theme .gmi-badge {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(15, 23, 42, 0.08);
+        }
+
+        html.light-theme .gmi-overlay {
+            background: linear-gradient(
+                to top,
+                rgba(255, 255, 255, 0.98) 0%,
+                rgba(255, 255, 255, 0.45) 50%,
+                transparent 100%
+            );
+        }
+
+        html.light-theme .gmi-overlay-content h3 {
+            color: #0f172a;
+        }
+
+        html.light-theme .gmi-overlay-content p {
+            color: #475569;
+        }
+
+        html.light-theme .gmi-zoom-btn {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(15, 23, 42, 0.08);
+            color: #475569;
+        }
+
+        html.light-theme .abstract-panel::after {
+            background-image: radial-gradient(rgba(0,0,0,0.06) 1.5px, transparent 1.5px);
+        }
+
+        html.light-theme .abstract-panel.ap-purple { background: linear-gradient(135deg, #f3e8ff 0%, #ffffff 100%); }
+        html.light-theme .abstract-panel.ap-cyan   { background: linear-gradient(135deg, #ecfeff 0%, #ffffff 100%); }
+        html.light-theme .abstract-panel.ap-pink   { background: linear-gradient(135deg, #fce7f3 0%, #ffffff 100%); }
+        html.light-theme .abstract-panel.ap-orange { background: linear-gradient(135deg, #ffedd5 0%, #ffffff 100%); }
+
+        html.light-theme .gallery-masonry-item:hover.gmi-purple { border-color: rgba(139, 92, 246, 0.4); box-shadow: 0 10px 30px rgba(139, 92, 246, 0.12); }
+        html.light-theme .gallery-masonry-item:hover.gmi-cyan   { border-color: rgba(6, 182, 212, 0.4);   box-shadow: 0 10px 30px rgba(6, 182, 212, 0.12);   }
+        html.light-theme .gallery-masonry-item:hover.gmi-pink   { border-color: rgba(236, 72, 153, 0.4);  box-shadow: 0 10px 30px rgba(236, 72, 153, 0.12);  }
+        html.light-theme .gallery-masonry-item:hover.gmi-orange { border-color: rgba(249, 115, 22, 0.4);  box-shadow: 0 10px 30px rgba(249, 115, 22, 0.12);  }
+
+        html.light-theme .lb-caption {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(15, 23, 42, 0.08);
+            color: #475569;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+        }
+
+        html.light-theme .lb-caption strong {
+            color: #0f172a;
+        }
+
+        html.light-theme .lb-close {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(15, 23, 42, 0.08);
+            color: #475569;
+        }
+        
+        html.light-theme .lb-close:hover {
+            color: white;
+        }
+
+        html.light-theme .lb-nav {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(15, 23, 42, 0.08);
+            color: #475569;
+        }
+
+        html.light-theme .lb-nav:hover {
+            color: white;
+        }
+
+        html.light-theme .lb-abstract-view {
+            background: #ffffff;
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/logo.png" alt="Laughora Logo" class="brand-logo-img">
+                <span class="logo-neon">Laugh</span><span class="logo-accent">ora</span></a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="home2.html" class="nav-link">Home2</a>
+                <a href="shows.html" class="nav-link">Shows</a>
+                <a href="tickets.html" class="nav-link">Tickets</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="openmic.html" class="nav-link">Open Mic</a>
+                <a href="gallery.html" class="nav-link active">Gallery</a>
+                <a href="performers.html" class="nav-link">Performers</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </nav>
+
+            <!-- Navbar Actions (Theme Toggle & Account) -->
+            <div class="nav-actions">
+                <button id="rtlToggle" class="rtl-toggle-btn" aria-label="Toggle RTL/LTR">
+                    <svg class="ltr-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12H9M15 6l-6 6 6 6"/></svg>
+                    <svg class="rtl-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h12M9 18l6-6-6-6"/></svg>
+                </button>
+                <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle theme">
+                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path>
+                        <path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path>
+                        <path d="M2 12h2"></path><path d="M20 12h2"></path>
+                        <path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>
+                    </svg>
+                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                    </svg>
+                </button>
+                <div class="user-dropdown">
+                    <button id="userDropdownBtn" class="user-dropdown-btn" aria-label="User Account">
+                        <svg class="user-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span class="user-badge-dot"></span>
+                    </button>
+                    <div class="user-dropdown-content">
+                        <div class="dropdown-header">
+                             <p class="user-name" id="navUserName">Comedy Fan</p>
+                            <p class="user-role" id="navUserRole">Spectator</p>
+                        </div>
+                        <a href="login.html" class="dropdown-item login-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+                            </span>
+                            <span>Sign In / Sign Up</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-divider"></div>
+                        <a href="user-dashboard.html" class="dropdown-item user-dash-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            </span>
+                            <span>User Dashboard</span>
+                        </a>
+                        <a href="admin-dashboard.html" class="dropdown-item admin-dash-link">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                            </span>
+                            <span>Admin Dashboard</span>
+                        </a>
+                        <button class="dropdown-item signout-btn logged-in-only" id="signoutBtn">
+                            <span class="di-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+                            </span>
+                            <span>Sign Out</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <div class="page-hero">
+        <span class="section-tag tag-purple">INSIDE THE CRADLE</span>
+        <h1 class="page-hero-title">Neon Frame <span>Gallery</span></h1>
+        <p>A visual glimpse into our high-energy comedy sanctuary. Hover over each frame to witness the electric details. Click to zoom.</p>
+    </div>
+
+    <!-- Gallery Content -->
+    <section class="gallery-page">
+        <div class="container">
+
+            <!-- Filter Buttons -->
+            <div class="gallery-filter-wrap">
+                <button class="gallery-filter-btn active" data-gfilter="all">All</button>
+                <button class="gallery-filter-btn" data-gfilter="venue">Venue</button>
+                <button class="gallery-filter-btn" data-gfilter="performer">Performers</button>
+                <button class="gallery-filter-btn" data-gfilter="crowd">Crowd</button>
+                <button class="gallery-filter-btn" data-gfilter="backstage">Backstage</button>
+            </div>
+
+            <!-- Masonry Gallery Grid -->
+            <div class="gallery-masonry" id="galleryMasonry">
+
+                <!-- Item 1 -->
+                <div class="gallery-masonry-item gmi-purple" data-gcategory="venue" data-lbsrc="assets/gallery_1.png" data-lbtitle="Packed House" data-lbcaption="A packed crowd roaring with laughter at a weekend headliner.">
+                    <span class="gmi-badge">Venue</span>
+                    <img src="assets/gallery_1.png" alt="Packed House" class="gmi-img" style="height:260px;">
+                    <div class="gmi-overlay">
+                        <div class="gmi-overlay-content">
+                            <h3>Packed House</h3>
+                            <p>Standing room only for our weekend headliner.</p>
+                        </div>
+                    </div>
+                    <button class="gmi-zoom-btn" aria-label="Zoom Image">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </button>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="gallery-masonry-item gmi-cyan" data-gcategory="performer" data-lbsrc="assets/comedian_1.png" data-lbtitle="Roxy Vance" data-lbcaption="Roxy Vance killing it on stage with sharp wit and hilarious observations.">
+                    <span class="gmi-badge">Performer</span>
+                    <img src="assets/comedian_1.png" alt="Roxy Vance" class="gmi-img" style="height:320px;">
+                    <div class="gmi-overlay">
+                        <div class="gmi-overlay-content">
+                            <h3>Roxy Vance</h3>
+                            <p>Stand-up comedy at its finest — sharp, bold, and hilarious.</p>
+                        </div>
+                    </div>
+                    <button class="gmi-zoom-btn" aria-label="Zoom Image">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </button>
+                </div>
+
+                <!-- Item 3: Abstract -->
+                <div class="gallery-masonry-item gmi-purple" data-gcategory="venue" data-lbsrc="assets/comedian_stage_1.jpg" data-lbtitle="Craft Cocktails" data-lbcaption="Handcrafted signature drinks served at the bar.">
+                    <span class="gmi-badge">Venue</span>
+                    <img src="assets/comedian_stage_1.jpg" alt="Craft Cocktails" class="gmi-img" style="height:260px;">
+                    <div class="gmi-overlay">
+                        <div class="gmi-overlay-content">
+                            <h3>Craft Cocktails</h3>
+                            <p>Handcrafted signature drinks at the bar.</p>
+                        </div>
+                    </div>
+                    <button class="gmi-zoom-btn" aria-label="Zoom Image">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </button>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="gallery-masonry-item gmi-purple" data-gcategory="performer" data-lbsrc="assets/comedian_2.png" data-lbtitle="Jax Carter" data-lbcaption="Jax Carter commanding the stage with his signature high-energy style.">
+                    <span class="gmi-badge">Performer</span>
+                    <img src="assets/comedian_2.png" alt="Jax Carter" class="gmi-img" style="height:290px;">
+                    <div class="gmi-overlay">
+                        <div class="gmi-overlay-content">
+                            <h3>Jax Carter</h3>
+                            <p>Commanding the stage with electric stand-up energy.</p>
+                        </div>
+                    </div>
+                    <button class="gmi-zoom-btn" aria-label="Zoom Image">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </button>
+                </div>
+
+                <!-- Item 5: Abstract -->
+                <div class="gallery-masonry-item gmi-cyan" data-gcategory="crowd" data-lbsrc="assets/comedian_stage_2.jpg" data-lbtitle="Crowd Laughs" data-lbcaption="Peak acoustics captured during Roxy Vance's performance.">
+                    <span class="gmi-badge">Crowd</span>
+                    <img src="https://plus.unsplash.com/premium_photo-1664302656889-e0ff44331843?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bGF1Z2hpbmclMjBjcm93ZHxlbnwwfHwwfHx8MA%3D%3D" alt="Crowd Laughs" class="gmi-img" style="height:260px;">
+                    <div class="gmi-overlay">
+                        <div class="gmi-overlay-content">
+                            <h3>Crowd Laughs</h3>
+                            <p>Peak acoustics during Roxy Vance's performance.</p>
+                        </div>
+                    </div>
+                    <button class="gmi-zoom-btn" aria-label="Zoom Image">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </button>
+                </div>
+
+                <!-- Item 6 -->
+                <div class="gallery-masonry-item gmi-cyan" data-gcategory="venue" data-lbsrc="assets/hero_bg.png" data-lbtitle="Live Audience" data-lbcaption="The crowd soaking in a night of non-stop laughter.">
+                    <span class="gmi-badge">Venue</span>
+                    <img src="assets/hero_bg.png" alt="Live Audience" class="gmi-img" style="height:250px;">
+                    <div class="gmi-overlay">
+                        <div class="gmi-overlay-content">
+                            <h3>Live Audience</h3>
+                            <p>An electric crowd enjoying a night of stand-up comedy.</p>
+                        </div>
+                    </div>
+                    <button class="gmi-zoom-btn" aria-label="Zoom Image">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </button>
+                </div>
+
+                <!-- Item 7 -->
+                <div class="gallery-masonry-item gmi-purple" data-gcategory="performer" data-lbsrc="assets/comedian_male.png" data-lbtitle="Marcus Chen" data-lbcaption="Marcus Chen delivering punchlines under vibrant stage lights.">
+                    <span class="gmi-badge">Performer</span>
+                    <img src="assets/comedian_male.png" alt="Marcus Chen" class="gmi-img" style="height:280px;">
+                    <div class="gmi-overlay">
+                        <div class="gmi-overlay-content">
+                            <h3>Marcus Chen</h3>
+                            <p>Delivering knockout punchlines under colorful stage lights.</p>
+                        </div>
+                    </div>
+                    <button class="gmi-zoom-btn" aria-label="Zoom Image">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </button>
+                </div>
+
+                <!-- Item 8: Abstract -->
+                <div class="gallery-masonry-item gmi-purple" data-gcategory="backstage" data-lbsrc="assets/comedian_stage_3.jpg" data-lbtitle="Backstage Zone" data-lbcaption="The neon-lit backstage green room where performers prepare.">
+                    <span class="gmi-badge">Backstage</span>
+                    <img src="assets/comedian_stage_3.jpg" alt="Backstage Zone" class="gmi-img" style="height:260px;">
+                    <div class="gmi-overlay">
+                        <div class="gmi-overlay-content">
+                            <h3>Backstage Zone</h3>
+                            <p>Where comedians prepare before taking the stage.</p>
+                        </div>
+                    </div>
+                    <button class="gmi-zoom-btn" aria-label="Zoom Image">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </button>
+                </div>
+
+                <!-- Item 9 -->
+                <div class="gallery-masonry-item gmi-cyan" data-gcategory="crowd" data-lbsrc="assets/crowd_laughing.png" data-lbtitle="Standing Ovation" data-lbcaption="The crowd on their feet after a killer comedy set.">
+                    <span class="gmi-badge">Crowd</span>
+                    <img src="assets/crowd_laughing.png" alt="Standing Ovation" class="gmi-img" style="height:220px;">
+                    <div class="gmi-overlay">
+                        <div class="gmi-overlay-content">
+                            <h3>Standing Ovation</h3>
+                            <p>A well-deserved standing ovation after a memorable night.</p>
+                        </div>
+                    </div>
+                    <button class="gmi-zoom-btn" aria-label="Zoom Image">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </button>
+                </div>
+
+            </div><!-- /gallery-masonry -->
+        </div>
+    </section>
+
+    <!-- Lightbox Overlay -->
+    <div class="lb-overlay" id="lbOverlay">
+        <div class="lb-content" id="lbContent">
+            <button class="lb-close" id="lbClose">&times;</button>
+            <button class="lb-nav lb-prev" id="lbPrev">&#8249;</button>
+            <button class="lb-nav lb-next" id="lbNext">&#8250;</button>
+            <img src="" id="lbImg" alt="Gallery zoom" style="display:none;">
+            <div id="lbAbstractView" class="lb-abstract-view" style="display:none;"></div>
+            <div class="lb-caption" id="lbCaption"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-glow-line"></div>
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Brand Info -->
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <img src="assets/logo.png" alt="Laughora Logo" class="brand-logo-img">
+                        <span class="logo-neon">Laugh</span><span class="logo-accent">ora</span>
+                    </a>
+                    <p>The premier stand-up comedy club. Three stages, non-stop laughs, and an unforgettable night out.</p>
+                    <div class="footer-socials">
+                        <a href="#" aria-label="Twitter"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.53v.05c0 2.08 1.48 3.82 3.44 4.21-.36.1-.74.15-1.13.15-.27 0-.54-.03-.8-.08.54 1.7 2.11 2.93 3.97 2.97-1.46 1.14-3.3 1.82-5.31 1.82-.35 0-.69-.02-1.02-.06C2.82 20.31 5.09 21 7.5 21c9 0 13.92-7.46 13.92-13.92 0-.21 0-.42-.02-.63.95-.7 1.78-1.56 2.43-2.54z" />
+                            </svg></a>
+                        <a href="#" aria-label="Instagram"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg></a>
+                        <a href="#" aria-label="YouTube"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"></path>
+                                <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" />
+                            </svg></a>
+                    </div>
+                </div>
+
+                <!-- Fast Links -->
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="home2.html">Alternate Stage</a></li>
+                        <li><a href="shows.html">Comedy Shows</a></li>
+                        <li><a href="openmic.html">Open Mic Slots</a></li>
+                        <li><a href="performers.html">The Comedians</a></li>
+                        <li><a href="tickets.html">Seating Tickets</a></li>
+                    </ul>
+                </div>
+
+                <!-- Quick Help -->
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="performers.html">The Comedians</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Emergency Contact</a></li>
+                        <li><a href="#">Privacy Protocol</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="footer-newsletter">
+                    <h4>Stay Updated</h4>
+                    <p>Subscribe to receive secret discount codes, lineup updates, and priority open mic notifications.</p>
+                    <form id="newsletterForm" class="newsletter-form">
+                        <input type="email" id="newsletterEmail" placeholder="Enter your email" required>
+                        <button type="submit" aria-label="Subscribe to newsletter">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </form>
+                    <p class="newsletter-feedback" id="newsletterFeedback"></p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Laughora Inc. All rights reserved.</p>
+                <a href="#" class="back-to-top">
+                    <span>Back to Top</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 15l-6-6-6 6" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Gallery filter with smooth transition
+        const filterBtns = document.querySelectorAll('.gallery-filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-masonry-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (btn.classList.contains('active')) return;
+                
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.getAttribute('data-gfilter');
+                
+                // Fade out items that will be hidden or shifted
+                galleryItems.forEach(item => {
+                    item.style.opacity = '0';
+                    item.style.transform = 'scale(0.95) translateY(10px)';
+                });
+                
+                // Wait for fade out, then swap displays and fade in new ones
+                setTimeout(() => {
+                    galleryItems.forEach(item => {
+                        const cat = item.getAttribute('data-gcategory');
+                        if (filter === 'all' || cat === filter) {
+                            item.style.display = 'block';
+                            // Trigger reflow
+                            item.offsetHeight;
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1) translateY(0)';
+                            setTimeout(() => {
+                                // Clear inline transform so hover rules can take effect
+                                item.style.transform = '';
+                            }, 400);
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                }, 300);
+            });
+        });
+
+        // Lightbox
+        const lbOverlay = document.getElementById('lbOverlay');
+        const lbImg = document.getElementById('lbImg');
+        const lbAbstract = document.getElementById('lbAbstractView');
+        const lbCaption = document.getElementById('lbCaption');
+        const lbClose = document.getElementById('lbClose');
+        const lbPrev = document.getElementById('lbPrev');
+        const lbNext = document.getElementById('lbNext');
+
+        let lbItems = [];
+        let lbIndex = 0;
+
+        // Build lightbox items list
+        function buildLbItems() {
+            lbItems = [];
+            // Select items that are currently visible
+            document.querySelectorAll('.gallery-masonry-item').forEach(item => {
+                if (item.style.display !== 'none') {
+                    lbItems.push({
+                        src: item.getAttribute('data-lbsrc'),
+                        color: item.getAttribute('data-lbcolor') || '',
+                        title: item.getAttribute('data-lbtitle'),
+                        caption: item.getAttribute('data-lbcaption')
+                    });
+                }
+            });
+        }
+
+        function openLb(index) {
+            buildLbItems();
+            lbIndex = index;
+            showLbItem();
+            lbOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function showLbItem() {
+            const item = lbItems[lbIndex];
+            if (!item) return;
+
+            // Fade out current content first
+            lbImg.style.opacity = '0';
+            lbImg.style.transform = 'scale(0.97)';
+            lbAbstract.style.opacity = '0';
+            lbAbstract.style.transform = 'scale(0.97)';
+            
+            setTimeout(() => {
+                if (item.src === 'abstract') {
+                    lbImg.style.display = 'none';
+                    lbAbstract.style.display = 'flex';
+                    lbAbstract.className = `lb-abstract-view ${item.color}`;
+                    lbAbstract.innerHTML = `<div style="text-align:center;padding:2rem;"><h2 style="color:white;font-size:2rem;font-family:var(--font-heading);text-shadow: 0 0 15px rgba(255,255,255,0.1);">${item.title}</h2><p style="color:var(--color-text-slate);margin-top:0.75rem;">${item.caption}</p></div>`;
+                    
+                    // Trigger reflow
+                    lbAbstract.offsetHeight;
+                    lbAbstract.style.opacity = '1';
+                    lbAbstract.style.transform = 'scale(1)';
+                } else {
+                    lbAbstract.style.display = 'none';
+                    lbImg.style.display = 'block';
+                    lbImg.src = item.src;
+                    lbImg.alt = item.title;
+                    
+                    // Trigger reflow
+                    lbImg.offsetHeight;
+                    lbImg.style.opacity = '1';
+                    lbImg.style.transform = 'scale(1)';
+                }
+                
+                // Colorize overlay glow based on category colors
+                const foundItem = Array.from(galleryItems).find(el => el.getAttribute('data-lbtitle') === item.title);
+                if (foundItem) {
+                    if (foundItem.classList.contains('gmi-purple')) {
+                        lbImg.style.boxShadow = '0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(176, 38, 255, 0.25)';
+                    } else if (foundItem.classList.contains('gmi-cyan')) {
+                        lbImg.style.boxShadow = '0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 240, 255, 0.25)';
+                    } else if (foundItem.classList.contains('gmi-pink')) {
+                        lbImg.style.boxShadow = '0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 0, 127, 0.25)';
+                    } else if (foundItem.classList.contains('gmi-orange')) {
+                        lbImg.style.boxShadow = '0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 107, 0, 0.25)';
+                    }
+                } else {
+                    lbImg.style.boxShadow = '0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(176, 38, 255, 0.15)';
+                }
+                
+                lbCaption.innerHTML = `<strong>${item.title}</strong> — ${item.caption}`;
+            }, 150);
+        }
+
+        function closeLb() {
+            lbOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        lbClose.addEventListener('click', closeLb);
+        lbOverlay.addEventListener('click', e => { if (e.target === lbOverlay) closeLb(); });
+
+        lbPrev.addEventListener('click', e => {
+            e.stopPropagation();
+            lbIndex = (lbIndex - 1 + lbItems.length) % lbItems.length;
+            showLbItem();
+        });
+
+        lbNext.addEventListener('click', e => {
+            e.stopPropagation();
+            lbIndex = (lbIndex + 1) % lbItems.length;
+            showLbItem();
+        });
+
+        document.addEventListener('keydown', e => {
+            if (!lbOverlay.classList.contains('active')) return;
+            if (e.key === 'Escape') closeLb();
+            if (e.key === 'ArrowLeft') { lbIndex = (lbIndex - 1 + lbItems.length) % lbItems.length; showLbItem(); }
+            if (e.key === 'ArrowRight') { lbIndex = (lbIndex + 1) % lbItems.length; showLbItem(); }
+        });
+
+        // Attach zoom buttons and item triggers
+        galleryItems.forEach(item => {
+            const zoomBtn = item.querySelector('.gmi-zoom-btn');
+            if (zoomBtn) {
+                zoomBtn.addEventListener('click', e => {
+                    e.stopPropagation();
+                    buildLbItems();
+                    const title = item.getAttribute('data-lbtitle');
+                    const foundIdx = lbItems.findIndex(li => li.title === title);
+                    openLb(foundIdx >= 0 ? foundIdx : 0);
+                });
+            }
+
+            item.addEventListener('click', e => {
+                if (!e.target.closest('.gmi-zoom-btn')) {
+                    buildLbItems();
+                    const title = item.getAttribute('data-lbtitle');
+                    const foundIdx = lbItems.findIndex(li => li.title === title);
+                    openLb(foundIdx >= 0 ? foundIdx : 0);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
